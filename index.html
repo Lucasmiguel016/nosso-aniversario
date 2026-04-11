@@ -7,43 +7,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* =========================================
-               AQUI ESTÁ O NOVO TOM DE ROSA DO FUNDO (DEEP MAROON-PINK)
-               ========================================= */
-            --spotify-bg: #c2185b; /* Rosa-marrom profundo e rico */
+            /* COR DO TOPO: Um vinho bem escuro e sofisticado */
+            --spotify-upper: #5e0b15; 
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
             --spotify-green: #1ed760;
-            --counter-box-bg: rgba(255, 255, 255, 0.1); /* Fundo suave das caixinhas */
+            --counter-box: rgba(255, 255, 255, 0.1);
         }
 
         body, html {
             margin: 0; padding: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: var(--spotify-bg);
+            /* DEGRADÊ: Começa no vinho escuro e termina no preto do Spotify */
+            background: linear-gradient(to bottom, var(--spotify-upper) 0%, var(--spotify-black) 100%);
+            background-attachment: fixed; /* Mantém o degradê fixo enquanto rola */
             color: var(--text-main);
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent; /* Evita o realce cinza no clique */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
+            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-upper);
             padding: 20px; text-align: center;
             position: fixed; width: 100%; top: 0; z-index: 100;
         }
 
-        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
-        .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-start { 
+            background-color: #fff; color: #000; padding: 18px 45px; 
+            border-radius: 35px; font-weight: bold; text-transform: uppercase; 
+            border: none; cursor: pointer; font-size: 1rem;
+        }
 
         /* TELA DO PLAYER */
-        #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; text-align: center; }
+        #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
@@ -59,48 +61,35 @@
             padding-bottom: 25px; position: relative; text-align: left;
         }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; }
-        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .sobre-title { 
+            position: absolute; top: 20px; left: 20px; color: #fff; 
+            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; 
+            font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); 
+        }
+        
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
-        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
+        .counter-item { background: var(--counter-box); border-radius: 15px; padding: 15px 5px; text-align: center; }
         .time-val { font-size: 1.8rem; font-weight: bold; display: block; }
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; }
 
         /* TOP 3 MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
-        .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
+        .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
         .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* =========================================
-           NOVA SEÇÃO DA CARTA/CONQUISTAS (MANTIDO)
-           ========================================= */
-        .message-and-achievements { margin-top: 35px; text-align: left; }
-
-        /* Card de Mensagem Especial */
+        /* CARTA E CONQUISTAS (image_7.png) */
         .message-card {
-            background-color: #e91e63; /* Bright Pink do card da sua referência */
-            border-radius: 25px;
-            padding: 25px;
-            color: #fff;
-            margin-bottom: 25px;
+            background-color: #e91e63; /* Rosa vivo do card */
+            border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left;
         }
-        .message-card-title { font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 10px; }
-        .message-card-text { font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
-        .btn-show-message { background-color: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
-
-        /* Seção de Conquistas */
-        .achievements-section { background-color: var(--spotify-black); border-radius: 20px; padding: 20px; }
-        .achievements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .achievements-title { color: var(--text-sub); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .achievements-counter { color: var(--text-sub); font-size: 0.9rem; }
-        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border-width: 2px; border-style: solid; }
-        /* Cores das bordas e ícones conforme imagem */
-        .trophy-item { border-color: #fbc02d; color: #fbc02d; }
-        .crown-item { border-color: #fbc02d; color: #fbc02d; }
+        .achievements-section { background-color: var(--spotify-black); border-radius: 20px; padding: 20px; text-align: left; }
+        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
+        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
+        .trophy-item, .crown-item { border-color: #fbc02d; color: #fbc02d; }
         .party-item { border-color: #7e57c2; color: #7e57c2; }
         .fire-item { border-color: #2196f3; color: #2196f3; }
 
-        /* MODAL DA CARTA (MANTIDO) */
+        /* MODAL DA CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: bold; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -164,37 +153,26 @@
                 <div class="moment-item"><span class="moment-number">3</span><span>Nossa primeira foto juntos</span></div>
             </div>
 
-            <div class="message-and-achievements">
-                <div class="message-card">
-                    <span class="message-card-title">Mensagem especial</span>
-                    <p class="message-card-text">
-                        Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨. Mais do que você pode imaginar...
-                    </p>
-                    <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
-                </div>
+            <div class="message-card">
+                <span style="font-weight: bold; display: block; margin-bottom: 10px;">Mensagem especial</span>
+                <p style="font-size: 1rem; margin-bottom: 20px;">Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨.</p>
+                <button style="background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold;" onclick="verCarta(true)">Mostrar Mensagem</button>
+            </div>
 
-                <div class="achievements-section">
-                    <div class="achievements-header">
-                        <span class="achievements-title">Conquistas</span>
-                        <span class="achievements-counter">16/30</span>
-                    </div>
-                    <div class="achievements-grid">
-                        <div class="achievement-item trophy-item">
-                            <i class="fa-solid fa-trophy"></i>
-                        </div>
-                        <div class="achievement-item crown-item">
-                            <i class="fa-solid fa-crown"></i>
-                        </div>
-                        <div class="achievement-item party-item">
-                            <i class="fa-solid fa-party-horn"></i>
-                        </div>
-                        <div class="achievement-item fire-item">
-                            <i class="fa-solid fa-fire"></i>
-                        </div>
-                    </div>
+            <div class="achievements-section">
+                <div style="display: flex; justify-content: space-between; color: var(--text-sub); font-size: 0.8rem;">
+                    <span>CONQUISTAS</span>
+                    <span>16/30</span>
+                </div>
+                <div class="achievements-grid">
+                    <div class="achievement-item trophy-item"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="achievement-item crown-item"><i class="fa-solid fa-crown"></i></div>
+                    <div class="achievement-item party-item"><i class="fa-solid fa-party-horn"></i></div>
+                    <div class="achievement-item fire-item"><i class="fa-solid fa-fire"></i></div>
                 </div>
             </div>
-            </div>
+
+        </div>
     </div>
 
     <div id="letter-modal">
@@ -217,11 +195,9 @@ Te amo para sempre! ❤️
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
-
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Play automático impedido pelo navegador."));
-
+            });
             cronometro();
             setInterval(cronometro, 1000);
         }
