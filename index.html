@@ -7,89 +7,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* COR DO TOPO: Um vinho bem escuro e sofisticado */
-            --spotify-upper: #5e0b15; 
+            /* =========================================
+               AQUI ESTÁ O NOVO ESQUEMA DE CORES
+               ========================================= */
+            --spotify-bg-upper: #8b0000; /* Vinho profundo e rico (como nas referências) */
+            --spotify-bg-lower: #000000; /* Fundo Preto absoluto */
+            
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
             --spotify-green: #1ed760;
-            --counter-box: rgba(255, 255, 255, 0.1);
+            --counter-box-bg: rgba(255, 255, 255, 0.1); /* Fundo suave das caixinhas */
         }
 
         body, html {
             margin: 0; padding: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            /* DEGRADÊ: Começa no vinho escuro e termina no preto do Spotify */
-            background: linear-gradient(to bottom, var(--spotify-upper) 0%, var(--spotify-black) 100%);
-            background-attachment: fixed; /* Mantém o degradê fixo enquanto rola */
+            background-color: var(--spotify-bg-lower); /* Fundo base preto */
             color: var(--text-main);
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* Evita o realce cinza no clique */
         }
 
         /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-upper);
+            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg-upper);
             padding: 20px; text-align: center;
             position: fixed; width: 100%; top: 0; z-index: 100;
         }
 
-        .btn-start { 
-            background-color: #fff; color: #000; padding: 18px 45px; 
-            border-radius: 35px; font-weight: bold; text-transform: uppercase; 
-            border: none; cursor: pointer; font-size: 1rem;
-        }
+        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
+        .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; font-size: 1rem; }
 
         /* TELA DO PLAYER */
-        #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
+        #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; text-align: center; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
+        
+        /* A CAPA AGORA ESTÁ EM UMA MOLDURA ARREDONDADA SOBRE O FUNDO VINHO */
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
         #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; transition: width 0.1s linear; }
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SEÇÃO SOBRE O CASAL */
+        /* =========================================
+           DIVISÃO CLARA: VINHO SÓ EM CIMA
+           ========================================= */
+        .background-color-split {
+            background: var(--spotify-bg-upper); /* Vinho Deep Magenta */
+            padding-bottom: 30px; /* Pequeno respiro antes do preto */
+        }
+
+        /* SEÇÃO SOBRE O CASAL (AGORA NO FUNDO PRETO) */
         .about-section {
-            background-color: var(--spotify-black);
+            background-color: var(--spotify-bg-lower); /* Fundo Preto absoluto */
             border-radius: 20px; margin-top: 40px; overflow: hidden;
             padding-bottom: 25px; position: relative; text-align: left;
         }
+        /* FOTO DO CASAL: Sem corte excessivo e centralizada */
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; }
-        .sobre-title { 
-            position: absolute; top: 20px; left: 20px; color: #fff; 
-            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; 
-            font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); 
-        }
-        
+        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
-        .counter-item { background: var(--counter-box); border-radius: 15px; padding: 15px 5px; text-align: center; }
+        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
         .time-val { font-size: 1.8rem; font-weight: bold; display: block; }
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; }
 
-        /* TOP 3 MOMENTOS */
+        /* TOP 3 MOMENTOS (MANTIDO) */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
-        .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+        .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* CARTA E CONQUISTAS (image_7.png) */
-        .message-card {
-            background-color: #e91e63; /* Rosa vivo do card */
-            border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left;
-        }
-        .achievements-section { background-color: var(--spotify-black); border-radius: 20px; padding: 20px; text-align: left; }
-        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
-        .trophy-item, .crown-item { border-color: #fbc02d; color: #fbc02d; }
+        /* MENSAGEM E CONQUISTAS (MANTIDO E NO PRETO) */
+        .message-and-achievements { margin-top: 35px; text-align: left; }
+        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin-bottom: 25px; }
+        .message-card-title { font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 10px; }
+        .message-card-text { font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
+        .btn-show-message { background-color: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .achievements-section { background-color: var(--spotify-black); border-radius: 20px; padding: 20px; }
+        .achievements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .achievements-title { color: var(--text-sub); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .achievements-counter { color: var(--text-sub); font-size: 0.9rem; }
+        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border-width: 2px; border-style: solid; }
+        .trophy-item { border-color: #fbc02d; color: #fbc02d; }
+        .crown-item { border-color: #fbc02d; color: #fbc02d; }
         .party-item { border-color: #7e57c2; color: #7e57c2; }
         .fire-item { border-color: #2196f3; color: #2196f3; }
 
-        /* MODAL DA CARTA */
+        /* MODAL DA CARTA (MANTIDO) */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: bold; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -107,27 +119,28 @@
         <p style="font-weight: 500; text-align: center;">Eu te amo mais que tudo! ❤️</p>
 
         <div class="main-card">
-            <img src="imagens/imagens/capa.JPEG" class="cover-art">
             
-            <div class="song-info">
-                <div>
-                    <h2 style="margin:0; font-size: 1.5rem;">Best Part (feat. H.E.R.)</h2>
-                    <p style="color: var(--text-sub); margin:5px 0;">Daniel Caesar, H.E.R.</p>
+            <div class="background-color-split">
+                <img src="imagens/imagens/capa.JPEG" class="cover-art">
+                
+                <div class="song-info">
+                    <div>
+                        <h2 style="margin:0; font-size: 1.5rem;">Best Part (feat. H.E.R.)</h2>
+                        <p style="color: var(--text-sub); margin:5px 0;">Daniel Caesar, H.E.R.</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.6rem;"></i>
                 </div>
-                <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.6rem;"></i>
-            </div>
 
-            <div class="progress-bar"><div id="progress"></div></div>
-            
-            <div class="controls">
-                <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
-                <i class="fa-solid fa-backward-step"></i>
-                <i id="playBtn" class="fa-solid fa-circle-play play-btn" onclick="controlarMusica()"></i>
-                <i class="fa-solid fa-forward-step"></i>
-                <i class="fa-solid fa-repeat" style="color: var(--text-sub)"></i>
-            </div>
-
-            <div class="about-section">
+                <div class="progress-bar"><div id="progress"></div></div>
+                
+                <div class="controls">
+                    <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
+                    <i class="fa-solid fa-backward-step"></i>
+                    <i id="playBtn" class="fa-solid fa-circle-play play-btn" onclick="controlarMusica()"></i>
+                    <i class="fa-solid fa-forward-step"></i>
+                    <i class="fa-solid fa-repeat" style="color: var(--text-sub)"></i>
+                </div>
+            </div> <div class="about-section">
                 <span class="sobre-title">Sobre o casal</span>
                 <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img">
                 
@@ -153,22 +166,26 @@
                 <div class="moment-item"><span class="moment-number">3</span><span>Nossa primeira foto juntos</span></div>
             </div>
 
-            <div class="message-card">
-                <span style="font-weight: bold; display: block; margin-bottom: 10px;">Mensagem especial</span>
-                <p style="font-size: 1rem; margin-bottom: 20px;">Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨.</p>
-                <button style="background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold;" onclick="verCarta(true)">Mostrar Mensagem</button>
-            </div>
-
-            <div class="achievements-section">
-                <div style="display: flex; justify-content: space-between; color: var(--text-sub); font-size: 0.8rem;">
-                    <span>CONQUISTAS</span>
-                    <span>16/30</span>
+            <div class="message-and-achievements">
+                <div class="message-card">
+                    <span class="message-card-title">Mensagem especial</span>
+                    <p class="message-card-text">
+                        Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨. Mais do que você pode imaginar...
+                    </p>
+                    <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
                 </div>
-                <div class="achievements-grid">
-                    <div class="achievement-item trophy-item"><i class="fa-solid fa-trophy"></i></div>
-                    <div class="achievement-item crown-item"><i class="fa-solid fa-crown"></i></div>
-                    <div class="achievement-item party-item"><i class="fa-solid fa-party-horn"></i></div>
-                    <div class="achievement-item fire-item"><i class="fa-solid fa-fire"></i></div>
+
+                <div class="achievements-section">
+                    <div class="achievements-header">
+                        <span class="achievements-title">Conquistas</span>
+                        <span class="achievements-counter">16/30</span>
+                    </div>
+                    <div class="achievements-grid">
+                        <div class="achievement-item trophy-item"><i class="fa-solid fa-trophy"></i></div>
+                        <div class="achievement-item crown-item"><i class="fa-solid fa-crown"></i></div>
+                        <div class="achievement-item party-item"><i class="fa-solid fa-party-horn"></i></div>
+                        <div class="achievement-item fire-item"><i class="fa-solid fa-fire"></i></div>
+                    </div>
                 </div>
             </div>
 
@@ -195,9 +212,11 @@ Te amo para sempre! ❤️
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
+
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            });
+            }).catch(e => console.log("Play automático impedido pelo navegador."));
+
             cronometro();
             setInterval(cronometro, 1000);
         }
