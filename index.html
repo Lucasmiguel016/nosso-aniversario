@@ -23,6 +23,7 @@
             overflow-x: hidden;
         }
 
+        /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -33,6 +34,7 @@
 
         .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; }
 
+        /* TELA DO PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -40,7 +42,7 @@
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
-        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
+        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; transition: width 0.1s linear; }
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
@@ -59,16 +61,17 @@
 
         /* TOP 3 MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
-        .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+        .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; }
         .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
+        /* CARTA */
         .btn-letter { background: var(--spotify-green); color: black; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; margin-top: 35px; cursor: pointer; font-size: 1.1rem; }
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
     </style>
 </head>
 <body>
 
-    <audio id="musicaReal"></audio>
+    <audio id="musicaReal" preload="auto"></audio>
 
     <div id="intro-screen">
         <h2 class="intro-text">Lucas separou um presente especial!<br>Um momento único feito com muito carinho.</h2>
@@ -134,50 +137,48 @@
         <h1 style="color: var(--spotify-green); margin-top: 30px;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
 Há um ano, eu não imaginava que seria tão feliz ao seu lado.
-Você é a "melhor parte" de cada dia meu.
+Você é a "melhor parte" de todos os meus dias.
 
 Te amo para sempre! ❤️
         </p>
     </div>
 
     <script>
-        const som = document.getElementById('musicaReal');
-        const btnIcon = document.getElementById('playBtn');
-        const barra = document.getElementById('progress');
+        const audio = document.getElementById('musicaReal');
+        const playBtn = document.getElementById('playBtn');
+        const bar = document.getElementById('progress');
 
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             
-            // TÉCNICA DE CACHE BUSTING PARA FORÇAR O DOWNLOAD DO NOVO ARQUIVO
-            const timestamp = new Date().getTime();
-            som.src = "musica.mp3?v=" + timestamp;
-            som.load();
+            // Força o carregamento do arquivo com um parâmetro para evitar cache
+            audio.src = "musica.mp3?v=" + new Date().getTime();
+            audio.load();
 
-            som.play().then(() => {
-                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => {
-                alert("Clique no ícone de Play para tocar a música!");
-            });
+            // Tenta o play de forma silenciosa no console
+            audio.play().then(() => {
+                playBtn.classList.replace('fa-circle-play', 'fa-circle-pause');
+            }).catch(e => console.warn("Play automático impedido pelo navegador."));
 
             cronometro();
             setInterval(cronometro, 1000);
         }
 
         function controlarMusica() {
-            if (som.paused) {
-                som.play();
-                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
+            if (audio.paused) {
+                audio.play();
+                playBtn.classList.replace('fa-circle-play', 'fa-circle-pause');
             } else {
-                som.pause();
-                btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
+                audio.pause();
+                playBtn.classList.replace('fa-circle-pause', 'fa-circle-play');
             }
         }
 
-        som.ontimeupdate = () => {
-            if (som.duration) {
-                const p = (som.currentTime / som.duration) * 100;
-                barra.style.width = p + "%";
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                const p = (audio.currentTime / audio.duration) * 100;
+                bar.style.width = p + "%";
             }
         };
 
