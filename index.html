@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg: #8b0000; /* Cor vinho do seu print */
+            --spotify-bg: #8b0000; /* Cor vinho */
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
+            --counter-box-bg: rgba(255, 255, 255, 0.1); /* Fundo suave das caixinhas */
         }
 
         body, html {
@@ -20,6 +21,7 @@
             background-color: var(--spotify-bg);
             color: var(--text-main);
             overflow-x: hidden;
+            text-align: center;
         }
 
         /* TELA INICIAL */
@@ -29,121 +31,117 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
             padding: 20px;
         }
 
-        .intro-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            line-height: 1.4;
-        }
-
-        .btn-start {
-            background-color: #fff;
-            color: #000;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
+        .btn-start { background-color: #fff; color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s; }
 
         /* TELA DO PLAYER */
-        #player-screen {
-            display: none; /* Escondido no início */
-            padding: 20px;
-            animation: fadeIn 1s ease-in;
-        }
+        #player-screen { display: none; padding: 20px; animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase {
-            font-size: 1rem;
-            margin: 20px 0;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .main-card {
-            width: 100%;
-            max-width: 350px;
-            margin: 0 auto;
-        }
-
-        .cover-art {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 8px;
-            object-fit: cover;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .song-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            text-align: left;
-        }
-
+        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; }
+        .main-card { width: 100%; max-width: 350px; margin: 0 auto; }
+        .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 8px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; text-align: left; }
         .song-title { font-size: 1.4rem; font-weight: bold; margin: 0; }
         .artist-name { color: var(--text-sub); margin: 5px 0; }
 
-        /* CONTROLES */
-        .progress-bar {
+        /* CONTROLES DO PLAYER */
+        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 25px 0 10px; position: relative; }
+        .progress-current { width: 45%; height: 100%; background: #fff; border-radius: 2px; }
+        .time-info { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; font-size: 1.5rem; }
+        .play-btn { font-size: 3.5rem; }
+
+        /* =========================================
+           NOVA SEÇÃO: SOBRE O CASAL (ESTILO REFERÊNCIA)
+           ========================================= */
+        .about-section {
+            background-color: var(--spotify-black); /* Fundo escuro como na imagem */
+            border-radius: 20px;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            overflow: hidden; /* Para a foto não vazar */
+            padding-bottom: 20px;
             width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            margin: 25px 0 10px;
-            position: relative;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left; /* Alinhamento geral à esquerda */
         }
-        .progress-current {
-            width: 45%; /* Progresso visual */
-            height: 100%;
-            background: #fff;
-            border-radius: 2px;
+
+        /* Foto Maior na Topo da Seção */
+        .couple-big-image {
+            width: 100%;
+            height: auto;
+            max-height: 250px; /* Limita a altura para não ficar gigante no celular */
+            object-fit: cover;
+            display: block;
         }
-        .time-info {
-            display: flex;
-            justify-content: space-between;
+
+        /* Títulos e Nomes */
+        .about-titles {
+            padding: 20px 20px 10px 20px;
+        }
+        .sobre-o-casal-title {
+            color: var(--text-sub);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            margin: 0;
+            display: block;
+        }
+        .couple-names {
+            color: var(--text-main);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 5px 0;
+            display: block;
+        }
+        .since-text {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            margin: 0;
+            display: block;
+        }
+
+        /* Grade do Contador (3 colunas, 2 linhas) */
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px 20px 20px 20px;
+        }
+
+        /* Caixinhas Individuais */
+        .counter-item {
+            background-color: var(--counter-box-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Borda sutil */
+            border-radius: 12px;
+            padding: 15px 5px;
+            text-align: center;
+        }
+
+        /* O Número Grande */
+        .time-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-main);
+            display: block;
+        }
+
+        /* A Unidade Pequena */
+        .time-unit {
             font-size: 0.7rem;
             color: var(--text-sub);
+            text-transform: uppercase;
+            display: block;
+            margin-top: 3px;
         }
 
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-            font-size: 1.5rem;
-        }
-        .play-btn {
-            font-size: 3.5rem;
-        }
-
-        /* SOBRE O CASAL */
-        .about-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 40px;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
-        .about-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -160,7 +158,7 @@
         <div class="top-phrase">Eu te amo mais que tudo! ❤️</div>
 
         <div class="main-card">
-            <img src="imagens/imagens/capa.JPEG" class="cover-art" alt="Nossa Foto">
+            <img src="imagens/imagens/capa.JPEG" class="cover-art" alt="Nossa Foto do Player">
             
             <div class="song-info">
                 <div>
@@ -186,21 +184,103 @@
                 <i class="fa-solid fa-repeat" style="color: var(--text-sub); font-size: 1.2rem;"></i>
             </div>
 
-            <div class="about-card">
-                <img src="imagens/imagens/casal_perfil.JPEG" class="about-img">
-                <div>
-                    <strong style="display: block; font-size: 1.1rem;">Sobre o casal</strong>
-                    <span style="font-size: 0.9rem; color: var(--text-sub);">Cada detalhe importa quando estou com você.</span>
+            <div class="about-section">
+                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-big-image" alt="Nossa Foto do Contador">
+                
+                <div class="about-titles">
+                    <span class="sobre-o-casal-title">Sobre o casal</span>
+                    <span class="couple-names">Lucas e Mariana</span>
+                    <span class="since-text">juntos desde 2025</span>
+                </div>
+
+                <div class="counter-grid">
+                    <div class="counter-item">
+                        <span id="years" class="time-value">0</span>
+                        <span class="time-unit">Anos</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="months" class="time-value">0</span>
+                        <span class="time-unit">Meses</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="days" class="time-value">0</span>
+                        <span class="time-unit">Dias</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="hours" class="time-value">0</span>
+                        <span class="time-unit">Horas</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="minutes" class="time-value">0</span>
+                        <span class="time-unit">Minutos</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="seconds" class="time-value">0</span>
+                        <span class="time-unit">Segundos</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Função para mostrar o presente e iniciar o contador
         function mostrarPresente() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
+            
+            // Inicia o contador
+            updateTimeSince();
+            // Atualiza a cada segundo
+            setInterval(updateTimeSince, 1000);
+        }
+
+        // --- LÓGICA DE TEMPO ---
+        // DEFINA A DATA DE INÍCIO AQUI (Ano, Mês-1, Dia, Hora, Minuto, Segundo)
+        // Nota: JavaScript conta meses de 0 a 11. Abril é mês 3.
+        const startDate = new Date(2025, 3, 17, 0, 0, 0); 
+
+        function updateTimeSince() {
+            const now = new Date();
+            let totalMilliseconds = now - startDate;
+
+            if (totalMilliseconds < 0) {
+                // Se a data de início ainda não chegou (segurança)
+                document.querySelectorAll('.time-value').forEach(el => el.innerHTML = "0");
+                return;
+            }
+
+            // Cálculo preciso de Anos, Meses e Dias usando o calendário real
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+
+            if (days < 0) {
+                months--;
+                // Pega o último dia do mês anterior
+                let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Cálculo das horas, minutos e segundos restantes
+            const totalSeconds = Math.floor(totalMilliseconds / 1000);
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Atualiza os elementos na tela
+            document.getElementById('years').innerHTML = years;
+            document.getElementById('months').innerHTML = months;
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('seconds').innerHTML = seconds;
         }
     </script>
 </body>
