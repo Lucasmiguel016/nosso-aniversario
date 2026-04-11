@@ -23,10 +23,8 @@
             overflow-x: hidden;
         }
 
-        /* ESCONDER O PLAYER DE ÁUDIO REAL */
         audio { display: none; }
 
-        /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -40,7 +38,6 @@
             border: none; cursor: pointer; font-size: 1rem;
         }
 
-        /* TELA DO PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -53,14 +50,11 @@
 
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
         
-        /* CONTROLES */
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
         #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
-        .play-btn { font-size: 4rem; cursor: pointer; transition: transform 0.2s; }
-        .play-btn:active { transform: scale(0.9); }
+        .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SEÇÃO SOBRE O CASAL */
         .about-section {
             background-color: var(--spotify-black);
             border-radius: 20px; margin-top: 40px; overflow: hidden;
@@ -87,12 +81,6 @@
         .time-val { font-size: 1.8rem; font-weight: bold; display: block; }
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; }
 
-        /* TOP 5 */
-        .top-moments { text-align: left; margin-top: 45px; padding: 0 10px; }
-        .moment { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
-        .m-num { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; }
-
-        /* CARTA */
         .btn-letter {
             background: var(--spotify-green); color: black; border: none;
             padding: 18px; width: 100%; border-radius: 12px; font-weight: bold;
@@ -107,7 +95,7 @@
 </head>
 <body>
 
-    <audio id="musicaReal">
+    <audio id="musicaReal" preload="auto">
         <source src="musica.mp3" type="audio/mpeg">
     </audio>
 
@@ -117,7 +105,7 @@
     </div>
 
     <div id="player-screen">
-        <p style="font-weight: 500;">Eu te amo mais que tudo! ❤️</p>
+        <p style="font-weight: 500; text-align: center;">Eu te amo mais que tudo! ❤️</p>
 
         <div class="main-card">
             <img src="imagens/imagens/capa.JPEG" class="cover-art">
@@ -159,13 +147,6 @@
                 </div>
             </div>
 
-            <div class="top-moments">
-                <h3 style="margin-bottom: 25px;">Seus momentos mais ouvidos:</h3>
-                <div class="moment"><span class="m-num">1</span><span>Nosso primeiro "Eu te amo"</span></div>
-                <div class="moment"><span class="m-num">2</span><span>Aquela viagem inesquecível</span></div>
-                <div class="moment"><span class="m-num">3</span><span>Nossa primeira foto juntos</span></div>
-            </div>
-
             <button class="btn-letter" onclick="verCarta(true)">Ler minha carta para você ✉️</button>
         </div>
     </div>
@@ -174,10 +155,10 @@
         <p onclick="verCarta(false)" style="color: var(--spotify-green); font-weight: bold; cursor: pointer;">← Voltar</p>
         <h1 style="color: var(--spotify-green); margin-top: 30px;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
-Há um ano, eu não imaginava que seria tão feliz. 
-Você é a "melhor parte" de cada dia meu. 
+Há um ano, eu não imaginava que seria tão feliz ao teu lado.
+És a "melhor parte" de todos os meus dias.
 
-Te amo daqui até a eternidade!
+Te amo para sempre! ❤️
         </p>
     </div>
 
@@ -187,13 +168,21 @@ Te amo daqui até a eternidade!
         const barra = document.getElementById('progress');
 
         function iniciarTudo() {
+            // 1. Mostrar a tela do player
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             
-            // Forçar o áudio
-            som.play().then(() => {
-                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(err => console.log("Erro ao tocar:", err));
+            // 2. Tentar tocar a música (vários métodos para garantir)
+            som.load(); // Força o recarregamento do ficheiro
+            const playPromise = som.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
+                }).catch(error => {
+                    console.log("Autoplay bloqueado. A música tocará no próximo clique.");
+                });
+            }
 
             cronometro();
             setInterval(cronometro, 1000);
@@ -210,15 +199,17 @@ Te amo daqui até a eternidade!
         }
 
         som.ontimeupdate = () => {
-            const p = (som.currentTime / som.duration) * 100;
-            barra.style.width = p + "%";
+            if (som.duration) {
+                const p = (som.currentTime / som.duration) * 100;
+                barra.style.width = p + "%";
+            }
         };
 
         function verCarta(s) {
             document.getElementById('letter-modal').style.display = s ? 'block' : 'none';
         }
 
-        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
+        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); // 17 de Abril de 2025
         function cronometro() {
             const agora = new Date();
             let anos = agora.getFullYear() - dataInicio.getFullYear();
