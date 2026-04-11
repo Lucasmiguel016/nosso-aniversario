@@ -3,137 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossa História - 1 Ano</title>
+    <title>Spotify - Nosso Momento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #ff4d6d;
-            --bg-color: #fff0f3;
-            --text-color: #590d22;
+            --spotify-bg: #8b0000; /* Cor vinho do seu print */
+            --spotify-black: #121212;
+            --text-main: #ffffff;
+            --text-sub: #b3b3b3;
         }
 
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--spotify-bg);
+            color: var(--text-main);
             overflow-x: hidden;
-            text-align: center;
         }
 
-        /* Container dos Corações */
-        #heart-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .heart {
-            position: absolute;
-            color: var(--primary-color);
-            font-size: 20px;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); }
-        }
-
-        /* Seções */
-        section {
-            min-height: 100vh;
+        /* TELA INICIAL */
+        #intro-screen {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
             padding: 20px;
-            box-sizing: border-box;
         }
 
-        .photo-frame {
-            width: 85vw;
-            max-width: 300px;
-            border: 10px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-radius: 5px;
-            transform: rotate(-3deg);
-            margin-bottom: 20px;
+        .intro-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
 
-        h1 { font-size: 2.5rem; color: var(--primary-color); }
-        p { font-size: 1.2rem; line-height: 1.6; }
-
-        .btn-music {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: white;
+        .btn-start {
+            background-color: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
             border: none;
-            padding: 15px;
-            border-radius: 50%;
             cursor: pointer;
-            z-index: 1000;
+            transition: 0.3s;
         }
+
+        /* TELA DO PLAYER */
+        #player-screen {
+            display: none; /* Escondido no início */
+            padding: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .top-phrase {
+            font-size: 1rem;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .cover-art {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .song-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .song-title { font-size: 1.4rem; font-weight: bold; margin: 0; }
+        .artist-name { color: var(--text-sub); margin: 5px 0; }
+
+        /* CONTROLES */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin: 25px 0 10px;
+            position: relative;
+        }
+        .progress-current {
+            width: 30%; /* Progresso fake */
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+        }
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-sub);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+        .play-btn {
+            font-size: 3rem;
+        }
+
+        /* SOBRE O CASAL */
+        .about-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+        .about-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="heart-container"></div>
+    <div id="intro-screen">
+        <div class="intro-text">
+            Lucas separou um presente especial!<br>
+            Um momento único feito com muito carinho.
+        </div>
+        <button class="btn-start" onclick="mostrarPresente()">Ver Presente</button>
+    </div>
 
-    <button class="btn-music" onclick="toggleMusic()">🎵</button>
-    <audio id="bg-music" loop>
-        <source src="sua-musica.mp3" type="audio/mpeg">
-    </audio>
+    <div id="player-screen">
+        <div class="top-phrase">Eu te amo mais que tudo! ❤️</div>
 
-    <section>
-        <h1>1 Ano de Nós ❤️</h1>
-        <p>Arraste para baixo para ver nossa história...</p>
-    </section>
+        <div class="main-card">
+            <img src="imagens/capa.jpg" class="cover-art" alt="Nossa Foto">
+            
+            <div class="song-info">
+                <div>
+                    <p class="song-title">Nossa História</p> <p class="artist-name">Lucas e [Nome Dela]</p> </div>
+                <i class="fa-solid fa-circle-check" style="color: #1ed760; font-size: 1.5rem;"></i>
+            </div>
 
-    <section>
-        <img src="foto1.jpg" class="photo-frame" alt="Nosso começo">
-        <h2>Onde tudo começou...</h2>
-        <p>"Aquele dia em que percebi que era você."</p>
-    </section>
+            <div class="progress-bar">
+                <div class="progress-current"></div>
+            </div>
+            <div class="time-info">
+                <span>0:00</span>
+                <span>-3:65</span>
+            </div>
 
-    <section>
-        <img src="foto2.jpg" class="photo-frame" style="transform: rotate(3deg);" alt="Momento especial">
-        <h2>365 dias depois</h2>
-        <p>"E o meu 'sim' continua sendo seu todos os dias."</p>
-    </section>
+            <div class="controls">
+                <i class="fa-solid fa-shuffle" style="color: var(--text-sub); font-size: 1rem;"></i>
+                <i class="fa-solid fa-backward-step"></i>
+                <i class="fa-solid fa-circle-play play-btn"></i>
+                <i class="fa-solid fa-forward-step"></i>
+                <i class="fa-solid fa-repeat" style="color: var(--text-sub); font-size: 1rem;"></i>
+            </div>
 
-    <section>
-        <h2>Para o futuro...</h2>
-        <p>Mal posso esperar pelos próximos anos ao seu lado. Te amo!</p>
-    </section>
+            <div class="about-card">
+                <img src="imagens/casal_perfil.jpg" class="about-img">
+                <div>
+                    <strong style="display: block; font-size: 1.1rem;">Sobre o casal</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-sub);">Feitos um para o outro desde [Data].</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Função para criar corações caindo
-        function createHeart() {
-            const container = document.getElementById('heart-container');
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.opacity = Math.random();
-            container.appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 5000);
-        }
-
-        setInterval(createHeart, 300);
-
-        // Lógica da Música
-        const music = document.getElementById('bg-music');
-        function toggleMusic() {
-            if (music.paused) { music.play(); } 
-            else { music.pause(); }
+        function mostrarPresente() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('player-screen').style.display = 'block';
+            
+            // Opcional: Se quiser que toque música ao clicar, 
+            // basta adicionar o elemento <audio> e dar play aqui.
         }
     </script>
 </body>
