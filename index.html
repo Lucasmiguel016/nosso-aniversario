@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg: #8b0000; /* Cor vinho */
+            --spotify-bg: #8b0000;
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
-            --counter-box-bg: rgba(255, 255, 255, 0.1); /* Fundo suave das caixinhas */
+            --counter-box-bg: rgba(255, 255, 255, 0.1);
+            --spotify-green: #1ed760;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--spotify-bg);
             color: var(--text-main);
@@ -27,137 +27,70 @@
         /* TELA INICIAL */
         #intro-screen {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
             padding: 20px;
         }
 
-        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
-        .btn-start { background-color: #fff; color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-start { background-color: #fff; color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; }
 
         /* TELA DO PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 1s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; }
         .main-card { width: 100%; max-width: 350px; margin: 0 auto; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 8px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* PLAYER CONTROLS */
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; text-align: left; }
-        .song-title { font-size: 1.4rem; font-weight: bold; margin: 0; }
-        .artist-name { color: var(--text-sub); margin: 5px 0; }
-
-        /* CONTROLES DO PLAYER */
-        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 25px 0 10px; position: relative; }
-        .progress-current { width: 45%; height: 100%; background: #fff; border-radius: 2px; }
-        .time-info { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); }
+        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 25px 0 10px; }
+        .progress-current { width: 0%; height: 100%; background: #fff; border-radius: 2px; transition: width 0.1s linear; }
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; font-size: 1.5rem; }
-        .play-btn { font-size: 3.5rem; }
+        .play-btn { font-size: 3.5rem; cursor: pointer; }
 
-        /* =========================================
-           NOVA SEÇÃO: SOBRE O CASAL (ESTILO REFERÊNCIA)
-           ========================================= */
+        /* SEÇÃO SOBRE O CASAL */
         .about-section {
-            background-color: var(--spotify-black); /* Fundo escuro como na imagem */
-            border-radius: 20px;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            overflow: hidden; /* Para a foto não vazar */
-            padding-bottom: 20px;
-            width: 100%;
-            max-width: 350px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative; /* Importante para o texto sobre a foto */
+            background-color: var(--spotify-black);
+            border-radius: 20px; margin-top: 50px; overflow: hidden;
+            padding-bottom: 20px; width: 100%; max-width: 350px; margin-inline: auto;
+            position: relative; text-align: left;
         }
+        .couple-big-image { width: 100%; height: auto; display: block; }
+        .sobre-o-casal-title { position: absolute; top: 15px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; font-weight: bold; }
+        .about-titles { padding: 20px; }
+        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 20px; }
+        .counter-item { background: var(--counter-box-bg); border-radius: 12px; padding: 15px 5px; text-align: center; }
+        .time-value { font-size: 1.8rem; font-weight: bold; display: block; }
+        .time-unit { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; }
 
-        /* Foto Grande na Topo da Seção */
-        .couple-big-image {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-        }
+        /* TOP 5 MOMENTOS */
+        .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
+        .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+        .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
+        .moment-text { font-size: 1rem; }
 
-        /* Texto 'Sobre o casal' no Canto Esquerdo da Foto */
-        .sobre-o-casal-title {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            font-weight: bold;
-            margin: 0;
-            z-index: 1; /* Garante que fique sobre a imagem */
-            pointer-events: none; /* Evita que o texto atrapalhe o clique na foto */
+        /* CARTA */
+        .btn-letter {
+            background: var(--spotify-green); color: black; border: none;
+            padding: 15px; width: 100%; border-radius: 10px; font-weight: bold;
+            margin-top: 30px; cursor: pointer; font-size: 1.1rem;
         }
-
-        /* Títulos e Nomes (em baixo da foto) */
-        .about-titles {
-            padding: 20px 20px 10px 20px;
-            text-align: left; /* Alinhamento à esquerda */
+        #letter-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--spotify-black); z-index: 1000; padding: 40px 20px;
+            box-sizing: border-box; overflow-y: auto; text-align: left;
         }
-        .couple-names {
-            color: var(--text-main);
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 0;
-            display: block;
-        }
-        .since-text {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-            margin: 5px 0;
-            display: block;
-        }
-
-        /* Grade do Contador (3 colunas, 2 linhas) */
-        .counter-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 10px 20px 20px 20px;
-        }
-
-        /* Caixinhas Individuais */
-        .counter-item {
-            background-color: var(--counter-box-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05); /* Borda sutil */
-            border-radius: 12px;
-            padding: 15px 5px;
-            text-align: center;
-        }
-
-        /* O Número Grande */
-        .time-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--text-main);
-            display: block;
-        }
-
-        /* A Unidade Pequena */
-        .time-unit {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            display: block;
-            margin-top: 3px;
-        }
-
+        .close-letter { color: var(--spotify-green); font-weight: bold; margin-bottom: 20px; display: block; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <audio id="meuAudio">
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="intro-screen">
-        <div class="intro-text">
-            Lucas separou um presente especial!<br>
-            Um momento único feito com muito carinho.
-        </div>
+        <div class="intro-text">Lucas separou um presente especial!<br>Um momento único feito com muito carinho.</div>
         <button class="btn-start" onclick="mostrarPresente()">Ver Presente</button>
     </div>
 
@@ -165,133 +98,111 @@
         <div class="top-phrase">Eu te amo mais que tudo! ❤️</div>
 
         <div class="main-card">
-            <img src="imagens/imagens/capa.JPEG" class="cover-art" alt="Nossa Foto do Player">
-            
+            <img src="imagens/imagens/capa.JPEG" class="cover-art">
             <div class="song-info">
                 <div>
-                    <p class="song-title">Sonha Comigo</p> 
-                    <p class="artist-name">Zé Neto e Cristiano</p>
+                    <p style="font-size: 1.4rem; font-weight: bold; margin:0;">Best Part (feat. H.E.R.)</p> 
+                    <p style="color: var(--text-sub); margin:5px 0;">Daniel Caesar, H.E.R.</p>
                 </div>
-                <i class="fa-solid fa-circle-check" style="color: #1ed760; font-size: 1.5rem;"></i>
+                <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.5rem;"></i>
             </div>
 
-            <div class="progress-bar">
-                <div class="progress-current"></div>
-            </div>
-            <div class="time-info">
-                <span>1:12</span>
-                <span>-3:65</span>
-            </div>
-
+            <div class="progress-bar"><div id="progress" class="progress-current"></div></div>
             <div class="controls">
-                <i class="fa-solid fa-shuffle" style="color: var(--text-sub); font-size: 1.2rem;"></i>
+                <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
                 <i class="fa-solid fa-backward-step"></i>
-                <i class="fa-solid fa-circle-play play-btn"></i>
+                <i id="playIcon" class="fa-solid fa-circle-play play-btn" onclick="togglePlay()"></i>
                 <i class="fa-solid fa-forward-step"></i>
-                <i class="fa-solid fa-repeat" style="color: var(--text-sub); font-size: 1.2rem;"></i>
+                <i class="fa-solid fa-repeat" style="color: var(--text-sub)"></i>
             </div>
 
             <div class="about-section">
                 <span class="sobre-o-casal-title">Sobre o casal</span>
-                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-big-image" alt="Nossa Foto do Contador">
-                
+                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-big-image">
                 <div class="about-titles">
-                    <span class="couple-names">Lucas e Mariana</span>
-                    <span class="since-text">juntos desde 2025</span>
+                    <span style="font-size: 1.8rem; font-weight: bold; display: block;">Lucas e Mariana</span>
+                    <span style="color: var(--text-sub); font-size: 0.9rem;">juntos desde 2025</span>
                 </div>
-
                 <div class="counter-grid">
-                    <div class="counter-item">
-                        <span id="years" class="time-value">0</span>
-                        <span class="time-unit">Anos</span>
-                    </div>
-                    <div class="counter-item">
-                        <span id="months" class="time-value">0</span>
-                        <span class="time-unit">Meses</span>
-                    </div>
-                    <div class="counter-item">
-                        <span id="days" class="time-value">0</span>
-                        <span class="time-unit">Dias</span>
-                    </div>
-                    <div class="counter-item">
-                        <span id="hours" class="time-value">0</span>
-                        <span class="time-unit">Horas</span>
-                    </div>
-                    <div class="counter-item">
-                        <span id="minutes" class="time-value">0</span>
-                        <span class="time-unit">Minutos</span>
-                    </div>
-                    <div class="counter-item">
-                        <span id="seconds" class="time-value">0</span>
-                        <span class="time-unit">Segundos</span>
-                    </div>
+                    <div class="counter-item"><span id="years" class="time-value">0</span><span class="time-unit">Anos</span></div>
+                    <div class="counter-item"><span id="months" class="time-value">0</span><span class="time-unit">Meses</span></div>
+                    <div class="counter-item"><span id="days" class="time-value">0</span><span class="time-unit">Dias</span></div>
+                    <div class="counter-item"><span id="hours" class="time-value">0</span><span class="time-unit">Hrs</span></div>
+                    <div class="counter-item"><span id="minutes" class="time-value">0</span><span class="time-unit">Min</span></div>
+                    <div class="counter-item"><span id="seconds" class="time-value">0</span><span class="time-unit">Seg</span></div>
                 </div>
             </div>
+
+            <div class="top-moments">
+                <h3 style="margin-bottom: 20px;">Seus momentos mais ouvidos:</h3>
+                <div class="moment-item"><span class="moment-number">1</span><span class="moment-text">Nosso primeiro "Eu te amo"</span></div>
+                <div class="moment-item"><span class="moment-number">2</span><span class="moment-text">Aquela viagem inesquecível</span></div>
+                <div class="moment-item"><span class="moment-number">3</span><span class="moment-text">Nossa primeira foto juntos</span></div>
+                <div class="moment-item"><span class="moment-number">4</span><span class="moment-text">O dia em que decidimos namorar</span></div>
+                <div class="moment-item"><span class="moment-number">5</span><span class="moment-text">Cada risada boba no sofá</span></div>
+            </div>
+
+            <button class="btn-letter" onclick="toggleLetter(true)">Ler minha carta para você ✉️</button>
         </div>
     </div>
 
+    <div id="letter-modal">
+        <span class="close-letter" onclick="toggleLetter(false)">← Voltar para a música</span>
+        <h1 style="color: var(--spotify-green);">Minha Mariana,</h1>
+        <p style="font-size: 1.2rem; line-height: 1.6; color: #eee;">
+            [Escreva aqui sua declaração real] <br><br>
+            Você é a "melhor parte" de cada dia meu...
+        </p>
+    </div>
+
     <script>
-        // Função para mostrar o presente e iniciar o contador
+        const audio = document.getElementById('meuAudio');
+        const playIcon = document.getElementById('playIcon');
+        const progress = document.getElementById('progress');
+
         function mostrarPresente() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
-            window.scrollTo(0, 0);
-            
-            // Inicia o contador
+            togglePlay();
             updateTimeSince();
-            // Atualiza a cada segundo
             setInterval(updateTimeSince, 1000);
         }
 
-        // --- LÓGICA DE TEMPO ---
-        // DEFINA A DATA DE INÍCIO AQUI (Ano, Mês-1, Dia, Hora, Minuto, Segundo)
-        // Nota: JavaScript conta meses de 0 a 11. Abril é mês 3.
-        const startDate = new Date(2025, 3, 17, 0, 0, 0); 
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
+            } else {
+                audio.pause();
+                playIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
+            }
+        }
 
+        audio.ontimeupdate = function() {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progress.style.width = pct + "%";
+            }
+        };
+
+        function toggleLetter(show) {
+            document.getElementById('letter-modal').style.display = show ? 'block' : 'none';
+        }
+
+        const startDate = new Date(2025, 3, 17, 0, 0, 0); 
         function updateTimeSince() {
             const now = new Date();
-            let totalMilliseconds = now - startDate;
-
-            if (totalMilliseconds < 0) {
-                // Se a data de início ainda não chegou (segurança)
-                document.querySelectorAll('.time-value').forEach(el => el.innerHTML = "0");
-                return;
-            }
-
-            // Cálculo preciso de Anos, Meses e Dias usando o calendário real
             let years = now.getFullYear() - startDate.getFullYear();
             let months = now.getMonth() - startDate.getMonth();
             let days = now.getDate() - startDate.getDate();
-
-            // Ajuste para dias negativos
-            if (days < 0) {
-                months--;
-                // Pega o último dia do mês anterior
-                let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-                days += prevMonth.getDate();
-            }
-
-            // Ajuste para meses negativos
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
-            // Cálculo das horas, minutos e segundos restantes
-            // (Usamos o totalMilliseconds para garantir precisão absoluta nas horas/min/seg)
-            const remainingMiliseconds = totalMilliseconds % (1000 * 60 * 60 * 24);
-            const totalSeconds = Math.floor(remainingMiliseconds / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            // Atualiza os elementos na tela
+            if (days < 0) { months--; let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
+            if (months < 0) { years--; months += 12; }
             document.getElementById('years').innerHTML = years;
             document.getElementById('months').innerHTML = months;
             document.getElementById('days').innerHTML = days;
-            document.getElementById('hours').innerHTML = hours;
-            document.getElementById('minutes').innerHTML = minutes;
-            document.getElementById('seconds').innerHTML = seconds;
+            document.getElementById('hours').innerHTML = now.getHours();
+            document.getElementById('minutes').innerHTML = now.getMinutes();
+            document.getElementById('seconds').innerHTML = now.getSeconds();
         }
     </script>
 </body>
