@@ -70,41 +70,48 @@
             max-width: 350px;
             margin-left: auto;
             margin-right: auto;
-            text-align: left; /* Alinhamento geral à esquerda */
+            position: relative; /* Importante para o texto sobre a foto */
         }
 
-        /* Foto Maior na Topo da Seção */
+        /* Foto Grande na Topo da Seção */
         .couple-big-image {
             width: 100%;
             height: auto;
-            max-height: 250px; /* Limita a altura para não ficar gigante no celular */
             object-fit: cover;
             display: block;
         }
 
-        /* Títulos e Nomes */
-        .about-titles {
-            padding: 20px 20px 10px 20px;
-        }
+        /* Texto 'Sobre o casal' no Canto Esquerdo da Foto */
         .sobre-o-casal-title {
-            color: var(--text-sub);
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #fff;
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 1.5px;
+            font-weight: bold;
             margin: 0;
-            display: block;
+            z-index: 1; /* Garante que fique sobre a imagem */
+            pointer-events: none; /* Evita que o texto atrapalhe o clique na foto */
+        }
+
+        /* Títulos e Nomes (em baixo da foto) */
+        .about-titles {
+            padding: 20px 20px 10px 20px;
+            text-align: left; /* Alinhamento à esquerda */
         }
         .couple-names {
             color: var(--text-main);
             font-size: 1.8rem;
             font-weight: bold;
-            margin: 5px 0;
+            margin: 0;
             display: block;
         }
         .since-text {
             color: var(--text-sub);
             font-size: 0.9rem;
-            margin: 0;
+            margin: 5px 0;
             display: block;
         }
 
@@ -185,10 +192,10 @@
             </div>
 
             <div class="about-section">
+                <span class="sobre-o-casal-title">Sobre o casal</span>
                 <img src="imagens/imagens/casal_perfil.JPEG" class="couple-big-image" alt="Nossa Foto do Contador">
                 
                 <div class="about-titles">
-                    <span class="sobre-o-casal-title">Sobre o casal</span>
                     <span class="couple-names">Lucas e Mariana</span>
                     <span class="since-text">juntos desde 2025</span>
                 </div>
@@ -256,6 +263,7 @@
             let months = now.getMonth() - startDate.getMonth();
             let days = now.getDate() - startDate.getDate();
 
+            // Ajuste para dias negativos
             if (days < 0) {
                 months--;
                 // Pega o último dia do mês anterior
@@ -263,16 +271,19 @@
                 days += prevMonth.getDate();
             }
 
+            // Ajuste para meses negativos
             if (months < 0) {
                 years--;
                 months += 12;
             }
 
             // Cálculo das horas, minutos e segundos restantes
-            const totalSeconds = Math.floor(totalMilliseconds / 1000);
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
+            // (Usamos o totalMilliseconds para garantir precisão absoluta nas horas/min/seg)
+            const remainingMiliseconds = totalMilliseconds % (1000 * 60 * 60 * 24);
+            const totalSeconds = Math.floor(remainingMiliseconds / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
 
             // Atualiza os elementos na tela
             document.getElementById('years').innerHTML = years;
