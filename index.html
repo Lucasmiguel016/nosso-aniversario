@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify - Nosso Momento</title>
+    <title>Spotify – Nosso Momento</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -21,23 +21,27 @@
             background-color: var(--spotify-bg);
             color: var(--text-main);
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         audio { display: none; }
 
+        /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
             padding: 20px; text-align: center;
+            position: fixed; width: 100%; top: 0; z-index: 100;
         }
 
         .btn-start { 
             background-color: #fff; color: #000; padding: 18px 45px; 
             border-radius: 35px; font-weight: bold; text-transform: uppercase; 
-            border: none; cursor: pointer; font-size: 1rem;
+            border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        /* TELA DO PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -50,11 +54,15 @@
 
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
         
+        /* BARRA DE PROGRESSO */
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
-        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
+        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; transition: width 0.1s linear; }
+        
+        /* CONTROLES */
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
-        .play-btn { font-size: 4rem; cursor: pointer; }
+        .play-btn { font-size: 4rem; cursor: pointer; transition: transform 0.2s; }
 
+        /* SEÇÃO SOBRE O CASAL */
         .about-section {
             background-color: var(--spotify-black);
             border-radius: 20px; margin-top: 40px; overflow: hidden;
@@ -62,7 +70,7 @@
         }
         .couple-img { 
             width: 100%; height: 320px; object-fit: cover; 
-            object-position: center 20%; display: block; 
+            object-position: center 25%; display: block; 
         }
         .sobre-title { 
             position: absolute; top: 20px; left: 20px; color: #fff; 
@@ -81,6 +89,12 @@
         .time-val { font-size: 1.8rem; font-weight: bold; display: block; }
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; }
 
+        /* TOP MOMENTOS */
+        .top-moments { text-align: left; margin-top: 45px; padding: 0 10px; }
+        .moment { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
+        .m-num { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; }
+
+        /* CARTA */
         .btn-letter {
             background: var(--spotify-green); color: black; border: none;
             padding: 18px; width: 100%; border-radius: 12px; font-weight: bold;
@@ -108,7 +122,7 @@
         <p style="font-weight: 500; text-align: center;">Eu te amo mais que tudo! ❤️</p>
 
         <div class="main-card">
-            <img src="imagens/imagens/capa.JPEG" class="cover-art">
+            <img src="imagens/imagens/capa.JPEG" class="cover-art" alt="Capa">
             
             <div class="song-info">
                 <div>
@@ -130,11 +144,11 @@
 
             <div class="about-section">
                 <span class="sobre-title">Sobre o casal</span>
-                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img">
+                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img" alt="Foto Casal">
                 
                 <div style="padding: 20px;">
                     <h2 style="margin:0;">Lucas e Mariana</h2>
-                    <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
+                    <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 17/04/2025</p>
                 </div>
 
                 <div class="counter-grid">
@@ -147,6 +161,13 @@
                 </div>
             </div>
 
+            <div class="top-moments">
+                <h3 style="margin-bottom: 25px;">Seus momentos mais ouvidos:</h3>
+                <div class="moment"><span class="m-num">1</span><span>Nosso primeiro "Eu te amo"</span></div>
+                <div class="moment"><span class="m-num">2</span><span>Aquela viagem inesquecível</span></div>
+                <div class="moment"><span class="m-num">3</span><span>Nossa primeira foto juntos</span></div>
+            </div>
+
             <button class="btn-letter" onclick="verCarta(true)">Ler minha carta para você ✉️</button>
         </div>
     </div>
@@ -155,10 +176,11 @@
         <p onclick="verCarta(false)" style="color: var(--spotify-green); font-weight: bold; cursor: pointer;">← Voltar</p>
         <h1 style="color: var(--spotify-green); margin-top: 30px;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
-Há um ano, eu não imaginava que seria tão feliz ao teu lado.
-És a "melhor parte" de todos os meus dias.
+Há um ano, eu não imaginava que seria tão feliz. 
+Você mudou minha rotina, meus planos e meu coração.
 
-Te amo para sempre! ❤️
+Obrigado por ser minha "Best Part" todos os dias. 
+Te amo daqui até a eternidade! ❤️
         </p>
     </div>
 
@@ -167,23 +189,20 @@ Te amo para sempre! ❤️
         const btnIcon = document.getElementById('playBtn');
         const barra = document.getElementById('progress');
 
+        // Função que inicia o site com interação do usuário
         function iniciarTudo() {
-            // 1. Mostrar a tela do player
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
+            window.scrollTo(0, 0);
             
-            // 2. Tentar tocar a música (vários métodos para garantir)
-            som.load(); // Força o recarregamento do ficheiro
-            const playPromise = som.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-                }).catch(error => {
-                    console.log("Autoplay bloqueado. A música tocará no próximo clique.");
-                });
-            }
+            // Tentativa robusta de Play
+            som.play().then(() => {
+                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
+            }).catch(e => {
+                console.log("Play automático bloqueado. Clique no ícone de play.");
+            });
 
+            // Inicia contador
             cronometro();
             setInterval(cronometro, 1000);
         }
@@ -209,14 +228,22 @@ Te amo para sempre! ❤️
             document.getElementById('letter-modal').style.display = s ? 'block' : 'none';
         }
 
-        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); // 17 de Abril de 2025
+        // Lógica do Cronômetro: 17 de Abril de 2025
+        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
+
         function cronometro() {
             const agora = new Date();
             let anos = agora.getFullYear() - dataInicio.getFullYear();
             let meses = agora.getMonth() - dataInicio.getMonth();
             let dias = agora.getDate() - dataInicio.getDate();
-            if (dias < 0) { meses--; let ant = new Date(agora.getFullYear(), agora.getMonth(), 0); dias += ant.getDate(); }
+
+            if (dias < 0) { 
+                meses--; 
+                let ant = new Date(agora.getFullYear(), agora.getMonth(), 0); 
+                dias += ant.getDate(); 
+            }
             if (meses < 0) { anos--; meses += 12; }
+
             document.getElementById('y').innerText = anos;
             document.getElementById('m').innerText = meses;
             document.getElementById('d').innerText = dias;
