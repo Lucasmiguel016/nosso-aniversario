@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg: #8b0000;
+            --spotify-bg: #8b0000; /* Vinho */
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
@@ -21,7 +21,6 @@
             background-color: var(--spotify-bg);
             color: var(--text-main);
             overflow-x: hidden;
-            text-align: center;
         }
 
         /* TELA INICIAL */
@@ -30,14 +29,17 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg);
             padding: 20px;
+            text-align: center;
         }
 
+        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
         .btn-start { background-color: #fff; color: #000; padding: 15px 40px; border-radius: 30px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; }
 
         /* TELA DO PLAYER */
-        #player-screen { display: none; padding: 20px; animation: fadeIn 1s ease-in; }
+        #player-screen { display: none; padding: 20px; animation: fadeIn 1s ease-in; text-align: center; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; }
         .main-card { width: 100%; max-width: 350px; margin: 0 auto; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 8px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
@@ -55,21 +57,31 @@
             padding-bottom: 20px; width: 100%; max-width: 350px; margin-inline: auto;
             position: relative; text-align: left;
         }
-        .couple-big-image { width: 100%; height: auto; display: block; }
-        .sobre-o-casal-title { position: absolute; top: 15px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; font-weight: bold; }
+        .couple-big-image { 
+            width: 100%; 
+            height: auto; 
+            max-height: 300px; /* Limita altura para não cortar você */
+            object-fit: contain; /* Ajustado para não cortar as laterais */
+            background-color: #1a1a1a;
+            display: block; 
+        }
+        .sobre-o-casal-title { 
+            position: absolute; top: 15px; left: 20px; color: #fff; 
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; 
+            font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
         .about-titles { padding: 20px; }
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 12px; padding: 15px 5px; text-align: center; }
-        .time-value { font-size: 1.8rem; font-weight: bold; display: block; }
+        .time-value { font-size: 1.6rem; font-weight: bold; display: block; }
         .time-unit { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; }
 
         /* TOP 5 MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
         .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
-        .moment-text { font-size: 1rem; }
 
-        /* CARTA */
+        /* BOTÃO DA CARTA */
         .btn-letter {
             background: var(--spotify-green); color: black; border: none;
             padding: 15px; width: 100%; border-radius: 10px; font-weight: bold;
@@ -99,6 +111,7 @@
 
         <div class="main-card">
             <img src="imagens/imagens/capa.JPEG" class="cover-art">
+            
             <div class="song-info">
                 <div>
                     <p style="font-size: 1.4rem; font-weight: bold; margin:0;">Best Part (feat. H.E.R.)</p> 
@@ -108,6 +121,7 @@
             </div>
 
             <div class="progress-bar"><div id="progress" class="progress-current"></div></div>
+            
             <div class="controls">
                 <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
                 <i class="fa-solid fa-backward-step"></i>
@@ -119,10 +133,12 @@
             <div class="about-section">
                 <span class="sobre-o-casal-title">Sobre o casal</span>
                 <img src="imagens/imagens/casal_perfil.JPEG" class="couple-big-image">
+                
                 <div class="about-titles">
                     <span style="font-size: 1.8rem; font-weight: bold; display: block;">Lucas e Mariana</span>
                     <span style="color: var(--text-sub); font-size: 0.9rem;">juntos desde 2025</span>
                 </div>
+
                 <div class="counter-grid">
                     <div class="counter-item"><span id="years" class="time-value">0</span><span class="time-unit">Anos</span></div>
                     <div class="counter-item"><span id="months" class="time-value">0</span><span class="time-unit">Meses</span></div>
@@ -134,7 +150,7 @@
             </div>
 
             <div class="top-moments">
-                <h3 style="margin-bottom: 20px;">Seus momentos mais ouvidos:</h3>
+                <h3 style="margin-bottom: 20px; text-align: left;">Seus momentos mais ouvidos:</h3>
                 <div class="moment-item"><span class="moment-number">1</span><span class="moment-text">Nosso primeiro "Eu te amo"</span></div>
                 <div class="moment-item"><span class="moment-number">2</span><span class="moment-text">Aquela viagem inesquecível</span></div>
                 <div class="moment-item"><span class="moment-number">3</span><span class="moment-text">Nossa primeira foto juntos</span></div>
@@ -149,9 +165,12 @@
     <div id="letter-modal">
         <span class="close-letter" onclick="toggleLetter(false)">← Voltar para a música</span>
         <h1 style="color: var(--spotify-green);">Minha Mariana,</h1>
-        <p style="font-size: 1.2rem; line-height: 1.6; color: #eee;">
-            [Escreva aqui sua declaração real] <br><br>
-            Você é a "melhor parte" de cada dia meu...
+        <p id="texto-carta" style="font-size: 1.1rem; line-height: 1.6; color: #eee; white-space: pre-wrap;">
+Há um ano, eu não imaginava que seria tão feliz. 
+Você mudou minha rotina, meus planos e, principalmente, meu coração.
+
+Obrigado por ser minha "Best Part" todos os dias. 
+Te amo daqui até a eternidade!
         </p>
     </div>
 
@@ -163,7 +182,7 @@
         function mostrarPresente() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
-            togglePlay();
+            togglePlay(); // Começa a tocar a música
             updateTimeSince();
             setInterval(updateTimeSince, 1000);
         }
@@ -189,14 +208,21 @@
             document.getElementById('letter-modal').style.display = show ? 'block' : 'none';
         }
 
+        // Lógica do Contador (17 de Abril de 2025)
         const startDate = new Date(2025, 3, 17, 0, 0, 0); 
         function updateTimeSince() {
             const now = new Date();
             let years = now.getFullYear() - startDate.getFullYear();
             let months = now.getMonth() - startDate.getMonth();
             let days = now.getDate() - startDate.getDate();
-            if (days < 0) { months--; let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
+            
+            if (days < 0) { 
+                months--; 
+                let prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); 
+                days += prevMonth.getDate(); 
+            }
             if (months < 0) { years--; months += 12; }
+            
             document.getElementById('years').innerHTML = years;
             document.getElementById('months').innerHTML = months;
             document.getElementById('days').innerHTML = days;
