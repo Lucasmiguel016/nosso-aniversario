@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg-upper: #8b0000; /* Vinho das referências anteriores */
+            --spotify-bg-upper: #8b0000; 
             --spotify-bg-lower: #000000; 
-            --spotify-green: #1ed760; /* Verde Spotify */
+            --spotify-green: #1ed760; 
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
@@ -27,19 +27,16 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* =========================================
-           TELA DE INTRODUÇÃO (VISUAL PRETO E VERDE)
-           ========================================= */
+        /* TELA DE INTRODUÇÃO (PRETO E VERDE) */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-color: #000000; /* FUNDO PRETO */
+            background-color: #000000; 
             padding: 20px; text-align: center;
             position: fixed; width: 100%; top: 0; z-index: 100;
             box-sizing: border-box;
         }
 
-        /* FRASE 1: Lucas separou um... (GRANDE) */
         .intro-title { 
             font-size: clamp(1.8rem, 8vw, 2.5rem);
             font-weight: 800; 
@@ -50,7 +47,6 @@
             letter-spacing: -1px;
         }
 
-        /* FRASE 2: Um momento único... (MENOR) */
         .intro-subtitle {
             font-size: 1rem;
             font-weight: 400;
@@ -60,10 +56,8 @@
             line-height: 1.4;
         }
 
-        /* PALAVRA PRESENTE EM VERDE */
         .highlight-green { color: var(--spotify-green); }
 
-        /* BOTÃO VERDE COM FONTE PRETA */
         .btn-start { 
             background-color: var(--spotify-green); 
             color: #000000; 
@@ -73,13 +67,9 @@
             text-transform: uppercase; 
             border: none; cursor: pointer; 
             font-size: 0.9rem;
-            transition: transform 0.2s;
         }
-        .btn-start:active { transform: scale(0.95); }
 
-        /* =========================================
-           ESTILOS DO PLAYER (RESTANTE DO SITE)
-           ========================================= */
+        /* PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -101,7 +91,7 @@
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
         .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
 
-        /* TOP 3 */
+        /* MOMENTOS ATUALIZADOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
@@ -179,9 +169,10 @@
 
             <div class="top-moments">
                 <h3 style="margin-bottom: 20px; font-weight: 800;">Nossos momentos mais ouvidos:</h3>
-                <div class="moment-item"><span class="moment-number">1</span><span>Nosso primeiro "Eu te amo"</span></div>
-                <div class="moment-item"><span class="moment-number">2</span><span>Aquela viagem inesquecível</span></div>
-                <div class="moment-item"><span class="moment-number">3</span><span>Nossa primeira foto juntos</span></div>
+                <div class="moment-item"><span class="moment-number">1</span><span>Eu te amo</span></div>
+                <div class="moment-item"><span class="moment-number">2</span><span>Quer ir no shopping ?</span></div>
+                <div class="moment-item"><span class="moment-number">3</span><span>Vamos comer poke ?</span></div>
+                <div class="moment-item"><span class="moment-number">4</span><span>Você tá tentando me derrubar ?</span></div>
             </div>
 
             <div class="message-card">
@@ -228,7 +219,7 @@ Te amo para sempre! ❤️
             window.scrollTo(0, 0);
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Play aguardando interação..."));
+            });
 
             cronometro();
             setInterval(cronometro, 1000);
