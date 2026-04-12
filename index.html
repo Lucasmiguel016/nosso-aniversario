@@ -4,39 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify – Nosso Momento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* =========================================
-               AQUI ESTÃO AS CORES DEFINITIVAS
-               ========================================= */
-            --spotify-bg-upper: #8b0000; /* Vinho Profundo Magenta */
-            --spotify-bg-lower: #000000; /* Preto Absoluto */
-            
+            --spotify-bg-upper: #8b0000; /* Vinho Original */
+            --spotify-bg-lower: #000000; /* Preto */
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
             --spotify-green: #1ed760;
-            --counter-box-bg: rgba(255, 255, 255, 0.1); /* Fundo suave das caixinhas */
+            --counter-box-bg: rgba(255, 255, 255, 0.1);
         }
 
         body, html {
             margin: 0; padding: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            
-            /* =========================================
-               DEGRADÊ NATURAL: COMEÇA VINHO EM CIMA E "DERRETE" PARA PRETO
-               Isso evita a divisão "quadrada" que você mencionou.
-               ========================================= */
-            background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 50%, var(--spotify-bg-lower) 100%);
-            background-attachment: fixed; /* Mantém o degradê fixo enquanto rola a página */
-            
+            /* Fonte Montserrat que imita a Circular do Spotify */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 60%, var(--spotify-bg-lower) 100%);
+            background-attachment: fixed;
             color: var(--text-main);
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent; /* Evita o realce cinza no clique */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* TELA DE INTRODUÇÃO (Também com degradê para combinar) */
+        /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -45,72 +37,61 @@
             position: fixed; width: 100%; top: 0; z-index: 100;
         }
 
-        .intro-text { font-size: 1.5rem; font-weight: bold; margin-bottom: 30px; line-height: 1.4; }
-        .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: bold; text-transform: uppercase; border: none; cursor: pointer; font-size: 1rem; }
+        .intro-text { font-size: 1.5rem; font-weight: 700; margin-bottom: 30px; line-height: 1.4; }
+        .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; }
 
-        /* TELA DO PLAYER */
+        /* PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 500; text-align: center; }
+        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 700; text-align: center; letter-spacing: -0.5px; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
-        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; transition: width 0.1s linear; }
+        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* =========================================
-           SEÇÃO SOBRE O CASAL (AGORA COM FUNDO FLUIDO E "NATURAL")
-           Removemos as bordas e o fundo duro para integrar ao degradê da página.
-           ========================================= */
+        /* SEÇÃO SOBRE O CASAL (Fundo Natural) */
         .about-section {
-            background-color: transparent; /* Remove o fundo preto duro */
+            background-color: transparent;
             margin-top: 40px; overflow: hidden;
             padding-bottom: 25px; position: relative; text-align: left;
         }
-        /* FOTO DO CASAL: Com margem para "respirar" no fundo fluido */
-        .couple-img { 
-            width: 100%; height: 320px; 
-            object-fit: cover; object-position: center 25%; 
-            display: block; 
-            margin-bottom: 20px;
-        }
-        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
+        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
-        .time-val { font-size: 1.8rem; font-weight: bold; display: block; }
-        .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; }
+        .time-val { font-size: 1.8rem; font-weight: 700; display: block; }
+        .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 400; }
 
-        /* TOP MOMENTOS */
+        /* TOP 3 */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
-        .moment-number { font-size: 1.5rem; font-weight: bold; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
+        .moment-number { font-size: 1.5rem; font-weight: 700; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* MENSAGEM E CONQUISTAS (Integrados ao degradê) */
-        .message-and-achievements { margin-top: 35px; text-align: left; }
-        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin-bottom: 25px; }
-        .message-card-title { font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 10px; }
-        .message-card-text { font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
-        .btn-show-message { background-color: #fff; color: #000; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
-        
-        /* Conquistas (mantido o estilo boxy para os ícones, mas sem fundo de seção duro) */
-        .achievements-section { background-color: transparent; padding: 0 10px; }
-        .achievements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .achievements-title { color: var(--text-sub); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .achievements-counter { color: var(--text-sub); font-size: 0.9rem; }
-        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border-width: 2px; border-style: solid; }
-        .trophy-item { border-color: #fbc02d; color: #fbc02d; }
-        .crown-item { border-color: #fbc02d; color: #fbc02d; }
+        /* MENSAGEM ESPECIAL (Fonte Spotify) */
+        .message-card { 
+            background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .message-card-title { font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 12px; }
+        .message-card-text { font-size: 1rem; line-height: 1.5; margin-bottom: 20px; font-weight: 400; }
+        .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; }
+
+        /* CONQUISTAS */
+        .achievements-section { background-color: transparent; padding: 0 10px; text-align: left; }
+        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
+        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
+        .trophy-item, .crown-item { border-color: #fbc02d; color: #fbc02d; }
         .party-item { border-color: #7e57c2; color: #7e57c2; }
         .fire-item { border-color: #2196f3; color: #2196f3; }
 
-        /* MODAL DA CARTA (MANTIDO) */
+        /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
-        .close-btn { color: var(--spotify-green); font-weight: bold; cursor: pointer; margin-bottom: 20px; display: block; }
+        .close-btn { color: var(--spotify-green); font-weight: 700; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
 </head>
 <body>
@@ -126,12 +107,11 @@
         <p class="top-phrase">Eu te amo mais que tudo! ❤️</p>
 
         <div class="main-card">
-            
             <img src="imagens/imagens/capa.JPEG" class="cover-art">
             
             <div class="song-info">
                 <div>
-                    <h2 style="margin:0; font-size: 1.5rem;">Best Part (feat. H.E.R.)</h2>
+                    <h2 style="margin:0; font-size: 1.5rem; font-weight: 700;">Best Part (feat. H.E.R.)</h2>
                     <p style="color: var(--text-sub); margin:5px 0;">Daniel Caesar, H.E.R.</p>
                 </div>
                 <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.6rem;"></i>
@@ -152,7 +132,7 @@
                 <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img">
                 
                 <div style="padding: 0 20px;">
-                    <h2 style="margin:0;">Lucas e Mariana</h2>
+                    <h2 style="margin:0; font-weight: 700;">Lucas e Mariana</h2>
                     <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
                 </div>
 
@@ -167,32 +147,28 @@
             </div>
 
             <div class="top-moments">
-                <h3 style="margin-bottom: 20px;">Nossos momentos mais ouvidos:</h3>
-                <div class="moment-item"><span class="moment-number">1</span><span>Nosso primeiro "Eu te amo"</span></div>
-                <div class="moment-item"><span class="moment-number">2</span><span>Aquela viagem inesquecível</span></div>
-                <div class="moment-item"><span class="moment-number">3</span><span>Nossa primeira foto juntos</span></div>
+                <h3 style="margin-bottom: 20px; font-weight: 700;">Nossos momentos mais ouvidos:</h3>
+                <div class="moment-item"><span class="moment-number">1</span><span style="font-weight: 400;">Nosso primeiro "Eu te amo"</span></div>
+                <div class="moment-item"><span class="moment-number">2</span><span style="font-weight: 400;">Aquela viagem inesquecível</span></div>
+                <div class="moment-item"><span class="moment-number">3</span><span style="font-weight: 400;">Nossa primeira foto juntos</span></div>
             </div>
 
-            <div class="message-and-achievements">
-                <div class="message-card">
-                    <span class="message-card-title">Mensagem especial</span>
-                    <p class="message-card-text">
-                        Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨. Mais do que você pode imaginar...
-                    </p>
-                    <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
-                </div>
+            <div class="message-card">
+                <span class="message-card-title">Mensagem especial</span>
+                <p class="message-card-text">Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨.</p>
+                <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
+            </div>
 
-                <div class="achievements-section">
-                    <div class="achievements-header">
-                        <span class="achievements-title">Conquistas</span>
-                        <span class="achievements-counter">16/30</span>
-                    </div>
-                    <div class="achievements-grid">
-                        <div class="achievement-item trophy-item"><i class="fa-solid fa-trophy"></i></div>
-                        <div class="achievement-item crown-item"><i class="fa-solid fa-crown"></i></div>
-                        <div class="achievement-item party-item"><i class="fa-solid fa-party-horn"></i></div>
-                        <div class="achievement-item fire-item"><i class="fa-solid fa-fire"></i></div>
-                    </div>
+            <div class="achievements-section">
+                <div style="display: flex; justify-content: space-between; color: var(--text-sub); font-size: 0.8rem; font-weight: 700;">
+                    <span>CONQUISTAS</span>
+                    <span>16/30</span>
+                </div>
+                <div class="achievements-grid">
+                    <div class="achievement-item trophy-item"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="achievement-item crown-item"><i class="fa-solid fa-crown"></i></div>
+                    <div class="achievement-item party-item"><i class="fa-solid fa-gift"></i></div>
+                    <div class="achievement-item fire-item"><i class="fa-solid fa-fire"></i></div>
                 </div>
             </div>
 
@@ -201,7 +177,7 @@
 
     <div id="letter-modal">
         <span class="close-btn" onclick="verCarta(false)">← Voltar para a música</span>
-        <h1 style="color: var(--spotify-green);">Minha Mariana,</h1>
+        <h1 style="color: var(--spotify-green); font-weight: 700;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
 Há um ano, eu não imaginava que seria tão feliz ao seu lado.
 Você é a "melhor parte" de todos os meus dias.
@@ -219,11 +195,9 @@ Te amo para sempre! ❤️
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
-
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Play automático impedido pelo navegador."));
-
+            });
             cronometro();
             setInterval(cronometro, 1000);
         }
