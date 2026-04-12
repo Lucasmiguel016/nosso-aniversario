@@ -20,6 +20,7 @@
         body, html {
             margin: 0; padding: 0;
             font-family: 'Montserrat', sans-serif;
+            /* Degradê suave que começa vinho e vira preto */
             background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 60%, var(--spotify-bg-lower) 100%);
             background-attachment: fixed;
             color: var(--text-main);
@@ -60,7 +61,7 @@
 
         .btn-start { 
             background-color: var(--spotify-green); 
-            color: #000000; /* FONTE PRETA NO BOTÃO VERDE */
+            color: #000000; 
             padding: 16px 40px; 
             border-radius: 35px; 
             font-weight: 800; 
@@ -92,7 +93,7 @@
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
         .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
 
-        /* TOP 4 MOMENTOS ATUALIZADOS */
+        /* TOP 4 MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
@@ -104,7 +105,7 @@
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
         /* =========================================
-           CONQUISTAS DO CASAL (LINHA DO TEMPO)
+           CONQUISTAS DO CASAL (INVERTIDO: ANEL > AVIÃO)
            ========================================= */
         .achievements-section { background-color: transparent; padding: 0 10px; text-align: left; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
@@ -115,13 +116,11 @@
             transition: 0.3s;
         }
         
-        /* Cores dos ícones */
-        .key-item { border-color: #1ed760; color: #1ed760; } /* Verde do Apê */
+        .key-item { border-color: #1ed760; color: #1ed760; } /* Verde Apê */
+        .ring-item { border-color: #fbc02d; color: #fbc02d; } /* Ouro Anel */
         .plane-item { border-color: #2196f3; color: #2196f3; } /* Azul Viagem */
-        .ring-item { border-color: #fbc02d; color: #fbc02d; } /* Ouro Pedido */
         .wedding-item { border-color: #ff5252; color: #ff5252; } /* Vermelho Casório */
 
-        /* ESTILO BLOQUEADO (LOCKED) */
         .locked {
             opacity: 0.15;
             filter: grayscale(100%);
@@ -209,11 +208,11 @@
                     <div class="achievement-item key-item">
                         <i class="fa-solid fa-key"></i>
                     </div>
-                    <div class="achievement-item plane-item locked">
-                        <i class="fa-solid fa-plane"></i>
-                    </div>
                     <div class="achievement-item ring-item locked">
                         <i class="fa-solid fa-ring"></i>
+                    </div>
+                    <div class="achievement-item plane-item locked">
+                        <i class="fa-solid fa-plane"></i>
                     </div>
                     <div class="achievement-item wedding-item locked">
                         <i class="fa-solid fa-house-chimney-heart"></i>
@@ -244,11 +243,9 @@ Te amo para sempre! ❤️
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
-            
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Aguardando play..."));
-
+            });
             cronometro();
             setInterval(cronometro, 1000);
         }
