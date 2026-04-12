@@ -8,60 +8,92 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg-upper: #8b0000; /* Vinho Profundo Magenta */
-            --spotify-bg-lower: #000000; /* Preto Absoluto */
-            
+            --spotify-bg-upper: #8b0000; /* Vinho Original */
+            --spotify-bg-lower: #000000; /* Preto */
+            --spotify-green: #1ed760; /* Verde Vibrante do Wrapped */
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
-            --spotify-green: #1ed760;
             --counter-box-bg: rgba(255, 255, 255, 0.1);
         }
 
         body, html {
             margin: 0; padding: 0;
             font-family: 'Montserrat', sans-serif;
-            /* Degradê suave que começa vinho e vira preto */
-            background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 60%, var(--spotify-bg-lower) 100%);
+            background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 55%, var(--spotify-bg-lower) 100%);
             background-attachment: fixed;
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* TELA DE INTRODUÇÃO */
+        audio { display: none; }
+
+        /* =========================================
+           TELA DE INTRODUÇÃO (VISUAL WRAPPED)
+           ========================================= */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8)), var(--spotify-bg-upper);
+            /* Fundo Verde Vibrante do Wrapped */
+            background-color: var(--spotify-green);
             padding: 20px; text-align: center;
             position: fixed; width: 100%; top: 0; z-index: 100;
+            box-sizing: border-box;
         }
 
-        .intro-text { font-size: 1.5rem; font-weight: 800; margin-bottom: 30px; line-height: 1.3; }
-        .btn-start { background-color: #fff; color: #000; padding: 18px 45px; border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; }
+        .intro-text { 
+            /* Tamanho adaptável para mobile (entre 1.2rem e 1.6rem) */
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            font-weight: 800; 
+            color: #fff; /* Texto branco no verde */
+            margin-bottom: 30px; 
+            line-height: 1.4; 
+            max-width: 90%; /* Garante que não toque nas bordas */
+            word-wrap: break-word; /* Evita que palavras longas cortem */
+        }
+        
+        /* Classe de destaque para a palavra "presente" */
+        .highlight { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); }
 
-        /* TELA DO PLAYER */
+        .btn-start { 
+            background-color: #fff; 
+            color: #000; 
+            padding: 18px 45px; 
+            border-radius: 35px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            border: none; cursor: pointer; 
+            font-size: 0.9rem;
+            /* DESTAQUE VERDE NO BOTÃO */
+            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.4);
+            transition: background-color 0.2s;
+        }
+        .btn-start:active { background-color: #e0e0e0; }
+
+        /* PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 1rem; margin: 20px 0; font-weight: 700; text-align: center; letter-spacing: -0.5px; }
+        .top-phrase { font-size: 0.95rem; margin: 20px 0; font-weight: 700; text-align: center; letter-spacing: -0.2px; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
+        
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
-        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; transition: width 0.1s linear; }
+        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
+        
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SEÇÃO SOBRE O CASAL (Fundo Natural) */
+        /* SOBRE O CASAL (Fundo Natural) */
         .about-section {
             background-color: transparent;
             margin-top: 40px; overflow: hidden;
             padding-bottom: 25px; position: relative; text-align: left;
         }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
-        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
@@ -73,22 +105,16 @@
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* =========================================
-           CARD MENSAGEM - ESTILO LETRAS DO SPOTIFY
-           ========================================= */
+        /* MENSAGEM ESPECIAL */
         .message-card { 
             background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         
-        /* AQUI ESTÁ O SEGREDO DA FONTE DE MÚSICA */
         .message-card-text { 
-            font-size: 1.5rem; /* Maior */
-            line-height: 1.1; /* Linhas mais juntas */
-            margin-bottom: 25px; 
-            font-weight: 800; /* Extra Bold */
-            letter-spacing: -0.8px; /* Letras mais próximas */
+            font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; 
+            font-weight: 800; letter-spacing: -0.8px; 
         }
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
 
@@ -110,8 +136,8 @@
     <audio id="musicaReal" src="track1.mp3" preload="auto"></audio>
 
     <div id="intro-screen">
-        <h2 class="intro-text">Lucas separou um presente especial!<br>Um momento único feito com muito carinho.</h2>
-        <button class="btn-start" onclick="iniciarTudo()">Ver Presente</button>
+        <h2 class="intro-text">Lucas separou um <span class="highlight">presente</span> especial! Um momento único feito com muito carinho.</h2>
+        <button class="btn-start" style="color: #1ed760;" onclick="iniciarTudo()">Ver Presente</button>
     </div>
 
     <div id="player-screen">
