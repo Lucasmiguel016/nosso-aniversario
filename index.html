@@ -27,7 +27,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 1. TELA DE INTRODUÇÃO */
+        /* =========================================
+           1. TELA DE INTRODUÇÃO
+           ========================================= */
         #intro-screen {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
@@ -42,15 +44,13 @@
         }
         .btn-start:active { transform: scale(0.95); }
 
-        /* 2. TELA DO PLAYER PRINCIPAL */
+        /* =========================================
+           2. TELA DO PLAYER PRINCIPAL
+           ========================================= */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { 
-            font-size: 0.95rem; margin: 20px auto; font-weight: 700; 
-            text-align: center; width: 100%; max-width: 380px; display: block;
-        }
-
+        .top-phrase { font-size: 0.95rem; margin: 20px auto; font-weight: 700; text-align: center; width: 100%; max-width: 380px; display: block; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
@@ -83,58 +83,46 @@
         .key-item { border-color: #1ed760; color: #1ed760; }
         .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* 3. GATILHO DE ROLAGEM */
+        /* =========================================
+           3. GATILHO DE ROLAGEM
+           ========================================= */
         #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
         .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
-        /* 4. TELA DE TRANSIÇÃO (DIAMANTE CORTINA) */
+        /* =========================================
+           4. TELA DE TRANSIÇÃO (SEU CÓDIGO INTACTO)
+           ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
-
+        #wrapped-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001; }
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 4001; text-align: center;
+            z-index: 4005; text-align: center; pointer-events: none;
         }
-        .transition-title { font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; text-shadow: 0 5px 20px rgba(0,0,0,0.8); }
-        .transition-sub { font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; }
-
-        .diamond-wrapper {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center; z-index: 4005;
+        .transition-title { 
+            font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
+            text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
+            animation: popIn 0.5s ease-out forwards;
         }
-        .diamond-half { display: flex; align-items: center; height: 100vh; }
-        
-        .half-left { animation: splitLeft 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
-        .half-right { animation: splitRight 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
+        .transition-sub { 
+            font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 280px; line-height: 1.4; 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
+        }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeInSub { to { opacity: 1; } }
 
-        .d-bar { width: 10vw; background: #1ed760; box-shadow: inset -2px 0 10px rgba(0,0,0,0.3); border-radius: 4px; margin: 0 1px;}
-        
-        .half-left .d-bar:nth-child(1) { height: 20vh; background: #117a32; }
-        .half-left .d-bar:nth-child(2) { height: 40vh; background: #159441; }
-        .half-left .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
-        .half-left .d-bar:nth-child(4) { height: 80vh; background: #1cd861; }
-        .half-left .d-bar:nth-child(5) { height: 100vh; background: #1ed760; } 
-
-        .half-right .d-bar:nth-child(1) { height: 100vh; background: #1ed760; } 
-        .half-right .d-bar:nth-child(2) { height: 80vh; background: #1cd861; }
-        .half-right .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
-        .half-right .d-bar:nth-child(4) { height: 40vh; background: #159441; }
-        .half-right .d-bar:nth-child(5) { height: 20vh; background: #117a32; }
-
-        @keyframes splitLeft { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
-        @keyframes splitRight { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(50vw); } }
-
-        /* 5. TELA DE STORIES & ROLETA */
+        /* =========================================
+           5. TELA DE STORIES
+           ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
-        
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
-        
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
@@ -142,52 +130,66 @@
 
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        /* ROLETA: Desliza de baixo para cima como na original */
+        /* NOVO CANVAS DE CELEBRAÇÃO (Poeira Mágica) */
+        #celebration-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
+        }
+        @keyframes fadeInConfetti { to { opacity: 1; } }
+
+        /* =========================================
+           O QUE VOCÊ PEDIU: ROLETA PARA CIMA E MAIS BLOCOS
+           ========================================= */
         .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; height: 250vh; position: absolute; top: -150vh; 
+            display: flex; flex-direction: column; width: 100%; 
+            height: 300vh; /* Altura total de 20 blocos de 15vh */
+            position: absolute; top: 0; left: 0;
+            transform: translateY(100vh); /* Começa PRETO, lá embaixo, fora da tela */
             will-change: transform; z-index: 5010;
         }
         
         .slot-row {
-            flex: 1; display: flex; justify-content: center; align-items: center;
-            font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
+            height: 15vh; /* Altura achatada para caber mais blocos na tela */
+            display: flex; justify-content: center; align-items: center;
+            font-size: 12vh; /* Número prensado e gigante */
+            font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
         }
         
+        /* Cores das barras com efeito 3D */
         .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
         .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
         .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
         .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
         
-        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 150vh, 0); } }
+        /* Animação PARA CIMA! Começa em 100vh e vai pra -200vh (deslizando 300vh de distância) */
+        @keyframes slideSlotsUp { 
+            0% { transform: translate3d(0, 100vh, 0); } 
+            100% { transform: translate3d(0, -200vh, 0); } 
+        }
 
         /* =========================================
-           TELA FINAL COM ZIGUEZAGUE E PARTÍCULAS
+           O QUE VOCÊ PEDIU: EFEITOS AMARELOS (ZIGZAG)
            ========================================= */
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: #000; /* Fundo totalmente preto */
+            background: #000; /* Fundo preto sólido final */
             opacity: 0; z-index: 5015; pointer-events: none;
         }
-        @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* Bordas Amarelas Serrilhadas (Cima e Baixo) */
+        /* Zigzag Amarelo do Topo */
         .reveal-yellow-top { position: absolute; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
-        .reveal-yellow-top .y-fill { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 10vh; width: 100%; }
+        .reveal-yellow-top .y-fill { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 12vh; width: 100%; }
         .reveal-yellow-top .y-saw-down { width: 100%; height: 35px; background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
 
+        /* Zigzag Amarelo da Base */
         .reveal-yellow-bottom { position: absolute; bottom: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
         .reveal-yellow-bottom .y-saw-up { width: 100%; height: 35px; background: linear-gradient(45deg, #ffb300 50%, transparent 50%), linear-gradient(-45deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
-        .reveal-yellow-bottom .y-fill { background: linear-gradient(to top, #ffe600, #ffb300); height: 10vh; width: 100%; }
+        .reveal-yellow-bottom .y-fill { background: linear-gradient(to top, #ffe600, #ffb300); height: 12vh; width: 100%; }
 
-        /* Canvas da Poeira Mágica (Partículas) */
-        #celebration-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5017; pointer-events: none;
-        }
+        @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* Textos Centrais com z-index alto para ficar acima das partículas */
-        .final-hours-text { font-size: 5.5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; z-index: 5020; text-shadow: 0 5px 15px rgba(0,0,0,0.8);}
-        .final-subtitle { font-size: 1rem; font-weight: 700; color: #fff; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; z-index: 5020; }
+        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 5020;}
+        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; z-index: 5020;}
 
         /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
@@ -195,6 +197,7 @@
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
+        /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -290,17 +293,10 @@
     </div>
 
     <div id="transition-screen">
+        <canvas id="wrapped-canvas"></canvas>
         <div class="transition-text-layer">
             <h1 class="transition-title">Lucas e Mariana</h1>
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
-        </div>
-        <div class="diamond-wrapper">
-            <div class="diamond-half half-left">
-                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
-            </div>
-            <div class="diamond-half half-right">
-                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
-            </div>
         </div>
     </div>
 
@@ -309,7 +305,26 @@
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
         <div id="story-hours-container">
+            
             <div id="slot-machine" class="slot-machine">
+                <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
+                <div class="slot-row r-blue hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div>
+                
+                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
+                <div class="slot-row r-blue hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-green hours-val"></div>
+                
+                <div class="slot-row r-pink hours-val"></div>
+                <div class="slot-row r-blue hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
+
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
@@ -318,6 +333,7 @@
             </div>
 
             <div id="final-hours-reveal" class="final-hours-reveal">
+                
                 <div class="reveal-yellow-top">
                     <div class="y-fill"></div>
                     <div class="y-saw-down"></div>
@@ -325,7 +341,7 @@
 
                 <canvas id="celebration-canvas"></canvas>
 
-                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020;">Horas juntos</p>
+                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index:5020;">Horas juntos</p>
                 <h1 id="final-hours-text" class="final-hours-text">0</h1>
                 <p class="final-subtitle">14% dos casais no mundo ✨</p>
 
@@ -333,6 +349,7 @@
                     <div class="y-saw-up"></div>
                     <div class="y-fill"></div>
                 </div>
+
             </div>
         </div>
 
@@ -420,8 +437,51 @@ Te amo para sempre! ❤️
             observer.observe(areaGatilho);
         }
 
+        // CANVAS EQUALIZER (TRANSIÇÃO ORIGINAL)
+        const canvas = document.getElementById('wrapped-canvas');
+        const ctx = canvas.getContext('2d');
+        let canvasAnimationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        function iniciarAnimacaoCanvas() {
+            resizeCanvas();
+            const barWidth = window.innerWidth > 600 ? 30 : 15;
+            const gap = 5;
+            const numBarsPerSide = 8;
+            const heights = [0.2, 0.4, 0.6, 0.8, 1.0, 0.8, 0.6, 0.4];
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const time = Date.now() * 0.005;
+
+                ctx.shadowBlur = 25;
+                ctx.shadowColor = '#1ed760';
+                ctx.fillStyle = '#1ed760';
+
+                for (let i = 0; i < numBarsPerSide; i++) {
+                    const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
+                    const barHeight = (canvas.height * heights[i]) * pulse;
+                    const y = (canvas.height - barHeight) / 2;
+                    
+                    const xLeft = i * (barWidth + gap);
+                    ctx.fillRect(xLeft, y, barWidth, barHeight);
+
+                    const xRight = canvas.width - ((i + 1) * (barWidth + gap));
+                    ctx.fillRect(xRight, y, barWidth, barHeight);
+                }
+
+                canvasAnimationId = requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
         // =========================================
-        // MOTOR DA POEIRA MÁGICA (PARTÍCULAS)
+        // MOTOR DA POEIRA MÁGICA
         // =========================================
         const celCanvas = document.getElementById('celebration-canvas');
         const celCtx = celCanvas.getContext('2d');
@@ -441,7 +501,7 @@ Te amo para sempre! ❤️
                 this.y = Math.random() * celCanvas.height; 
                 this.size = Math.random() * 4 + 2; 
                 this.color = dustColors[Math.floor(Math.random() * dustColors.length)];
-                this.speedY = Math.random() * 2 - 1; 
+                this.speedY = Math.random() * 2 - 1; // Flutua suavemente
                 this.speedX = Math.random() * 1 - 0.5; 
                 this.spin = Math.random() * 360;
                 this.spinSpeed = Math.random() * 2 - 1;
@@ -504,8 +564,10 @@ Te amo para sempre! ❤️
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
             document.getElementById('transition-screen').style.display = 'block';
+            iniciarAnimacaoCanvas();
             
             setTimeout(() => {
+                cancelAnimationFrame(canvasAnimationId); 
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 4000);
@@ -549,15 +611,17 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                slotMachine.style.animation = 'slideSlots 2s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
+                
+                // MÁGICA AQUI: A animação "slideSlotsUp" chama as colunas de baixo para cima!
+                slotMachine.style.animation = 'slideSlotsUp 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2s'; 
-                
-                // Dispara o pó mágico na tela preta com as bordas amarelas
-                setTimeout(iniciarCelebracao, 2000);
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.5s'; 
+
+                // Dispara o pó mágico após a tela preta aparecer
+                setTimeout(iniciarCelebracao, 2500);
 
             } else {
                 containerHoras.style.display = 'none';
