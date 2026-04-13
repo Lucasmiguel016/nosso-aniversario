@@ -12,7 +12,6 @@
             --spotify-bg-lower: #000000; 
             --spotify-green: #1ed760; 
             --spotify-black: #121212;
-            --spotify-yellow: #ffcc00; /* Amarelo da animação Wrapped */
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
             --counter-box-bg: rgba(255, 255, 255, 0.1);
@@ -94,30 +93,44 @@
 
         .locked { opacity: 0.15; filter: grayscale(100%); border-style: dashed !important; }
 
-        .btn-stories { width: 100%; background: #fff; color: #000; padding: 16px; border-radius: 30px; font-weight: 800; margin-top: 35px; border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
-
         /* =========================================
-           ANIMAÇÃO ZIG-ZAG (TELA DE TRANSIÇÃO WRAPPED)
+           O GATILHO DE ROLAGEM (ONDA NEON ROSA)
            ========================================= */
-        #transition-screen {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #000; z-index: 4000; flex-direction: column; justify-content: space-between; overflow: hidden;
+        #scroll-trigger-area {
+            margin-top: 60px;
+            padding-bottom: 80px;
+            text-align: center;
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
+        .scroll-hint {
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            animation: bounce 2s infinite;
+        }
+        .neon-wave {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+            margin: 0 auto;
+            /* O brilho neon envolta da onda */
+            filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7));
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* ANIMAÇÃO ZIG-ZAG (TELA DE TRANSIÇÃO) */
+        #transition-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 4000; flex-direction: column; justify-content: space-between; overflow: hidden; }
         .yellow-block { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 15vh; width: 100%; }
-        
-        /* Dentes do Zigue-zague */
-        .saw-top {
-            width: 200vw; height: 35px;
-            background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%);
-            background-size: 40px 100%;
-            animation: moveLeft 1s linear infinite;
-        }
-        .saw-bottom {
-            width: 200vw; height: 35px;
-            background: linear-gradient(45deg, #ffe600 50%, transparent 50%), linear-gradient(-45deg, #ffe600 50%, transparent 50%);
-            background-size: 40px 100%;
-            animation: moveRight 1s linear infinite;
-        }
+        .saw-top { width: 200vw; height: 35px; background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; animation: moveLeft 1s linear infinite; }
+        .saw-bottom { width: 200vw; height: 35px; background: linear-gradient(45deg, #ffe600 50%, transparent 50%), linear-gradient(-45deg, #ffe600 50%, transparent 50%); background-size: 40px 100%; animation: moveRight 1s linear infinite; }
         @keyframes moveLeft { from { transform: translateX(0); } to { transform: translateX(-40px); } }
         @keyframes moveRight { from { transform: translateX(-40px); } to { transform: translateX(0); } }
 
@@ -126,22 +139,16 @@
         .transition-sub { font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 80%; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        /* =========================================
-           TELA DE STORIES (RETROSPECTIVA)
-           ========================================= */
+        /* TELA DE STORIES */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
-        
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); transition: opacity 0.3s; }
-        
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; pointer-events: none; }
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
         
-        /* Barras de Progresso no Topo */
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5010; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
         
-        /* Controles invisíveis */
         .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5010; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5005; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5005; cursor: pointer; }
@@ -229,7 +236,19 @@
                 </div>
             </div>
 
-            <button class="btn-stories" onclick="iniciarRetrospectiva()">Ver Retrospectiva 📸</button>
+            <div id="scroll-trigger-area">
+                <p class="scroll-hint">Continue descendo</p>
+                <svg class="neon-wave" viewBox="0 0 200 60" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ff3399"/>
+                            <stop offset="40%" stop-color="#ff0040"/>
+                            <stop offset="100%" stop-color="#cc0000"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M 10 20 L 80 20 C 110 20, 130 50, 150 50 C 170 50, 185 30, 185 30 L 185 38 C 185 38, 170 60, 140 60 C 110 60, 90 30, 80 30 L 10 30 Z" fill="url(#neonGradient)" rx="5"/>
+                </svg>
+            </div>
 
         </div>
     </div>
@@ -239,12 +258,10 @@
             <div class="yellow-block"></div>
             <div class="saw-top"></div>
         </div>
-        
         <div class="transition-text">
             <h1 class="transition-title">Lucas e Mariana</h1>
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
-
         <div>
             <div class="saw-bottom"></div>
             <div class="yellow-block"></div>
@@ -253,15 +270,11 @@
 
     <div id="stories-screen">
         <div class="story-progress-container" id="story-bars"></div>
-        
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
-        
         <img id="story-img" class="story-img-bg" src="">
-        
         <div class="story-content">
             <h2 id="story-text" class="story-text"></h2>
         </div>
-
         <div class="story-left-click" onclick="prevStory()"></div>
         <div class="story-right-click" onclick="nextStory()"></div>
     </div>
@@ -278,20 +291,26 @@ Te amo para sempre! ❤️
     </div>
 
     <script>
-        // ================= CONTROLES DA MÚSICA =================
+        // ================= CONTROLES GERAIS E MÚSICA =================
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
         const barra = document.getElementById('progress');
+        let observerLigado = false; // Flag para garantir que o observer inicie certo
 
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
+            
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            });
+            }).catch(e => console.log("Aguardando play manual..."));
+
             cronometro();
             setInterval(cronometro, 1000);
+
+            // Inicia o sensor de rolagem (Observer) somente depois que o site for aberto
+            setTimeout(iniciarSensorDeRolagem, 500); 
         }
 
         function controlarMusica() {
@@ -305,6 +324,21 @@ Te amo para sempre! ❤️
 
         function verCarta(s) {
             document.getElementById('letter-modal').style.display = s ? 'block' : 'none';
+        }
+
+        // ================= SENSOR DE ROLAGEM (INTERSECTION OBSERVER) =================
+        function iniciarSensorDeRolagem() {
+            const areaGatilho = document.getElementById('scroll-trigger-area');
+            
+            const observer = new IntersectionObserver((entradas) => {
+                if (entradas[0].isIntersecting) {
+                    // Quando a onda rosa aparece na tela, dispara a retrospectiva
+                    iniciarRetrospectiva();
+                    observer.unobserve(areaGatilho); // Desliga o sensor após acionar
+                }
+            }, { threshold: 0.6 }); // Só dispara quando 60% da onda estiver visível
+
+            observer.observe(areaGatilho);
         }
 
         // ================= CRONÔMETRO =================
@@ -337,15 +371,11 @@ Te amo para sempre! ❤️
         let storyProgress = 0;
 
         function iniciarRetrospectiva() {
-            window.scrollTo(0, 0);
             document.getElementById('transition-screen').style.display = 'flex';
-            
-            // Pausa a música principal para focar na retrospectiva (Opcional, tire se quiser que continue tocando)
-            // se quiser que continue tocando, basta remover as 2 linhas abaixo
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
 
-            // Após 3 segundos de animação zigue-zague, abre os stories
+            // 3 segundos de tela amarela
             setTimeout(() => {
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
@@ -355,7 +385,6 @@ Te amo para sempre! ❤️
         function abrirStories() {
             document.getElementById('stories-screen').style.display = 'block';
             
-            // Gera as barras de progresso
             const barsContainer = document.getElementById('story-bars');
             barsContainer.innerHTML = '';
             storiesData.forEach((_, index) => {
@@ -370,19 +399,16 @@ Te amo para sempre! ❤️
             clearInterval(storyInterval);
             storyProgress = 0;
             
-            // Atualiza as barras (cheias para as passadas, vazias para as futuras)
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
                 if (i < currentStory) fill.style.width = '100%';
                 else if (i > currentStory) fill.style.width = '0%';
-                else fill.style.width = '0%'; // A atual começa zerada
+                else fill.style.width = '0%'; 
             }
             
-            // Atualiza Foto e Texto
             document.getElementById('story-img').src = storiesData[currentStory].img;
             document.getElementById('story-text').innerHTML = storiesData[currentStory].text;
             
-            // Inicia animação da barra atual (5 segundos = 50 steps de 100ms)
             const currentFill = document.getElementById(`fill-${currentStory}`);
             storyInterval = setInterval(() => {
                 storyProgress += 2;
@@ -403,7 +429,6 @@ Te amo para sempre! ❤️
                 currentStory--;
                 renderStory();
             } else {
-                // Se estiver no primeiro, reinicia a barra
                 storyProgress = 0; 
                 document.getElementById(`fill-${currentStory}`).style.width = '0%';
             }
