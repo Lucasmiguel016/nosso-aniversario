@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg-upper: #8b0000; /* Vinho Profundo */
-            --spotify-bg-lower: #000000; /* Preto */
-            --spotify-green: #1ed760; /* Verde Vibrante */
+            --spotify-bg-upper: #8b0000; 
+            --spotify-bg-lower: #000000; 
+            --spotify-green: #1ed760; 
             --spotify-black: #121212;
+            --spotify-yellow: #ffcc00; /* Amarelo da animação Wrapped */
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
             --counter-box-bg: rgba(255, 255, 255, 0.1);
@@ -20,7 +21,6 @@
         body, html {
             margin: 0; padding: 0;
             font-family: 'Montserrat', sans-serif;
-            /* Degradê suave que começa vinho e vira preto */
             background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 60%, var(--spotify-bg-lower) 100%);
             background-attachment: fixed;
             color: var(--text-main);
@@ -28,7 +28,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* TELA DE INTRODUÇÃO (VISUAL PRETO E VERDE) */
+        /* TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -38,36 +38,14 @@
             box-sizing: border-box;
         }
 
-        .intro-title { 
-            font-size: clamp(1.8rem, 8vw, 2.5rem);
-            font-weight: 800; 
-            color: #fff;
-            margin-bottom: 15px; 
-            line-height: 1.2;
-            max-width: 90%;
-            letter-spacing: -1px;
-        }
-
-        .intro-subtitle {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #b3b3b3;
-            margin-bottom: 40px;
-            max-width: 80%;
-            line-height: 1.4;
-        }
-
+        .intro-title { font-size: clamp(1.8rem, 8vw, 2.5rem); font-weight: 800; color: #fff; margin-bottom: 15px; line-height: 1.2; max-width: 90%; letter-spacing: -1px; }
+        .intro-subtitle { font-size: 1rem; font-weight: 400; color: #b3b3b3; margin-bottom: 40px; max-width: 80%; line-height: 1.4; }
         .highlight-green { color: var(--spotify-green); }
 
         .btn-start { 
-            background-color: var(--spotify-green); 
-            color: #000000; 
-            padding: 16px 40px; 
-            border-radius: 35px; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            border: none; cursor: pointer; 
-            font-size: 0.9rem;
+            background-color: var(--spotify-green); color: #000000; padding: 16px 40px; 
+            border-radius: 35px; font-weight: 800; text-transform: uppercase; 
+            border: none; cursor: pointer; font-size: 0.9rem;
             box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3);
         }
 
@@ -84,7 +62,7 @@
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SEÇÃO SOBRE O CASAL */
+        /* SOBRE O CASAL */
         .about-section { background-color: transparent; margin-top: 40px; overflow: hidden; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
@@ -98,34 +76,75 @@
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* CARD MENSAGEM - FONTE SPOTIFY LYRICS */
+        /* CARD MENSAGEM */
         .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
-        /* =========================================
-           CONQUISTAS DO CASAL (INVERTIDO: ANEL > AVIÃO)
-           ========================================= */
+        /* CONQUISTAS (MILESTONES) */
         .achievements-section { background-color: transparent; padding: 0 10px; text-align: left; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .achievement-item { 
-            background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; 
-            display: flex; justify-content: center; align-items: center; 
-            font-size: 1.5rem; border: 2px solid;
-            transition: 0.3s;
-        }
+        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; transition: 0.3s; }
         
-        .key-item { border-color: #1ed760; color: #1ed760; } /* Verde Apê */
-        .ring-item { border-color: #fbc02d; color: #fbc02d; } /* Ouro Anel */
-        .plane-item { border-color: #2196f3; color: #2196f3; } /* Azul Viagem */
-        .wedding-item { border-color: #ff5252; color: #ff5252; } /* Vermelho Casório */
+        .key-item { border-color: #1ed760; color: #1ed760; }
+        .ring-item { border-color: #fbc02d; color: #fbc02d; }
+        .plane-item { border-color: #2196f3; color: #2196f3; }
+        .wedding-item { border-color: #ff5252; color: #ff5252; }
 
-        .locked {
-            opacity: 0.15;
-            filter: grayscale(100%);
-            border-style: dashed !important;
+        .locked { opacity: 0.15; filter: grayscale(100%); border-style: dashed !important; }
+
+        .btn-stories { width: 100%; background: #fff; color: #000; padding: 16px; border-radius: 30px; font-weight: 800; margin-top: 35px; border: none; cursor: pointer; font-size: 1rem; box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
+
+        /* =========================================
+           ANIMAÇÃO ZIG-ZAG (TELA DE TRANSIÇÃO WRAPPED)
+           ========================================= */
+        #transition-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; z-index: 4000; flex-direction: column; justify-content: space-between; overflow: hidden;
         }
+        .yellow-block { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 15vh; width: 100%; }
+        
+        /* Dentes do Zigue-zague */
+        .saw-top {
+            width: 200vw; height: 35px;
+            background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%);
+            background-size: 40px 100%;
+            animation: moveLeft 1s linear infinite;
+        }
+        .saw-bottom {
+            width: 200vw; height: 35px;
+            background: linear-gradient(45deg, #ffe600 50%, transparent 50%), linear-gradient(-45deg, #ffe600 50%, transparent 50%);
+            background-size: 40px 100%;
+            animation: moveRight 1s linear infinite;
+        }
+        @keyframes moveLeft { from { transform: translateX(0); } to { transform: translateX(-40px); } }
+        @keyframes moveRight { from { transform: translateX(-40px); } to { transform: translateX(0); } }
+
+        .transition-text { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; animation: pulse 2s infinite; }
+        .transition-title { font-size: 2.5rem; font-weight: 800; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -1.5px; }
+        .transition-sub { font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 80%; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* =========================================
+           TELA DE STORIES (RETROSPECTIVA)
+           ========================================= */
+        #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
+        
+        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); transition: opacity 0.3s; }
+        
+        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; pointer-events: none; }
+        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
+        
+        /* Barras de Progresso no Topo */
+        .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5010; }
+        .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
+        .story-fill { height: 100%; background: #fff; width: 0%; }
+        
+        /* Controles invisíveis */
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5010; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5005; cursor: pointer; }
+        .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5005; cursor: pointer; }
 
         /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
@@ -169,12 +188,10 @@
             <div class="about-section">
                 <span class="sobre-title">Sobre o casal</span>
                 <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img">
-                
                 <div style="padding: 0 20px;">
                     <h2 style="margin:0; font-weight: 800;">Lucas e Mariana</h2>
                     <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
                 </div>
-
                 <div class="counter-grid">
                     <div class="counter-item"><span id="y" class="time-val">0</span><span class="time-uni">Anos</span></div>
                     <div class="counter-item"><span id="m" class="time-val">0</span><span class="time-uni">Meses</span></div>
@@ -205,22 +222,48 @@
                     <span>1/4</span>
                 </div>
                 <div class="achievements-grid">
-                    <div class="achievement-item key-item">
-                        <i class="fa-solid fa-key"></i>
-                    </div>
-                    <div class="achievement-item ring-item locked">
-                        <i class="fa-solid fa-ring"></i>
-                    </div>
-                    <div class="achievement-item plane-item locked">
-                        <i class="fa-solid fa-plane"></i>
-                    </div>
-                    <div class="achievement-item wedding-item locked">
-                        <i class="fa-solid fa-house-chimney-heart"></i>
-                    </div>
+                    <div class="achievement-item key-item"><i class="fa-solid fa-key"></i></div>
+                    <div class="achievement-item ring-item locked"><i class="fa-solid fa-ring"></i></div>
+                    <div class="achievement-item plane-item locked"><i class="fa-solid fa-plane"></i></div>
+                    <div class="achievement-item wedding-item locked"><i class="fa-solid fa-house-chimney-heart"></i></div>
                 </div>
             </div>
 
+            <button class="btn-stories" onclick="iniciarRetrospectiva()">Ver Retrospectiva 📸</button>
+
         </div>
+    </div>
+
+    <div id="transition-screen">
+        <div>
+            <div class="yellow-block"></div>
+            <div class="saw-top"></div>
+        </div>
+        
+        <div class="transition-text">
+            <h1 class="transition-title">Lucas e Mariana</h1>
+            <p class="transition-sub">Os momentos que marcaram essa relação</p>
+        </div>
+
+        <div>
+            <div class="saw-bottom"></div>
+            <div class="yellow-block"></div>
+        </div>
+    </div>
+
+    <div id="stories-screen">
+        <div class="story-progress-container" id="story-bars"></div>
+        
+        <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
+        
+        <img id="story-img" class="story-img-bg" src="">
+        
+        <div class="story-content">
+            <h2 id="story-text" class="story-text"></h2>
+        </div>
+
+        <div class="story-left-click" onclick="prevStory()"></div>
+        <div class="story-right-click" onclick="nextStory()"></div>
     </div>
 
     <div id="letter-modal">
@@ -235,6 +278,7 @@ Te amo para sempre! ❤️
     </div>
 
     <script>
+        // ================= CONTROLES DA MÚSICA =================
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
         const barra = document.getElementById('progress');
@@ -251,26 +295,19 @@ Te amo para sempre! ❤️
         }
 
         function controlarMusica() {
-            if (som.paused) {
-                som.play();
-                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            } else {
-                som.pause();
-                btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
-            }
+            if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); } 
+            else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
         }
 
         som.ontimeupdate = () => {
-            if (som.duration) {
-                const p = (som.currentTime / som.duration) * 100;
-                barra.style.width = p + "%";
-            }
+            if (som.duration) { barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; }
         };
 
         function verCarta(s) {
             document.getElementById('letter-modal').style.display = s ? 'block' : 'none';
         }
 
+        // ================= CRONÔMETRO =================
         const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
         function cronometro() {
             const agora = new Date();
@@ -285,6 +322,96 @@ Te amo para sempre! ❤️
             document.getElementById('h').innerText = agora.getHours();
             document.getElementById('min').innerText = agora.getMinutes();
             document.getElementById('sec').innerText = agora.getSeconds();
+        }
+
+        // ================= SISTEMA DE STORIES =================
+        const storiesData = [
+            { img: 'imagens/imagens/capa.JPEG', text: 'Nosso primeiro "Eu te amo"' },
+            { img: 'imagens/imagens/casal_perfil.JPEG', text: 'Quer ir no shopping?' },
+            { img: 'imagens/imagens/capa.JPEG', text: 'Vamos comer poke?' },
+            { img: 'imagens/imagens/casal_perfil.JPEG', text: 'Você tá tentando me derrubar?' }
+        ];
+        
+        let currentStory = 0;
+        let storyInterval;
+        let storyProgress = 0;
+
+        function iniciarRetrospectiva() {
+            window.scrollTo(0, 0);
+            document.getElementById('transition-screen').style.display = 'flex';
+            
+            // Pausa a música principal para focar na retrospectiva (Opcional, tire se quiser que continue tocando)
+            // se quiser que continue tocando, basta remover as 2 linhas abaixo
+            som.pause();
+            btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
+
+            // Após 3 segundos de animação zigue-zague, abre os stories
+            setTimeout(() => {
+                document.getElementById('transition-screen').style.display = 'none';
+                abrirStories();
+            }, 3000);
+        }
+
+        function abrirStories() {
+            document.getElementById('stories-screen').style.display = 'block';
+            
+            // Gera as barras de progresso
+            const barsContainer = document.getElementById('story-bars');
+            barsContainer.innerHTML = '';
+            storiesData.forEach((_, index) => {
+                barsContainer.innerHTML += `<div class="story-bar"><div class="story-fill" id="fill-${index}"></div></div>`;
+            });
+
+            currentStory = 0;
+            renderStory();
+        }
+
+        function renderStory() {
+            clearInterval(storyInterval);
+            storyProgress = 0;
+            
+            // Atualiza as barras (cheias para as passadas, vazias para as futuras)
+            for(let i=0; i<storiesData.length; i++) {
+                const fill = document.getElementById(`fill-${i}`);
+                if (i < currentStory) fill.style.width = '100%';
+                else if (i > currentStory) fill.style.width = '0%';
+                else fill.style.width = '0%'; // A atual começa zerada
+            }
+            
+            // Atualiza Foto e Texto
+            document.getElementById('story-img').src = storiesData[currentStory].img;
+            document.getElementById('story-text').innerHTML = storiesData[currentStory].text;
+            
+            // Inicia animação da barra atual (5 segundos = 50 steps de 100ms)
+            const currentFill = document.getElementById(`fill-${currentStory}`);
+            storyInterval = setInterval(() => {
+                storyProgress += 2;
+                currentFill.style.width = storyProgress + '%';
+                if(storyProgress >= 100) { nextStory(); }
+            }, 100);
+        }
+
+        function nextStory() {
+            if(currentStory < storiesData.length - 1) {
+                currentStory++;
+                renderStory();
+            } else { fecharStories(); }
+        }
+
+        function prevStory() {
+            if(currentStory > 0) {
+                currentStory--;
+                renderStory();
+            } else {
+                // Se estiver no primeiro, reinicia a barra
+                storyProgress = 0; 
+                document.getElementById(`fill-${currentStory}`).style.width = '0%';
+            }
+        }
+
+        function fecharStories() {
+            clearInterval(storyInterval);
+            document.getElementById('stories-screen').style.display = 'none';
         }
     </script>
 </body>
