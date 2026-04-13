@@ -27,9 +27,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* =========================================
-           1. TELA DE INTRODUÇÃO
-           ========================================= */
+        /* 1. TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
@@ -44,13 +42,16 @@
         }
         .btn-start:active { transform: scale(0.95); }
 
-        /* =========================================
-           2. TELA DO PLAYER PRINCIPAL
-           ========================================= */
+        /* 2. TELA DO PLAYER PRINCIPAL */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 0.95rem; margin: 20px 0; font-weight: 700; text-align: center; }
+        /* FRASE CENTRALIZADA */
+        .top-phrase { 
+            font-size: 0.95rem; margin: 20px auto; font-weight: 700; 
+            text-align: center; width: 100%; max-width: 380px; display: block;
+        }
+
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
@@ -63,7 +64,6 @@
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         
-        /* CONTADOR CORRIGIDO: Mais espaço entre número e texto */
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 20px 5px; text-align: center; }
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; margin-bottom: 5px; }
@@ -84,17 +84,13 @@
         .key-item { border-color: #1ed760; color: #1ed760; }
         .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* =========================================
-           3. GATILHO DE ROLAGEM
-           ========================================= */
+        /* 3. GATILHO DE ROLAGEM */
         #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
         .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
-        /* =========================================
-           4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER)
-           ========================================= */
+        /* 4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER) */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
@@ -124,9 +120,7 @@
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes fadeInSub { to { opacity: 1; } }
 
-        /* =========================================
-           5. TELA DE STORIES & ROLETA 3D FLUIDA
-           ========================================= */
+        /* 5. TELA DE STORIES & ROLETA */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
@@ -139,9 +133,16 @@
 
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
+        /* CANVAS DE CELEBRAÇÃO (CONFETES) */
+        #celebration-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
+        }
+        @keyframes fadeInConfetti { to { opacity: 0.8; } }
+
+        /* ROLETA AJUSTADA: 5 BLOCOS */
         .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; 
-            will-change: transform; 
+            display: flex; flex-direction: column; width: 100%; height: 250vh; position: absolute; top: -150vh; 
+            will-change: transform; z-index: 5010;
         }
         
         .slot-row {
@@ -149,24 +150,26 @@
             font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
         
+        /* CORES E SOMBRAS EXATAS DO PRINT */
         .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
         .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
         .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
         .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
         
-        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 250vh, 0); } }
+        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 150vh, 0); } }
 
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
-            opacity: 0; z-index: 10; pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85) 50%, #000 100%);
+            opacity: 0; z-index: 5015; pointer-events: none;
         }
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-hours-text { font-size: 5.5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
@@ -279,14 +282,14 @@
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
         <div id="story-hours-container">
+            <canvas id="celebration-canvas"></canvas>
+
             <div id="slot-machine" class="slot-machine">
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-blue hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
             </div>
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px;">Horas juntos</p>
@@ -422,6 +425,66 @@ Te amo para sempre! ❤️
             draw();
         }
 
+        // MOTOR DE CONFETES
+        const celCanvas = document.getElementById('celebration-canvas');
+        const celCtx = celCanvas.getContext('2d');
+        let particles = [];
+        const confettiColors = ['#1ed760', '#191414', '#ffffff', '#ff3399', '#fbc02d'];
+
+        function resizeCelebrationCanvas() {
+            celCanvas.width = window.innerWidth;
+            celCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCelebrationCanvas);
+
+        class Confetti {
+            constructor() {
+                this.x = Math.random() * celCanvas.width;
+                this.y = Math.random() * -100; 
+                this.size = Math.random() * 8 + 4;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.speedY = Math.random() * 5 + 3; 
+                this.speedX = Math.random() * 3 - 1.5; 
+                this.spin = Math.random() * 360;
+                this.spinSpeed = Math.random() * 10 - 5;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.spin += this.spinSpeed;
+                if (this.y > celCanvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * celCanvas.width;
+                }
+            }
+            draw() {
+                celCtx.save();
+                celCtx.translate(this.x, this.y);
+                celCtx.rotate(this.spin * Math.PI / 180);
+                celCtx.fillStyle = this.color;
+                celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                celCtx.restore();
+            }
+        }
+
+        function iniciarCelebracao() {
+            particles = [];
+            resizeCelebrationCanvas();
+            celCanvas.style.animation = 'fadeInConfetti 1s forwards';
+            for (let i = 0; i < 100; i++) { particles.push(new Confetti()); }
+
+            function animarConfetes() {
+                if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
+                celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animarConfetes);
+            }
+            animarConfetes();
+        }
+
         // STORIES
         const storiesData = [
             { type: 'hours' }, 
@@ -465,6 +528,7 @@ Te amo para sempre! ❤️
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
+            celCanvas.style.opacity = '0'; 
             
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
@@ -487,12 +551,16 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
+                // Roleta otimizada para deslizar 150vh (menos blocos)
+                slotMachine.style.animation = 'slideSlots 2s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2s'; 
+                
+                // Dispara os confetes quando a roleta terminar
+                setTimeout(iniciarCelebracao, 2000);
 
             } else {
                 containerHoras.style.display = 'none';
@@ -528,6 +596,7 @@ Te amo para sempre! ❤️
 
         function fecharStories() {
             clearInterval(storyInterval);
+            particles = []; // Limpa os confetes
             document.getElementById('stories-screen').style.display = 'none';
         }
     </script>
