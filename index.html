@@ -38,11 +38,19 @@
         .btn-start { 
             background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
             border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3); transition: transform 0.2s;
         }
+        .btn-start:active { transform: scale(0.95); }
 
         /* 2. TELA DO PLAYER PRINCIPAL */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* FRASE CENTRALIZADA CORRETAMENTE */
+        .top-phrase { 
+            font-size: 0.95rem; margin: 20px auto; font-weight: 700; 
+            text-align: center; width: 100%; max-width: 380px; display: block;
+        }
 
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
@@ -52,26 +60,28 @@
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* Sobre o Casal e Contador CORRIGIDO */
+        /* Sobre o Casal */
         .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         
-        /* ESPAÇAMENTO AJUSTADO: Números e unidades não estão mais grudados */
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 22px 5px; text-align: center; }
-        .time-val { font-size: 1.9rem; font-weight: 800; display: block; margin-bottom: 6px; } /* Espaço embaixo do número */
+        .time-val { font-size: 1.9rem; font-weight: 800; display: block; margin-bottom: 6px; } 
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;}
 
+        /* Top Momentos */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
+        /* Mensagem */
         .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
+        /* Conquistas */
         .achievements-section { background: transparent; padding: 0 10px; text-align: left; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
         .achievement-item { background: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
@@ -85,67 +95,49 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           4. TELA DE TRANSIÇÃO (DIAMANTE OTIMIZADO)
+           4. TELA DE TRANSIÇÃO (DIAMANTE CORTINA PERFEITO)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
 
-        /* Texto Central (Corrigido e com Glow) */
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 4005; text-align: center; pointer-events: none;
+            z-index: 4001; text-align: center;
         }
-        .transition-title { 
-            font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; 
-            text-shadow: 0 0 10px rgba(30, 215, 96, 0.8), 0 0 25px rgba(30, 215, 96, 0.5); 
-            opacity: 0; animation: fadePopIn 0.8s forwards 0.5s; /* Entra depois que as barras aparecem */
+        .transition-title { font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; text-shadow: 0 5px 20px rgba(0,0,0,0.8); }
+        .transition-sub { font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; }
+
+        .diamond-wrapper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center; z-index: 4005;
         }
-        .transition-sub { 
-            font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; 
-            opacity: 0; animation: fadePopIn 1s forwards 1.2s; 
-        }
-        @keyframes fadePopIn { 0% { opacity: 0; transform: scale(0.9) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        .diamond-half { display: flex; align-items: center; height: 100vh; }
+        
+        .half-left { animation: splitLeft 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
+        .half-right { animation: splitRight 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
 
-        /* Estrutura do Diamante OTIMIZADA: MENOS BARRAS, MAIS LARGAS (Estilo References) */
-        .diamond-scroller {
-            position: absolute; top: 0; width: 100%; height: 200vh;
-            display: flex; justify-content: center; z-index: 4001;
-            animation: wrappedScrollDown 2.5s linear infinite;
-        }
-        @keyframes wrappedScrollDown { 0% { transform: translateY(-100vh); } 100% { transform: translateY(0); } }
+        .d-bar { width: 10vw; background: #1ed760; box-shadow: inset -2px 0 10px rgba(0,0,0,0.3); border-radius: 4px; margin: 0 1px;}
+        
+        .half-left .d-bar:nth-child(1) { height: 20vh; background: #117a32; }
+        .half-left .d-bar:nth-child(2) { height: 40vh; background: #159441; }
+        .half-left .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
+        .half-left .d-bar:nth-child(4) { height: 80vh; background: #1cd861; }
+        .half-left .d-bar:nth-child(5) { height: 100vh; background: #1ed760; } 
 
-        /* Gap Central (Onde fica o texto) */
-        .central-void { width: 60vw; height: 100%; }
+        .half-right .d-bar:nth-child(1) { height: 100vh; background: #1ed760; } 
+        .half-right .d-bar:nth-child(2) { height: 80vh; background: #1cd861; }
+        .half-right .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
+        .half-right .d-bar:nth-child(4) { height: 40vh; background: #159441; }
+        .half-right .d-bar:nth-child(5) { height: 20vh; background: #117a32; }
 
-        /* As Trilhas de Diamantes (Isométricas) */
-        .diamond-track { display: flex; flex-direction: column; }
-
-        /* Forma V/Diamante com poucas barras (4 por diamante) */
-        .diamond-shape { display: flex; align-items: center; justify-content: flex-end; width: 20vw; height: 35vh; margin-bottom: 15vh; }
-        .right-track .diamond-shape { justify-content: flex-start; }
-
-        /* A Barra Individual: Larga e com Efeito Chanfrado (Topo Verde Limão, Frente Verde Escura) */
-        .d-bar { 
-            width: 5vw; /* Larga */
-            background-color: #0c5625; /* Frente Escura */
-            box-sizing: border-box;
-            border-top: 1.5vh solid var(--spotify-green); /* Topo Chanfrado Brilhante */
-            border-radius: 4px;
-            margin: 0 1px;
-            box-shadow: -5px 5px 20px rgba(0,0,0,0.8);
-        }
-
-        /* Escalonamento das alturas para formar o V perfeito das refs */
-        .d1 { height: 100%; z-index: 10; width: 6vw; border-top-width: 2vh;} /* Mais externa (Ponto do V) */
-        .d2 { height: 80%; z-index: 9; }
-        .d3 { height: 60%; z-index: 8; }
-        .d4 { height: 40%; z-index: 7; }
+        @keyframes splitLeft { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+        @keyframes splitRight { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(50vw); } }
 
         /* =========================================
-           5. STORIES E CELEBRAÇÃO (CONFITES REAIS)
+           5. STORIES E CELEBRAÇÃO (CONFITES)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
@@ -155,29 +147,29 @@
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; }
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* ROLETA E CELEBRAÇÃO (Com Canvas de confetes) */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        /* NOVO Canvas de Confetes/Celebração */
+        /* Canvas de Celebração */
         #celebration-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; /* Começa oculto */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
         }
-        @keyframes fadeInConfetti { to { opacity: 0.8; } } /* Brilho suave dos confetes */
+        @keyframes fadeInConfetti { to { opacity: 0.8; } }
 
-        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; z-index: 5010;}
+        /* Roleta Menor (5 blocos como você pediu) */
+        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 250vh; position: absolute; top: -150vh; z-index: 5010;}
         .slot-row {
             flex: 1; display: flex; justify-content: center; align-items: center;
             font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
         
-        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e; }
+        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
+        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
         
-        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(250vh); } }
+        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(150vh); } }
 
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -292,30 +284,17 @@
     </div>
 
     <div id="transition-screen">
-        <div class="diamond-scroller">
-            <div class="central-void"></div>
-            
-            <div class="diamond-track left-track">
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
-            </div>
-
-            <div class="diamond-track right-track">
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
-            </div>
-        </div>
-        
         <div class="transition-text-layer">
-            <h1 class="transition-title">Lucas e Mariana</h1> <p class="transition-sub">Os momentos que marcaram essa relação</p>
+            <h1 class="transition-title">Lucas e Mariana</h1>
+            <p class="transition-sub">Os momentos que marcaram essa relação</p>
+        </div>
+        <div class="diamond-wrapper">
+            <div class="diamond-half half-left">
+                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
+            </div>
+            <div class="diamond-half half-right">
+                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
+            </div>
         </div>
     </div>
 
@@ -330,10 +309,8 @@
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-blue hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
             </div>
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px;">Horas juntos</p>
@@ -358,7 +335,7 @@
         <h1 style="color: var(--spotify-green); font-weight: 800;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
 Há um ano, eu não imaginava que seria tão feliz ao seu lado.
-Você é a "melhor parte" of todos os meus dias.
+Você é a "melhor parte" de todos os meus dias.
 
 Te amo para sempre! ❤️
         </p>
@@ -428,11 +405,13 @@ Te amo para sempre! ❤️
         }
 
         // =========================================
-        // NOVO MOTOR DE CELEBRAÇÃO (Confetes Canvas)
+        // MOTOR DE CELEBRAÇÃO (Confetes)
         // =========================================
         const celCanvas = document.getElementById('celebration-canvas');
         const celCtx = celCanvas.getContext('2d');
         let celebrationInterval;
+        let particles = [];
+        const confettiColors = ['#1ed760', '#191414', '#ffffff', '#ff3399', '#fbc02d'];
 
         function resizeCelebrationCanvas() {
             celCanvas.width = window.innerWidth;
@@ -440,18 +419,14 @@ Te amo para sempre! ❤️
         }
         window.addEventListener('resize', resizeCelebrationCanvas);
 
-        let particles = [];
-        // Cores da celebração (Spotify Branding Colors + Brilho)
-        const confettiColors = ['#1ed760', '#191414', '#ffffff', '#ff3399', '#fbc02d'];
-
         class Confetti {
             constructor() {
                 this.x = Math.random() * celCanvas.width;
-                this.y = Math.random() * -100; // Começa acima da tela
+                this.y = Math.random() * -100; 
                 this.size = Math.random() * 8 + 4;
                 this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                this.speedY = Math.random() * 5 + 3; // Velocidade de queda
-                this.speedX = Math.random() * 3 - 1.5; // Drift lateral
+                this.speedY = Math.random() * 5 + 3; 
+                this.speedX = Math.random() * 3 - 1.5; 
                 this.spin = Math.random() * 360;
                 this.spinSpeed = Math.random() * 10 - 5;
             }
@@ -459,8 +434,6 @@ Te amo para sempre! ❤️
                 this.y += this.speedY;
                 this.x += this.speedX;
                 this.spin += this.spinSpeed;
-                
-                // Se cair, reinicia no topo
                 if (this.y > celCanvas.height) {
                     this.y = -20;
                     this.x = Math.random() * celCanvas.width;
@@ -480,12 +453,10 @@ Te amo para sempre! ❤️
             particles = [];
             resizeCelebrationCanvas();
             celCanvas.style.animation = 'fadeInConfetti 1s forwards';
-            // Cria 100 confetes
             for (let i = 0; i < 100; i++) { particles.push(new Confetti()); }
 
             function animarConfetes() {
                 if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
-                
                 celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
@@ -517,11 +488,10 @@ Te amo para sempre! ❤️
             
             document.getElementById('transition-screen').style.display = 'block';
             
-            // Dura 4 segundos e corta para os Stories
             setTimeout(() => {
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
-            }, 4000);
+            }, 3500);
         }
 
         function abrirStories() {
@@ -540,7 +510,7 @@ Te amo para sempre! ❤️
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
-            celCanvas.style.opacity = '0'; // Esconde confetes de outras telas
+            celCanvas.style.opacity = '0'; 
             
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
@@ -570,7 +540,6 @@ Te amo para sempre! ❤️
                 finalReveal.offsetHeight;
                 finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
                 
-                // GATILHO DA CELEBRAÇÃO: Inicia confetes quando a roleta para
                 setTimeout(iniciarCelebracao, 2500);
 
             } else {
@@ -607,7 +576,7 @@ Te amo para sempre! ❤️
 
         function fecharStories() {
             clearInterval(storyInterval);
-            particles = []; // Limpa confetes
+            particles = []; 
             document.getElementById('stories-screen').style.display = 'none';
         }
     </script>
