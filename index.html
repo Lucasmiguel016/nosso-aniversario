@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify – Nosso Momento</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -27,37 +27,22 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* =========================================
-           TELA DE INTRODUÇÃO
-           ========================================= */
+        /* TELA DE INTRODUÇÃO */
         #intro-screen {
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-color: #000000; 
-            padding: 20px; text-align: center;
-            position: fixed; width: 100%; top: 0; z-index: 100;
-            box-sizing: border-box;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
         }
-
         .intro-title { font-size: clamp(1.8rem, 8vw, 2.5rem); font-weight: 800; color: #fff; margin-bottom: 15px; line-height: 1.2; max-width: 90%; letter-spacing: -1px; }
         .intro-subtitle { font-size: 1rem; font-weight: 400; color: #b3b3b3; margin-bottom: 40px; max-width: 80%; line-height: 1.4; }
         .highlight-green { color: var(--spotify-green); }
-
         .btn-start { 
-            background-color: var(--spotify-green); color: #000000; padding: 16px 40px; 
-            border-radius: 35px; font-weight: 800; text-transform: uppercase; 
-            border: none; cursor: pointer; font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3);
-            transition: transform 0.2s;
+            background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
+            border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
         }
-        .btn-start:active { transform: scale(0.95); }
 
-        /* =========================================
-           TELA DO PLAYER PRINCIPAL
-           ========================================= */
+        /* TELA DO PLAYER */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .top-phrase { font-size: 0.95rem; margin: 20px 0; font-weight: 700; text-align: center; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
@@ -67,162 +52,131 @@
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SOBRE O CASAL */
-        .about-section { background-color: transparent; margin-top: 40px; overflow: hidden; padding-bottom: 25px; position: relative; text-align: left; }
+        /* SOBRE O CASAL E TOP MOMENTOS */
+        .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
         .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
-
-        /* TOP MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* CARTA */
-        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        /* CARTA E CONQUISTAS */
+        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
-
-        /* CONQUISTAS */
-        .achievements-section { background-color: transparent; padding: 0 10px; text-align: left; }
+        .achievements-section { background: transparent; padding: 0 10px; text-align: left; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .achievement-item { background-color: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; transition: 0.3s; }
+        .achievement-item { background: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
         .key-item { border-color: #1ed760; color: #1ed760; }
-        .ring-item { border-color: #fbc02d; color: #fbc02d; }
-        .plane-item { border-color: #2196f3; color: #2196f3; }
-        .wedding-item { border-color: #ff5252; color: #ff5252; }
-        .locked { opacity: 0.15; filter: grayscale(100%); border-style: dashed !important; }
+        .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* GATILHO DE ROLAGEM (ONDA NEON) */
-        #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; transition: opacity 0.3s; }
+        /* GATILHO DE ROLAGEM */
+        #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
-        .neon-wave { width: 100%; height: auto; max-width: 300px; margin: 0 auto; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
+        .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           ANIMAÇÃO EXATA SPOTIFY WRAPPED 2026 (BLOCOS 3D)
+           NOVA TELA DE TRANSIÇÃO: O DIAMANTE WRAPPED
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-            background: #000; z-index: 4000; justify-content: center; align-items: center; overflow: hidden; 
+            background: #000; z-index: 4000; overflow: hidden; 
         }
 
-        .track-container {
-            position: absolute; top: 0; width: 50vw; height: 100vh; overflow: hidden;
+        /* O texto fica por trás do diamante */
+        .transition-text-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 4001; text-align: center;
         }
-        .left-container { left: 0; }
-        .right-container { right: 0; display: flex; flex-direction: column; align-items: flex-end; }
+        .transition-title { font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; }
+        .transition-sub { font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; }
 
-        /* A trilha que rola infinitamente para baixo */
-        .track {
-            width: 100%;
-            height: 200vh; /* 2x o tamanho da tela para o loop perfeito */
-            animation: slideDownWrapped 3s linear infinite;
+        /* As metades do diamante que se abrem */
+        .diamond-wrapper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center; z-index: 4005;
         }
-        .right-container .track { display: flex; flex-direction: column; align-items: flex-end; }
+        .diamond-half { display: flex; align-items: center; height: 100vh; }
+        
+        /* Animação de Abertura da Cortina */
+        .half-left { animation: splitLeft 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
+        .half-right { animation: splitRight 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
 
-        @keyframes slideDownWrapped {
-            0% { transform: translateY(-100vh); }
-            100% { transform: translateY(0); }
-        }
+        /* As barras do diamante */
+        .d-bar { width: 10vw; background: #1ed760; box-shadow: inset -2px 0 10px rgba(0,0,0,0.3); }
+        
+        .half-left .d-bar:nth-child(1) { height: 20vh; background: #169c46; }
+        .half-left .d-bar:nth-child(2) { height: 40vh; background: #18b04f; }
+        .half-left .d-bar:nth-child(3) { height: 60vh; background: #1ac458; }
+        .half-left .d-bar:nth-child(4) { height: 80vh; background: #1cd861; }
+        .half-left .d-bar:nth-child(5) { height: 100vh; background: #1ed760; } /* Centro */
 
-        /* O Segredo do 3D: Bordas chanfradas criam o topo e a lateral iluminada */
-        .w-block {
-            height: 10vh; /* Cada bloco tem 10% da tela */
-            background-color: #0a4d1f; /* Frente Escura */
-            box-sizing: border-box;
-            border-top: 2vh solid #1ed760; /* Topo Iluminado (Verde Wrapped) */
-        }
-        .w-l {
-            border-right: 2vh solid #117a32; /* Lateral Direita (Meio tom) */
-            border-radius: 0 4px 4px 0;
-        }
-        .w-r {
-            border-left: 2vh solid #117a32; /* Lateral Esquerda (Meio tom) */
-            border-radius: 4px 0 0 4px;
-        }
+        .half-right .d-bar:nth-child(1) { height: 100vh; background: #1ed760; } /* Centro */
+        .half-right .d-bar:nth-child(2) { height: 80vh; background: #1cd861; }
+        .half-right .d-bar:nth-child(3) { height: 60vh; background: #1ac458; }
+        .half-right .d-bar:nth-child(4) { height: 40vh; background: #18b04f; }
+        .half-right .d-bar:nth-child(5) { height: 20vh; background: #169c46; }
 
-        .transition-text { 
-            position: relative; z-index: 10; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; padding: 20px; text-align: center; 
+        @keyframes splitLeft {
+            0%, 35% { transform: translateX(0); } /* Fica fechado no começo */
+            100% { transform: translateX(-50vw); } /* Abre pra esquerda */
         }
-        .transition-title { 
-            font-size: 2.8rem; font-weight: 800; color: var(--spotify-green); 
-            margin-bottom: 10px; letter-spacing: -1.5px; 
-            text-shadow: 0 5px 25px rgba(0,0,0,0.9); /* Para saltar sobre os blocos */
-        }
-        .transition-sub { 
-            font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 280px; 
-            line-height: 1.4; text-shadow: 0 3px 15px rgba(0,0,0,0.9); 
+        @keyframes splitRight {
+            0%, 35% { transform: translateX(0); }
+            100% { transform: translateX(50vw); } /* Abre pra direita */
         }
 
         /* =========================================
-           TELA DE STORIES (RETROSPECTIVA)
+           TELA DE STORIES & SLOT MACHINE 3D
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
-        
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
-        
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; }
 
-        /* CONTEÚDO DAS FOTOS */
-        #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
-        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
-        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; pointer-events: none; }
-        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
-
-        /* =========================================
-           STORY 1: HORAS JUNTOS (SLOT MACHINE 3D)
-           ========================================= */
+        /* EXTRUSÃO 3D PESADA (TEXT SHADOW) PARA AS HORAS */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
+        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 300vh; position: absolute; top: -200vh; }
         
-        .slot-machine {
-            display: flex; flex-direction: column; width: 100%;
-            height: 300vh; position: absolute; top: -200vh; 
-        }
-        
-        /* Aprimoramento do Efeito 3D para a Roleta de Números */
         .slot-row {
             flex: 1; display: flex; justify-content: center; align-items: center;
-            font-size: 6rem; font-weight: 800; color: #121212;
-            letter-spacing: -3px;
-            /* Sombras múltiplas para dar o efeito de profundidade do print */
-            text-shadow: 
-                -1px 1px 0 #000,
-                -2px 2px 0 #000,
-                -3px 3px 0 #000,
-                -4px 4px 0 #000,
-                -5px 5px 15px rgba(0,0,0,0.8);
-            box-shadow: inset 0px 10px 20px rgba(0,0,0,0.5), inset 0px -10px 20px rgba(0,0,0,0.5);
+            font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
-
-        @keyframes slideSlots {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(200vh); } 
-        }
+        
+        /* Cores exatas do print com o extrude 3D nas sombras */
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #145a32, -2px 2px 0 #145a32, -3px 3px 0 #145a32, -4px 4px 0 #145a32, -5px 5px 0 #145a32, -6px 6px 0 #145a32; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #6c3483, -2px 2px 0 #6c3483, -3px 3px 0 #6c3483, -4px 4px 0 #6c3483, -5px 5px 0 #6c3483, -6px 6px 0 #6c3483; }
+        .r-orange { background: #f39c12; color: #1a1a1a; text-shadow: -1px 1px 0 #9c640c, -2px 2px 0 #9c640c, -3px 3px 0 #9c640c, -4px 4px 0 #9c640c, -5px 5px 0 #9c640c, -6px 6px 0 #9c640c; }
+        .r-indigo { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e, -5px 5px 0 #1a237e, -6px 6px 0 #1a237e; }
+        
+        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(200vh); } }
 
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85) 60%, #000 100%);
+            background: linear-gradient(transparent, rgba(0,0,0,0.85) 50%, #000 100%);
             opacity: 0; z-index: 10; pointer-events: none;
         }
-        
-        @keyframes fadeInReveal {
-            0% { opacity: 0; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
+        @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; }
         .final-subtitle { font-size: 1.1rem; font-weight: 700; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* FOTOS DOS STORIES */
+        #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
+        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
+        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
+        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
         /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
@@ -241,7 +195,6 @@
 
     <div id="player-screen">
         <p class="top-phrase">Eu te amo mais que tudo! ❤️</p>
-
         <div class="main-card">
             <img src="imagens/imagens/capa.JPEG" class="cover-art">
             <div class="song-info">
@@ -251,9 +204,7 @@
                 </div>
                 <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.6rem;"></i>
             </div>
-
             <div class="progress-bar"><div id="progress"></div></div>
-            
             <div class="controls">
                 <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
                 <i class="fa-solid fa-backward-step"></i>
@@ -270,12 +221,12 @@
                     <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
                 </div>
                 <div class="counter-grid">
-                    <div class="counter-item"><span id="y" class="time-val">0</span><span class="time-uni">Anos</span></div>
-                    <div class="counter-item"><span id="m" class="time-val">0</span><span class="time-uni">Meses</span></div>
-                    <div class="counter-item"><span id="d" class="time-val">0</span><span class="time-uni">Dias</span></div>
-                    <div class="counter-item"><span id="h" class="time-val">0</span><span class="time-uni">Hrs</span></div>
-                    <div class="counter-item"><span id="min" class="time-val">0</span><span class="time-uni">Min</span></div>
-                    <div class="counter-item"><span id="sec" class="time-val">0</span><span class="time-uni">Seg</span></div>
+                    <div class="counter-item"><span id="y">0</span><span class="time-uni">Anos</span></div>
+                    <div class="counter-item"><span id="m">0</span><span class="time-uni">Meses</span></div>
+                    <div class="counter-item"><span id="d">0</span><span class="time-uni">Dias</span></div>
+                    <div class="counter-item"><span id="h">0</span><span class="time-uni">Hrs</span></div>
+                    <div class="counter-item"><span id="min">0</span><span class="time-uni">Min</span></div>
+                    <div class="counter-item"><span id="sec">0</span><span class="time-uni">Seg</span></div>
                 </div>
             </div>
 
@@ -319,67 +270,22 @@
                     <path d="M 10 20 L 80 20 C 110 20, 130 50, 150 50 C 170 50, 185 30, 185 30 L 185 38 C 185 38, 170 60, 140 60 C 110 60, 90 30, 80 30 L 10 30 Z" fill="url(#neonGradient)" rx="5"/>
                 </svg>
             </div>
-
         </div>
     </div>
 
     <div id="transition-screen">
-        
-        <div class="track-container left-container">
-            <div class="track">
-                <div class="w-block w-l" style="width: 45vw;"></div>
-                <div class="w-block w-l" style="width: 35vw;"></div>
-                <div class="w-block w-l" style="width: 25vw;"></div>
-                <div class="w-block w-l" style="width: 15vw;"></div>
-                <div class="w-block w-l" style="width: 10vw;"></div>
-                <div class="w-block w-l" style="width: 10vw;"></div>
-                <div class="w-block w-l" style="width: 15vw;"></div>
-                <div class="w-block w-l" style="width: 25vw;"></div>
-                <div class="w-block w-l" style="width: 35vw;"></div>
-                <div class="w-block w-l" style="width: 45vw;"></div>
-                <div class="w-block w-l" style="width: 45vw;"></div>
-                <div class="w-block w-l" style="width: 35vw;"></div>
-                <div class="w-block w-l" style="width: 25vw;"></div>
-                <div class="w-block w-l" style="width: 15vw;"></div>
-                <div class="w-block w-l" style="width: 10vw;"></div>
-                <div class="w-block w-l" style="width: 10vw;"></div>
-                <div class="w-block w-l" style="width: 15vw;"></div>
-                <div class="w-block w-l" style="width: 25vw;"></div>
-                <div class="w-block w-l" style="width: 35vw;"></div>
-                <div class="w-block w-l" style="width: 45vw;"></div>
-            </div>
-        </div>
-
-        <div class="transition-text">
+        <div class="transition-text-layer">
             <h1 class="transition-title">Lucas e Mariana</h1>
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
-
-        <div class="track-container right-container">
-            <div class="track">
-                <div class="w-block w-r" style="width: 45vw;"></div>
-                <div class="w-block w-r" style="width: 35vw;"></div>
-                <div class="w-block w-r" style="width: 25vw;"></div>
-                <div class="w-block w-r" style="width: 15vw;"></div>
-                <div class="w-block w-r" style="width: 10vw;"></div>
-                <div class="w-block w-r" style="width: 10vw;"></div>
-                <div class="w-block w-r" style="width: 15vw;"></div>
-                <div class="w-block w-r" style="width: 25vw;"></div>
-                <div class="w-block w-r" style="width: 35vw;"></div>
-                <div class="w-block w-r" style="width: 45vw;"></div>
-                <div class="w-block w-r" style="width: 45vw;"></div>
-                <div class="w-block w-r" style="width: 35vw;"></div>
-                <div class="w-block w-r" style="width: 25vw;"></div>
-                <div class="w-block w-r" style="width: 15vw;"></div>
-                <div class="w-block w-r" style="width: 10vw;"></div>
-                <div class="w-block w-r" style="width: 10vw;"></div>
-                <div class="w-block w-r" style="width: 15vw;"></div>
-                <div class="w-block w-r" style="width: 25vw;"></div>
-                <div class="w-block w-r" style="width: 35vw;"></div>
-                <div class="w-block w-r" style="width: 45vw;"></div>
+        <div class="diamond-wrapper">
+            <div class="diamond-half half-left">
+                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
+            </div>
+            <div class="diamond-half half-right">
+                <div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div><div class="d-bar"></div>
             </div>
         </div>
-
     </div>
 
     <div id="stories-screen">
@@ -388,13 +294,12 @@
 
         <div id="story-hours-container">
             <div id="slot-machine" class="slot-machine">
-                <div class="slot-row hours-val" style="background:#ff9800;"></div>
-                <div class="slot-row hours-val" style="background:#4caf50;"></div>
-                <div class="slot-row hours-val" style="background:#e91e63;"></div>
-                <div class="slot-row hours-val" style="background:#ff9800;"></div>
-                <div class="slot-row hours-val" style="background:#3f51b5;"></div>
-                <div class="slot-row hours-val" style="background:#cddc39;"></div>
-                <div class="slot-row hours-val" style="background:#ff9800;"></div>
+                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-indigo hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-green hours-val"></div>
             </div>
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px;">Horas juntos</p>
@@ -438,7 +343,7 @@ Te amo para sempre! ❤️
             
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Aguardando play manual..."));
+            }).catch(e => console.log("Aguardando play..."));
 
             cronometro();
             setInterval(cronometro, 1000);
@@ -503,7 +408,10 @@ Te amo para sempre! ❤️
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
-            document.getElementById('transition-screen').style.display = 'flex';
+            // Ativa o diamante cortina
+            document.getElementById('transition-screen').style.display = 'block';
+            
+            // Depois que o diamante se abre (3.5s), inicia os stories
             setTimeout(() => {
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
@@ -548,12 +456,12 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                slotMachine.style.animation = 'slideSlots 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards';
+                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2s'; 
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
 
             } else {
                 containerHoras.style.display = 'none';
@@ -567,7 +475,7 @@ Te amo para sempre! ❤️
                 storyProgress += 2;
                 currentFill.style.width = storyProgress + '%';
                 if(storyProgress >= 100) { nextStory(); }
-            }, 100);
+            }, 100); // 5 segundos por tela
         }
 
         function nextStory() {
