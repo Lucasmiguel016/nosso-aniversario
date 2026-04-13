@@ -48,7 +48,9 @@
             border-radius: 35px; font-weight: 800; text-transform: uppercase; 
             border: none; cursor: pointer; font-size: 0.9rem;
             box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3);
+            transition: transform 0.2s;
         }
+        .btn-start:active { transform: scale(0.95); }
 
         /* =========================================
            TELA DO PLAYER PRINCIPAL
@@ -102,63 +104,61 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           NOVA ANIMAÇÃO "WRAPPED" VERDE 3D (FLUIDA)
+           ANIMAÇÃO EXATA SPOTIFY WRAPPED 2026 (BLOCOS 3D)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; justify-content: center; align-items: center; overflow: hidden; 
         }
 
-        /* Container das Barras Laterais */
-        .side-bars {
-            position: absolute; top: 0; height: 100vh; display: flex; align-items: center; width: 45vw; z-index: 1;
+        .track-container {
+            position: absolute; top: 0; width: 50vw; height: 100vh; overflow: hidden;
         }
-        .left-bars { left: -2vw; }
-        .right-bars { right: -2vw; flex-direction: row-reverse; }
+        .left-container { left: 0; }
+        .right-container { right: 0; display: flex; flex-direction: column; align-items: flex-end; }
 
-        /* As Fitas 3D */
-        .bar {
-            width: 9vw;
-            background: linear-gradient(180deg, #053313 0%, #1ed760 50%, #053313 100%);
-            background-size: 100% 200%;
-            border-radius: 20px; /* Bordas arredondadas do Wrapped */
-            margin: 0 -2px; /* Remove espaços vazios */
-            animation: flowDown 2s linear infinite;
+        /* A trilha que rola infinitamente para baixo */
+        .track {
+            width: 100%;
+            height: 200vh; /* 2x o tamanho da tela para o loop perfeito */
+            animation: slideDownWrapped 3s linear infinite;
         }
-        
-        /* Sombras para dar profundidade 3D (diferentes para cada lado) */
-        .left-bars .bar { box-shadow: 8px 0 25px rgba(0,0,0,0.9), inset 3px 0 8px rgba(255,255,255,0.3); }
-        .right-bars .bar { box-shadow: -8px 0 25px rgba(0,0,0,0.9), inset -3px 0 8px rgba(255,255,255,0.3); }
+        .right-container .track { display: flex; flex-direction: column; align-items: flex-end; }
 
-        /* O truque do degradê se movendo (parece que as barras descem infinitamente) */
-        @keyframes flowDown {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 200%; }
+        @keyframes slideDownWrapped {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(0); }
         }
 
-        /* Tamanhos escalonados para formar o V perfeito no centro */
-        .b1 { height: 120vh; z-index: 5; } /* Mais externa (maior) */
-        .b2 { height: 95vh;  z-index: 4; }
-        .b3 { height: 75vh;  z-index: 3; }
-        .b4 { height: 55vh;  z-index: 2; }
-        .b5 { height: 35vh;  z-index: 1; } /* Mais interna (menor) */
+        /* O Segredo do 3D: Bordas chanfradas criam o topo e a lateral iluminada */
+        .w-block {
+            height: 10vh; /* Cada bloco tem 10% da tela */
+            background-color: #0a4d1f; /* Frente Escura */
+            box-sizing: border-box;
+            border-top: 2vh solid #1ed760; /* Topo Iluminado (Verde Wrapped) */
+        }
+        .w-l {
+            border-right: 2vh solid #117a32; /* Lateral Direita (Meio tom) */
+            border-radius: 0 4px 4px 0;
+        }
+        .w-r {
+            border-left: 2vh solid #117a32; /* Lateral Esquerda (Meio tom) */
+            border-radius: 4px 0 0 4px;
+        }
 
-        /* Texto Central (Pulsando) */
         .transition-text { 
             position: relative; z-index: 10; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; padding: 20px; text-align: center; 
-            animation: pulseText 2s infinite; 
         }
         .transition-title { 
             font-size: 2.8rem; font-weight: 800; color: var(--spotify-green); 
             margin-bottom: 10px; letter-spacing: -1.5px; 
-            text-shadow: 0 5px 25px rgba(0,0,0,0.9); /* Sombra forte para não sumir no verde */
+            text-shadow: 0 5px 25px rgba(0,0,0,0.9); /* Para saltar sobre os blocos */
         }
         .transition-sub { 
-            font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 250px; 
+            font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 280px; 
             line-height: 1.4; text-shadow: 0 3px 15px rgba(0,0,0,0.9); 
         }
-        @keyframes pulseText { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
         /* =========================================
            TELA DE STORIES (RETROSPECTIVA)
@@ -180,7 +180,7 @@
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
         /* =========================================
-           STORY 1: HORAS JUNTOS (SLOT MACHINE)
+           STORY 1: HORAS JUNTOS (SLOT MACHINE 3D)
            ========================================= */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
@@ -188,12 +188,20 @@
             display: flex; flex-direction: column; width: 100%;
             height: 300vh; position: absolute; top: -200vh; 
         }
+        
+        /* Aprimoramento do Efeito 3D para a Roleta de Números */
         .slot-row {
             flex: 1; display: flex; justify-content: center; align-items: center;
-            font-size: 5rem; font-weight: 800; color: #121212;
-            text-shadow: -4px 4px 0px rgba(0,0,0,0.6); 
-            box-shadow: inset 0px 5px 15px rgba(0,0,0,0.4);
-            letter-spacing: -2px;
+            font-size: 6rem; font-weight: 800; color: #121212;
+            letter-spacing: -3px;
+            /* Sombras múltiplas para dar o efeito de profundidade do print */
+            text-shadow: 
+                -1px 1px 0 #000,
+                -2px 2px 0 #000,
+                -3px 3px 0 #000,
+                -4px 4px 0 #000,
+                -5px 5px 15px rgba(0,0,0,0.8);
+            box-shadow: inset 0px 10px 20px rgba(0,0,0,0.5), inset 0px -10px 20px rgba(0,0,0,0.5);
         }
 
         @keyframes slideSlots {
@@ -213,8 +221,8 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        .final-hours-text { font-size: 4.5rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .final-subtitle { font-size: 1rem; font-weight: 700; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .final-hours-text { font-size: 5rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-subtitle { font-size: 1.1rem; font-weight: 700; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
         /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
@@ -317,12 +325,29 @@
 
     <div id="transition-screen">
         
-        <div class="side-bars left-bars">
-            <div class="bar b1"></div>
-            <div class="bar b2"></div>
-            <div class="bar b3"></div>
-            <div class="bar b4"></div>
-            <div class="bar b5"></div>
+        <div class="track-container left-container">
+            <div class="track">
+                <div class="w-block w-l" style="width: 45vw;"></div>
+                <div class="w-block w-l" style="width: 35vw;"></div>
+                <div class="w-block w-l" style="width: 25vw;"></div>
+                <div class="w-block w-l" style="width: 15vw;"></div>
+                <div class="w-block w-l" style="width: 10vw;"></div>
+                <div class="w-block w-l" style="width: 10vw;"></div>
+                <div class="w-block w-l" style="width: 15vw;"></div>
+                <div class="w-block w-l" style="width: 25vw;"></div>
+                <div class="w-block w-l" style="width: 35vw;"></div>
+                <div class="w-block w-l" style="width: 45vw;"></div>
+                <div class="w-block w-l" style="width: 45vw;"></div>
+                <div class="w-block w-l" style="width: 35vw;"></div>
+                <div class="w-block w-l" style="width: 25vw;"></div>
+                <div class="w-block w-l" style="width: 15vw;"></div>
+                <div class="w-block w-l" style="width: 10vw;"></div>
+                <div class="w-block w-l" style="width: 10vw;"></div>
+                <div class="w-block w-l" style="width: 15vw;"></div>
+                <div class="w-block w-l" style="width: 25vw;"></div>
+                <div class="w-block w-l" style="width: 35vw;"></div>
+                <div class="w-block w-l" style="width: 45vw;"></div>
+            </div>
         </div>
 
         <div class="transition-text">
@@ -330,12 +355,29 @@
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
 
-        <div class="side-bars right-bars">
-            <div class="bar b1"></div>
-            <div class="bar b2"></div>
-            <div class="bar b3"></div>
-            <div class="bar b4"></div>
-            <div class="bar b5"></div>
+        <div class="track-container right-container">
+            <div class="track">
+                <div class="w-block w-r" style="width: 45vw;"></div>
+                <div class="w-block w-r" style="width: 35vw;"></div>
+                <div class="w-block w-r" style="width: 25vw;"></div>
+                <div class="w-block w-r" style="width: 15vw;"></div>
+                <div class="w-block w-r" style="width: 10vw;"></div>
+                <div class="w-block w-r" style="width: 10vw;"></div>
+                <div class="w-block w-r" style="width: 15vw;"></div>
+                <div class="w-block w-r" style="width: 25vw;"></div>
+                <div class="w-block w-r" style="width: 35vw;"></div>
+                <div class="w-block w-r" style="width: 45vw;"></div>
+                <div class="w-block w-r" style="width: 45vw;"></div>
+                <div class="w-block w-r" style="width: 35vw;"></div>
+                <div class="w-block w-r" style="width: 25vw;"></div>
+                <div class="w-block w-r" style="width: 15vw;"></div>
+                <div class="w-block w-r" style="width: 10vw;"></div>
+                <div class="w-block w-r" style="width: 10vw;"></div>
+                <div class="w-block w-r" style="width: 15vw;"></div>
+                <div class="w-block w-r" style="width: 25vw;"></div>
+                <div class="w-block w-r" style="width: 35vw;"></div>
+                <div class="w-block w-r" style="width: 45vw;"></div>
+            </div>
         </div>
 
     </div>
