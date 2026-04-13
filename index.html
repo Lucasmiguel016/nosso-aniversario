@@ -27,7 +27,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* TELA DE INTRODUÇÃO */
+        /* =========================================
+           1. TELA DE INTRODUÇÃO
+           ========================================= */
         #intro-screen {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
@@ -38,11 +40,16 @@
         .btn-start { 
             background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
             border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3); transition: transform 0.2s;
         }
+        .btn-start:active { transform: scale(0.95); }
 
-        /* TELA DO PLAYER */
+        /* =========================================
+           2. TELA DO PLAYER PRINCIPAL E DETALHES
+           ========================================= */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .top-phrase { font-size: 0.95rem; margin: 20px 0; font-weight: 700; text-align: center; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
@@ -52,7 +59,7 @@
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
-        /* SOBRE O CASAL E TOP MOMENTOS */
+        /* Sobre o Casal */
         .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
@@ -60,106 +67,105 @@
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
         .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
+
+        /* Top 4 Momentos */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        /* CARTA E CONQUISTAS */
-        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; }
+        /* Carta de Mensagem */
+        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
         .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+
+        /* Conquistas (Milestones) */
         .achievements-section { background: transparent; padding: 0 10px; text-align: left; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
         .achievement-item { background: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
         .key-item { border-color: #1ed760; color: #1ed760; }
         .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* GATILHO DE ROLAGEM */
+        /* =========================================
+           3. GATILHO DE ROLAGEM (ONDA NEON)
+           ========================================= */
         #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
         .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           NOVA TELA DE TRANSIÇÃO: O DIAMANTE WRAPPED
+           4. TELA DE TRANSIÇÃO (DIAMANTE SPOTIFY WRAPPED)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
 
-        /* O texto fica por trás do diamante */
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 4001; text-align: center;
         }
-        .transition-title { font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; }
+        .transition-title { font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; text-shadow: 0 5px 20px rgba(0,0,0,0.8); }
         .transition-sub { font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; }
 
-        /* As metades do diamante que se abrem */
+        /* Diamante abrindo (Cortina) */
         .diamond-wrapper {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center; z-index: 4005;
         }
         .diamond-half { display: flex; align-items: center; height: 100vh; }
         
-        /* Animação de Abertura da Cortina */
         .half-left { animation: splitLeft 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
         .half-right { animation: splitRight 3.5s cubic-bezier(0.77, 0, 0.17, 1) forwards; }
 
-        /* As barras do diamante */
-        .d-bar { width: 10vw; background: #1ed760; box-shadow: inset -2px 0 10px rgba(0,0,0,0.3); }
+        /* Barras que formam o diamante */
+        .d-bar { width: 10vw; background: #1ed760; box-shadow: inset -2px 0 10px rgba(0,0,0,0.3); border-radius: 4px; margin: 0 1px;}
         
-        .half-left .d-bar:nth-child(1) { height: 20vh; background: #169c46; }
-        .half-left .d-bar:nth-child(2) { height: 40vh; background: #18b04f; }
-        .half-left .d-bar:nth-child(3) { height: 60vh; background: #1ac458; }
+        .half-left .d-bar:nth-child(1) { height: 20vh; background: #117a32; }
+        .half-left .d-bar:nth-child(2) { height: 40vh; background: #159441; }
+        .half-left .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
         .half-left .d-bar:nth-child(4) { height: 80vh; background: #1cd861; }
-        .half-left .d-bar:nth-child(5) { height: 100vh; background: #1ed760; } /* Centro */
+        .half-left .d-bar:nth-child(5) { height: 100vh; background: #1ed760; } 
 
-        .half-right .d-bar:nth-child(1) { height: 100vh; background: #1ed760; } /* Centro */
+        .half-right .d-bar:nth-child(1) { height: 100vh; background: #1ed760; } 
         .half-right .d-bar:nth-child(2) { height: 80vh; background: #1cd861; }
-        .half-right .d-bar:nth-child(3) { height: 60vh; background: #1ac458; }
-        .half-right .d-bar:nth-child(4) { height: 40vh; background: #18b04f; }
-        .half-right .d-bar:nth-child(5) { height: 20vh; background: #169c46; }
+        .half-right .d-bar:nth-child(3) { height: 60vh; background: #1ab852; }
+        .half-right .d-bar:nth-child(4) { height: 40vh; background: #159441; }
+        .half-right .d-bar:nth-child(5) { height: 20vh; background: #117a32; }
 
-        @keyframes splitLeft {
-            0%, 35% { transform: translateX(0); } /* Fica fechado no começo */
-            100% { transform: translateX(-50vw); } /* Abre pra esquerda */
-        }
-        @keyframes splitRight {
-            0%, 35% { transform: translateX(0); }
-            100% { transform: translateX(50vw); } /* Abre pra direita */
-        }
+        @keyframes splitLeft { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+        @keyframes splitRight { 0%, 35% { transform: translateX(0); } 100% { transform: translateX(50vw); } }
 
         /* =========================================
-           TELA DE STORIES & SLOT MACHINE 3D
+           5. TELA DE STORIES & ROLETA (SLOT MACHINE)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
+        
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
+        
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; }
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* EXTRUSÃO 3D PESADA (TEXT SHADOW) PARA AS HORAS */
+        /* Roleta de Horas (Slot Machine 3D) */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
-        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 300vh; position: absolute; top: -200vh; }
+        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; }
         
+        /* Faixas Coloridas e Tipografia 3D */
         .slot-row {
             flex: 1; display: flex; justify-content: center; align-items: center;
             font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
+        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116, -5px 5px 10px rgba(0,0,0,0.8); }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b, -5px 5px 10px rgba(0,0,0,0.8); }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f, -5px 5px 10px rgba(0,0,0,0.8); }
+        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e, -5px 5px 10px rgba(0,0,0,0.8); }
         
-        /* Cores exatas do print com o extrude 3D nas sombras */
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #145a32, -2px 2px 0 #145a32, -3px 3px 0 #145a32, -4px 4px 0 #145a32, -5px 5px 0 #145a32, -6px 6px 0 #145a32; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #6c3483, -2px 2px 0 #6c3483, -3px 3px 0 #6c3483, -4px 4px 0 #6c3483, -5px 5px 0 #6c3483, -6px 6px 0 #6c3483; }
-        .r-orange { background: #f39c12; color: #1a1a1a; text-shadow: -1px 1px 0 #9c640c, -2px 2px 0 #9c640c, -3px 3px 0 #9c640c, -4px 4px 0 #9c640c, -5px 5px 0 #9c640c, -6px 6px 0 #9c640c; }
-        .r-indigo { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e, -5px 5px 0 #1a237e, -6px 6px 0 #1a237e; }
-        
-        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(200vh); } }
+        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(250vh); } }
 
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -169,10 +175,10 @@
         }
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; }
-        .final-subtitle { font-size: 1.1rem; font-weight: 700; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FOTOS DOS STORIES */
+        /* Fotos dos Momentos */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
@@ -294,12 +300,13 @@
 
         <div id="story-hours-container">
             <div id="slot-machine" class="slot-machine">
+                <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-indigo hours-val"></div>
+                <div class="slot-row r-blue hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
             </div>
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px;">Horas juntos</p>
@@ -336,6 +343,7 @@ Te amo para sempre! ❤️
         const barra = document.getElementById('progress');
         const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
 
+        // INÍCIO
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
@@ -350,6 +358,7 @@ Te amo para sempre! ❤️
             setTimeout(iniciarSensorDeRolagem, 500); 
         }
 
+        // MÚSICA
         function controlarMusica() {
             if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); } 
             else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
@@ -359,8 +368,10 @@ Te amo para sempre! ❤️
             if (som.duration) { barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; }
         };
 
+        // CARTA
         function verCarta(s) { document.getElementById('letter-modal').style.display = s ? 'block' : 'none'; }
 
+        // CRONÔMETRO DE ANOS, MESES E DIAS
         function cronometro() {
             const agora = new Date();
             let anos = agora.getFullYear() - dataInicio.getFullYear();
@@ -376,11 +387,13 @@ Te amo para sempre! ❤️
             document.getElementById('sec').innerText = agora.getSeconds();
         }
 
+        // CÁLCULO DAS HORAS TOTAIS PARA A ROLETA
         function calcularHorasTotais() {
             const diffMs = new Date() - dataInicio;
-            return Math.floor(diffMs / (1000 * 60 * 60));
+            return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
         }
 
+        // SENSOR DE ROLAGEM
         function iniciarSensorDeRolagem() {
             const areaGatilho = document.getElementById('scroll-trigger-area');
             const observer = new IntersectionObserver((entradas) => {
@@ -392,6 +405,7 @@ Te amo para sempre! ❤️
             observer.observe(areaGatilho);
         }
 
+        // ARRAY DOS STORIES
         const storiesData = [
             { type: 'hours' }, 
             { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
@@ -404,20 +418,22 @@ Te amo para sempre! ❤️
         let storyInterval;
         let storyProgress = 0;
 
+        // INICIA A ANIMAÇÃO DO DIAMANTE
         function iniciarRetrospectiva() {
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
-            // Ativa o diamante cortina
+            // Exibe a tela preta com o diamante
             document.getElementById('transition-screen').style.display = 'block';
             
-            // Depois que o diamante se abre (3.5s), inicia os stories
+            // Depois de 3.5 segundos (quando o diamante termina de abrir), muda para os Stories
             setTimeout(() => {
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 3500);
         }
 
+        // INICIA OS STORIES
         function abrirStories() {
             document.getElementById('stories-screen').style.display = 'block';
             
@@ -431,6 +447,7 @@ Te amo para sempre! ❤️
             renderStory();
         }
 
+        // RENDERIZA CADA STORY
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
@@ -475,9 +492,10 @@ Te amo para sempre! ❤️
                 storyProgress += 2;
                 currentFill.style.width = storyProgress + '%';
                 if(storyProgress >= 100) { nextStory(); }
-            }, 100); // 5 segundos por tela
+            }, 100);
         }
 
+        // AVANÇAR E VOLTAR
         function nextStory() {
             if(currentStory < storiesData.length - 1) {
                 currentStory++;
