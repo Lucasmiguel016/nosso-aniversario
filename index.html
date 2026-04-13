@@ -27,9 +27,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* =========================================
-           1. TELA DE INTRODUÇÃO
-           ========================================= */
+        /* 1. TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
@@ -40,17 +38,12 @@
         .btn-start { 
             background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
             border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3); transition: transform 0.2s;
         }
-        .btn-start:active { transform: scale(0.95); }
 
-        /* =========================================
-           2. TELA DO PLAYER PRINCIPAL
-           ========================================= */
+        /* 2. TELA DO PLAYER PRINCIPAL */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .top-phrase { font-size: 0.95rem; margin: 20px 0; font-weight: 700; text-align: center; }
         .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
         .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
         .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
@@ -59,14 +52,15 @@
         .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
         .play-btn { font-size: 4rem; cursor: pointer; }
 
+        /* Sobre o Casal e Contador CORRIGIDO */
         .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
         
-        /* CONTADOR CORRIGIDO: Mais espaço entre número e texto */
+        /* ESPAÇAMENTO AJUSTADO: Números e unidades não estão mais grudados */
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
-        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 20px 5px; text-align: center; }
-        .time-val { font-size: 1.8rem; font-weight: 800; display: block; margin-bottom: 5px; }
+        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 22px 5px; text-align: center; }
+        .time-val { font-size: 1.9rem; font-weight: 800; display: block; margin-bottom: 6px; } /* Espaço embaixo do número */
         .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;}
 
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
@@ -84,48 +78,74 @@
         .key-item { border-color: #1ed760; color: #1ed760; }
         .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* =========================================
-           3. GATILHO DE ROLAGEM
-           ========================================= */
+        /* 3. GATILHO DA ONDA NEON */
         #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
         .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER)
+           4. TELA DE TRANSIÇÃO (DIAMANTE OTIMIZADO)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
 
-        #wrapped-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001;
-        }
-
+        /* Texto Central (Corrigido e com Glow) */
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 4005; text-align: center; pointer-events: none;
         }
-        
         .transition-title { 
-            font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
-            text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
-            animation: popIn 0.5s ease-out forwards;
+            font-size: 3rem; font-weight: 900; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -2px; 
+            text-shadow: 0 0 10px rgba(30, 215, 96, 0.8), 0 0 25px rgba(30, 215, 96, 0.5); 
+            opacity: 0; animation: fadePopIn 0.8s forwards 0.5s; /* Entra depois que as barras aparecem */
         }
         .transition-sub { 
-            font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 280px; line-height: 1.4; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
+            font-size: 1.1rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; 
+            opacity: 0; animation: fadePopIn 1s forwards 1.2s; 
+        }
+        @keyframes fadePopIn { 0% { opacity: 0; transform: scale(0.9) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+
+        /* Estrutura do Diamante OTIMIZADA: MENOS BARRAS, MAIS LARGAS (Estilo References) */
+        .diamond-scroller {
+            position: absolute; top: 0; width: 100%; height: 200vh;
+            display: flex; justify-content: center; z-index: 4001;
+            animation: wrappedScrollDown 2.5s linear infinite;
+        }
+        @keyframes wrappedScrollDown { 0% { transform: translateY(-100vh); } 100% { transform: translateY(0); } }
+
+        /* Gap Central (Onde fica o texto) */
+        .central-void { width: 60vw; height: 100%; }
+
+        /* As Trilhas de Diamantes (Isométricas) */
+        .diamond-track { display: flex; flex-direction: column; }
+
+        /* Forma V/Diamante com poucas barras (4 por diamante) */
+        .diamond-shape { display: flex; align-items: center; justify-content: flex-end; width: 20vw; height: 35vh; margin-bottom: 15vh; }
+        .right-track .diamond-shape { justify-content: flex-start; }
+
+        /* A Barra Individual: Larga e com Efeito Chanfrado (Topo Verde Limão, Frente Verde Escura) */
+        .d-bar { 
+            width: 5vw; /* Larga */
+            background-color: #0c5625; /* Frente Escura */
+            box-sizing: border-box;
+            border-top: 1.5vh solid var(--spotify-green); /* Topo Chanfrado Brilhante */
+            border-radius: 4px;
+            margin: 0 1px;
+            box-shadow: -5px 5px 20px rgba(0,0,0,0.8);
         }
 
-        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeInSub { to { opacity: 1; } }
+        /* Escalonamento das alturas para formar o V perfeito das refs */
+        .d1 { height: 100%; z-index: 10; width: 6vw; border-top-width: 2vh;} /* Mais externa (Ponto do V) */
+        .d2 { height: 80%; z-index: 9; }
+        .d3 { height: 60%; z-index: 8; }
+        .d4 { height: 40%; z-index: 7; }
 
         /* =========================================
-           5. TELA DE STORIES & ROLETA 3D FLUIDA
+           5. STORIES E CELEBRAÇÃO (CONFITES REAIS)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
@@ -135,43 +155,48 @@
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; }
 
+        /* ROLETA E CELEBRAÇÃO (Com Canvas de confetes) */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; 
-            will-change: transform; 
+        /* NOVO Canvas de Confetes/Celebração */
+        #celebration-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; /* Começa oculto */
         }
-        
+        @keyframes fadeInConfetti { to { opacity: 0.8; } } /* Brilho suave dos confetes */
+
+        .slot-machine { display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; z-index: 5010;}
         .slot-row {
             flex: 1; display: flex; justify-content: center; align-items: center;
             font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
         
-        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
+        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116; }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f; }
+        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e; }
         
-        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 250vh, 0); } }
+        @keyframes slideSlots { 0% { transform: translateY(0); } 100% { transform: translateY(250vh); } }
 
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
-            opacity: 0; z-index: 10; pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85) 50%, #000 100%);
+            opacity: 0; z-index: 5015; pointer-events: none;
         }
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-hours-text { font-size: 5.5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
+        /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -267,10 +292,30 @@
     </div>
 
     <div id="transition-screen">
-        <canvas id="wrapped-canvas"></canvas>
+        <div class="diamond-scroller">
+            <div class="central-void"></div>
+            
+            <div class="diamond-track left-track">
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+                <div class="diamond-shape"><div class="d-bar d4"></div><div class="d-bar d3"></div><div class="d-bar d2"></div><div class="d-bar d1"></div></div>
+            </div>
+
+            <div class="diamond-track right-track">
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+                <div class="diamond-shape"><div class="d-bar d1"></div><div class="d-bar d2"></div><div class="d-bar d3"></div><div class="d-bar d4"></div></div>
+            </div>
+        </div>
+        
         <div class="transition-text-layer">
-            <h1 class="transition-title">Lucas e Mariana</h1>
-            <p class="transition-sub">Os momentos que marcaram essa relação</p>
+            <h1 class="transition-title">Lucas e Mariana</h1> <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
     </div>
 
@@ -279,6 +324,8 @@
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
         <div id="story-hours-container">
+            <canvas id="celebration-canvas"></canvas>
+
             <div id="slot-machine" class="slot-machine">
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
@@ -311,7 +358,7 @@
         <h1 style="color: var(--spotify-green); font-weight: 800;">Minha Mariana,</h1>
         <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
 Há um ano, eu não imaginava que seria tão feliz ao seu lado.
-Você é a "melhor parte" de todos os meus dias.
+Você é a "melhor parte" of todos os meus dias.
 
 Te amo para sempre! ❤️
         </p>
@@ -323,6 +370,7 @@ Te amo para sempre! ❤️
         const barra = document.getElementById('progress');
         const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
 
+        // INÍCIO
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
@@ -379,50 +427,78 @@ Te amo para sempre! ❤️
             observer.observe(areaGatilho);
         }
 
-        // CANVAS EQUALIZER
-        const canvas = document.getElementById('wrapped-canvas');
-        const ctx = canvas.getContext('2d');
-        let canvasAnimationId;
+        // =========================================
+        // NOVO MOTOR DE CELEBRAÇÃO (Confetes Canvas)
+        // =========================================
+        const celCanvas = document.getElementById('celebration-canvas');
+        const celCtx = celCanvas.getContext('2d');
+        let celebrationInterval;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function resizeCelebrationCanvas() {
+            celCanvas.width = window.innerWidth;
+            celCanvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', resizeCelebrationCanvas);
 
-        function iniciarAnimacaoCanvas() {
-            resizeCanvas();
-            const barWidth = window.innerWidth > 600 ? 30 : 15;
-            const gap = 5;
-            const numBarsPerSide = 8;
-            const heights = [0.2, 0.4, 0.6, 0.8, 1.0, 0.8, 0.6, 0.4];
+        let particles = [];
+        // Cores da celebração (Spotify Branding Colors + Brilho)
+        const confettiColors = ['#1ed760', '#191414', '#ffffff', '#ff3399', '#fbc02d'];
 
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const time = Date.now() * 0.005;
-
-                ctx.shadowBlur = 25;
-                ctx.shadowColor = '#1ed760';
-                ctx.fillStyle = '#1ed760';
-
-                for (let i = 0; i < numBarsPerSide; i++) {
-                    const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
-                    const barHeight = (canvas.height * heights[i]) * pulse;
-                    const y = (canvas.height - barHeight) / 2;
-                    
-                    const xLeft = i * (barWidth + gap);
-                    ctx.fillRect(xLeft, y, barWidth, barHeight);
-
-                    const xRight = canvas.width - ((i + 1) * (barWidth + gap));
-                    ctx.fillRect(xRight, y, barWidth, barHeight);
-                }
-
-                canvasAnimationId = requestAnimationFrame(draw);
+        class Confetti {
+            constructor() {
+                this.x = Math.random() * celCanvas.width;
+                this.y = Math.random() * -100; // Começa acima da tela
+                this.size = Math.random() * 8 + 4;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.speedY = Math.random() * 5 + 3; // Velocidade de queda
+                this.speedX = Math.random() * 3 - 1.5; // Drift lateral
+                this.spin = Math.random() * 360;
+                this.spinSpeed = Math.random() * 10 - 5;
             }
-            draw();
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.spin += this.spinSpeed;
+                
+                // Se cair, reinicia no topo
+                if (this.y > celCanvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * celCanvas.width;
+                }
+            }
+            draw() {
+                celCtx.save();
+                celCtx.translate(this.x, this.y);
+                celCtx.rotate(this.spin * Math.PI / 180);
+                celCtx.fillStyle = this.color;
+                celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                celCtx.restore();
+            }
         }
 
-        // STORIES
+        function iniciarCelebracao() {
+            particles = [];
+            resizeCelebrationCanvas();
+            celCanvas.style.animation = 'fadeInConfetti 1s forwards';
+            // Cria 100 confetes
+            for (let i = 0; i < 100; i++) { particles.push(new Confetti()); }
+
+            function animarConfetes() {
+                if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
+                
+                celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animarConfetes);
+            }
+            animarConfetes();
+        }
+
+        // =========================================
+        // SISTEMA DE STORIES
+        // =========================================
         const storiesData = [
             { type: 'hours' }, 
             { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
@@ -440,10 +516,9 @@ Te amo para sempre! ❤️
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
             document.getElementById('transition-screen').style.display = 'block';
-            iniciarAnimacaoCanvas();
             
+            // Dura 4 segundos e corta para os Stories
             setTimeout(() => {
-                cancelAnimationFrame(canvasAnimationId); 
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 4000);
@@ -465,6 +540,7 @@ Te amo para sempre! ❤️
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
+            celCanvas.style.opacity = '0'; // Esconde confetes de outras telas
             
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
@@ -493,6 +569,9 @@ Te amo para sempre! ❤️
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
                 finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
+                
+                // GATILHO DA CELEBRAÇÃO: Inicia confetes quando a roleta para
+                setTimeout(iniciarCelebracao, 2500);
 
             } else {
                 containerHoras.style.display = 'none';
@@ -528,6 +607,7 @@ Te amo para sempre! ❤️
 
         function fecharStories() {
             clearInterval(storyInterval);
+            particles = []; // Limpa confetes
             document.getElementById('stories-screen').style.display = 'none';
         }
     </script>
