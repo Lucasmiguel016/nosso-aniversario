@@ -74,7 +74,7 @@
         .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
         .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
 
-        /* TOP MOMENTOS */
+        /* TOP 4 MOMENTOS */
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
@@ -102,76 +102,97 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           NOVA ANIMAÇÃO "WRAPPED" VERDE (SPOTIFY)
+           TELA DE TRANSIÇÃO (WRAPPED VERDE)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-            background: #000; z-index: 4000; 
-            justify-content: center; align-items: center; overflow: hidden; 
+            background: #000; z-index: 4000; justify-content: center; align-items: center; overflow: hidden; 
         }
 
-        /* Blocos verdes descendo pela Esquerda */
         .wrapped-left {
             position: absolute; left: 0; top: -360px;
             width: 120px; height: calc(100vh + 720px);
-            /* Desenho SVG das camadas 3D em tons de verde */
             background-image: url('data:image/svg+xml;utf8,<svg width="120" height="360" viewBox="0 0 120 360" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="120" height="60" fill="%231ed760"/><rect x="0" y="60" width="100" height="60" fill="%231ab852"/><rect x="0" y="120" width="80" height="60" fill="%23159441"/><rect x="0" y="180" width="60" height="60" fill="%23107532"/><rect x="0" y="240" width="80" height="60" fill="%23159441"/><rect x="0" y="300" width="100" height="60" fill="%231ab852"/></svg>');
-            background-size: 120px 360px;
-            background-repeat: repeat-y;
-            animation: slideUp 2.5s linear infinite;
-            z-index: 1;
+            background-size: 120px 360px; background-repeat: repeat-y; animation: slideUp 2.5s linear infinite; z-index: 1;
         }
 
-        /* Blocos verdes descendo pela Direita */
         .wrapped-right {
             position: absolute; right: 0; top: -360px;
             width: 120px; height: calc(100vh + 720px);
-            /* Desenho SVG espelhado para o lado direito */
             background-image: url('data:image/svg+xml;utf8,<svg width="120" height="360" viewBox="0 0 120 360" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="120" height="60" fill="%231ed760"/><rect x="20" y="60" width="100" height="60" fill="%231ab852"/><rect x="40" y="120" width="80" height="60" fill="%23159441"/><rect x="60" y="180" width="60" height="60" fill="%23107532"/><rect x="40" y="240" width="80" height="60" fill="%23159441"/><rect x="20" y="300" width="100" height="60" fill="%231ab852"/></svg>');
-            background-size: 120px 360px;
-            background-repeat: repeat-y;
-            animation: slideDown 2.5s linear infinite;
-            z-index: 1;
+            background-size: 120px 360px; background-repeat: repeat-y; animation: slideDown 2.5s linear infinite; z-index: 1;
         }
 
         @keyframes slideUp { from { transform: translateY(0); } to { transform: translateY(-360px); } }
         @keyframes slideDown { from { transform: translateY(-360px); } to { transform: translateY(0); } }
 
-        /* Texto Central da Animação */
-        .transition-text { 
-            position: relative; z-index: 10;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 20px; text-align: center; animation: pulseText 2s infinite; 
-        }
-        .transition-title { 
-            font-size: 2.5rem; font-weight: 800; color: var(--spotify-green); 
-            margin-bottom: 10px; letter-spacing: -1.5px; 
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Sombra para destacar sobre os blocos */
-        }
-        .transition-sub { 
-            font-size: 1rem; font-weight: 700; color: #fff; max-width: 250px; 
-            line-height: 1.4; text-shadow: 0 2px 10px rgba(0,0,0,0.8); 
-        }
+        .transition-text { position: relative; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; animation: pulseText 2s infinite; }
+        .transition-title { font-size: 2.5rem; font-weight: 800; color: var(--spotify-green); margin-bottom: 10px; letter-spacing: -1.5px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .transition-sub { font-size: 1rem; font-weight: 700; color: #fff; max-width: 250px; line-height: 1.4; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         @keyframes pulseText { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
         /* =========================================
            TELA DE STORIES (RETROSPECTIVA)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
-        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); transition: opacity 0.3s; }
-        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; pointer-events: none; }
-        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
         
-        .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5010; }
+        /* Controles invisíveis para tocar */
+        .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
+        .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
+        
+        .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
+        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        /* CONTEÚDO DAS FOTOS (Oculto na tela de horas) */
+        #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
+        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
+        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; pointer-events: none; }
+        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
+
+        /* =========================================
+           STORY 1: HORAS JUNTOS (SLOT MACHINE)
+           ========================================= */
+        #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5010; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5005; cursor: pointer; }
-        .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5005; cursor: pointer; }
+        .slot-machine {
+            display: flex; flex-direction: column; width: 100%;
+            height: 300vh; /* Altura grande para a rolagem */
+            position: absolute; top: -200vh; /* Começa lá no alto e desce */
+        }
+        .slot-row {
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            font-size: 5rem; font-weight: 800; color: #121212;
+            text-shadow: -4px 4px 0px rgba(0,0,0,0.6); /* Efeito 3D forte */
+            box-shadow: inset 0px 5px 15px rgba(0,0,0,0.4);
+            letter-spacing: -2px;
+        }
+
+        /* Animação que faz as faixas descerem rápido */
+        @keyframes slideSlots {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(200vh); } 
+        }
+
+        /* Tela final que aparece após a rolagem das horas */
+        .final-hours-reveal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85) 60%, #000 100%);
+            opacity: 0; z-index: 10; pointer-events: none;
+        }
+        
+        @keyframes fadeInReveal {
+            0% { opacity: 0; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .final-hours-text { font-size: 4.5rem; font-weight: 800; color: #fff; margin: 0; letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-subtitle { font-size: 1rem; font-weight: 700; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
         /* MODAL CARTA */
-        #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 2000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
+        #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
 </head>
@@ -272,22 +293,42 @@
 
     <div id="transition-screen">
         <div class="wrapped-left"></div>
-        
         <div class="transition-text">
             <h1 class="transition-title">Lucas e Mariana</h1>
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
-
         <div class="wrapped-right"></div>
     </div>
 
     <div id="stories-screen">
         <div class="story-progress-container" id="story-bars"></div>
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
-        <img id="story-img" class="story-img-bg" src="">
-        <div class="story-content">
-            <h2 id="story-text" class="story-text"></h2>
+
+        <div id="story-hours-container">
+            <div id="slot-machine" class="slot-machine">
+                <div class="slot-row hours-val" style="background:#ff9800;"></div>
+                <div class="slot-row hours-val" style="background:#4caf50;"></div>
+                <div class="slot-row hours-val" style="background:#e91e63;"></div>
+                <div class="slot-row hours-val" style="background:#ff9800;"></div>
+                <div class="slot-row hours-val" style="background:#3f51b5;"></div>
+                <div class="slot-row hours-val" style="background:#cddc39;"></div>
+                <div class="slot-row hours-val" style="background:#ff9800;"></div>
+            </div>
+            
+            <div id="final-hours-reveal" class="final-hours-reveal">
+                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px;">Horas juntos</p>
+                <h1 id="final-hours-text" class="final-hours-text">0</h1>
+                <p class="final-subtitle">14% dos casais no mundo ✨</p>
+            </div>
         </div>
+
+        <div id="story-photo-container">
+            <img id="story-img" class="story-img-bg" src="">
+            <div class="story-content">
+                <h2 id="story-text" class="story-text"></h2>
+            </div>
+        </div>
+
         <div class="story-left-click" onclick="prevStory()"></div>
         <div class="story-right-click" onclick="nextStory()"></div>
     </div>
@@ -304,10 +345,11 @@ Te amo para sempre! ❤️
     </div>
 
     <script>
-        // ================= CONTROLES GERAIS E MÚSICA =================
+        // ================= CONTROLES GERAIS =================
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
         const barra = document.getElementById('progress');
+        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
 
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
@@ -320,8 +362,6 @@ Te amo para sempre! ❤️
 
             cronometro();
             setInterval(cronometro, 1000);
-
-            // Inicia o sensor de rolagem após meio segundo
             setTimeout(iniciarSensorDeRolagem, 500); 
         }
 
@@ -334,27 +374,9 @@ Te amo para sempre! ❤️
             if (som.duration) { barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; }
         };
 
-        function verCarta(s) {
-            document.getElementById('letter-modal').style.display = s ? 'block' : 'none';
-        }
-
-        // ================= SENSOR DE ROLAGEM (GATILHO) =================
-        function iniciarSensorDeRolagem() {
-            const areaGatilho = document.getElementById('scroll-trigger-area');
-            
-            const observer = new IntersectionObserver((entradas) => {
-                if (entradas[0].isIntersecting) {
-                    // Quando a onda rosa aparece, chama a retrospectiva
-                    iniciarRetrospectiva();
-                    observer.unobserve(areaGatilho); // Desliga para não rodar duas vezes
-                }
-            }, { threshold: 0.6 });
-
-            observer.observe(areaGatilho);
-        }
+        function verCarta(s) { document.getElementById('letter-modal').style.display = s ? 'block' : 'none'; }
 
         // ================= CRONÔMETRO =================
-        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
         function cronometro() {
             const agora = new Date();
             let anos = agora.getFullYear() - dataInicio.getFullYear();
@@ -370,12 +392,33 @@ Te amo para sempre! ❤️
             document.getElementById('sec').innerText = agora.getSeconds();
         }
 
+        // Função que calcula exatamente as HORAS TOTAIS
+        function calcularHorasTotais() {
+            const diffMs = new Date() - dataInicio;
+            return Math.floor(diffMs / (1000 * 60 * 60));
+        }
+
+        // ================= SENSOR DE ROLAGEM =================
+        function iniciarSensorDeRolagem() {
+            const areaGatilho = document.getElementById('scroll-trigger-area');
+            const observer = new IntersectionObserver((entradas) => {
+                if (entradas[0].isIntersecting) {
+                    iniciarRetrospectiva();
+                    observer.unobserve(areaGatilho);
+                }
+            }, { threshold: 0.6 });
+            observer.observe(areaGatilho);
+        }
+
         // ================= SISTEMA DE STORIES E RETROSPECTIVA =================
+        
+        // Agora o primeiro item é o tipo 'hours', e o resto são fotos
         const storiesData = [
-            { img: 'imagens/imagens/capa.JPEG', text: 'Nosso primeiro "Eu te amo"' },
-            { img: 'imagens/imagens/casal_perfil.JPEG', text: 'Quer ir no shopping?' },
-            { img: 'imagens/imagens/capa.JPEG', text: 'Vamos comer poke?' },
-            { img: 'imagens/imagens/casal_perfil.JPEG', text: 'Você tá tentando me derrubar?' }
+            { type: 'hours' }, 
+            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
+            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Quer ir no shopping?' },
+            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Vamos comer poke?' },
+            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Você tá tentando me derrubar?' }
         ];
         
         let currentStory = 0;
@@ -383,13 +426,11 @@ Te amo para sempre! ❤️
         let storyProgress = 0;
 
         function iniciarRetrospectiva() {
-            // Pausa a música e exibe a tela de transição Verde do Wrapped
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
+            // Exibe Animação Verde por 3.5s
             document.getElementById('transition-screen').style.display = 'flex';
-
-            // Aguarda 3.5 segundos curtindo a animação verde antes de abrir os stories
             setTimeout(() => {
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
@@ -413,16 +454,49 @@ Te amo para sempre! ❤️
             clearInterval(storyInterval);
             storyProgress = 0;
             
+            // Preenche as barras superiores
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
                 if (i < currentStory) fill.style.width = '100%';
-                else if (i > currentStory) fill.style.width = '0%';
                 else fill.style.width = '0%'; 
             }
             
-            document.getElementById('story-img').src = storiesData[currentStory].img;
-            document.getElementById('story-text').innerHTML = storiesData[currentStory].text;
+            const story = storiesData[currentStory];
+            const containerHoras = document.getElementById('story-hours-container');
+            const containerFotos = document.getElementById('story-photo-container');
+
+            if (story.type === 'hours') {
+                // EXIBE ANIMAÇÃO DE HORAS (SLOT MACHINE)
+                containerFotos.style.display = 'none';
+                containerHoras.style.display = 'block';
+
+                let totalHoras = calcularHorasTotais().toLocaleString('pt-BR');
+                
+                // Preenche o número nas faixas coloridas e no texto final
+                document.querySelectorAll('.hours-val').forEach(el => el.innerText = totalHoras);
+                document.getElementById('final-hours-text').innerText = totalHoras;
+
+                // Reseta e dispara animação da Slot Machine
+                const slotMachine = document.getElementById('slot-machine');
+                slotMachine.style.animation = 'none';
+                slotMachine.offsetHeight; // Força re-render
+                slotMachine.style.animation = 'slideSlots 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards';
+
+                // Reseta e dispara o Fade in do resultado final
+                const finalReveal = document.getElementById('final-hours-reveal');
+                finalReveal.style.animation = 'none';
+                finalReveal.offsetHeight;
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2s'; // Inicia depois de 2s
+
+            } else {
+                // EXIBE FOTOS NORMAIS
+                containerHoras.style.display = 'none';
+                containerFotos.style.display = 'block';
+                document.getElementById('story-img').src = story.img;
+                document.getElementById('story-text').innerHTML = story.text;
+            }
             
+            // Temporizador do story (5 segundos por story)
             const currentFill = document.getElementById(`fill-${currentStory}`);
             storyInterval = setInterval(() => {
                 storyProgress += 2;
