@@ -62,10 +62,12 @@
         .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
         .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        
+        /* CONTADOR CORRIGIDO: Mais espaço entre número e texto */
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
-        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 15px 5px; text-align: center; }
-        .time-val { font-size: 1.8rem; font-weight: 800; display: block; }
-        .time-uni { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; }
+        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 20px 5px; text-align: center; }
+        .time-val { font-size: 1.8rem; font-weight: 800; display: block; margin-bottom: 5px; }
+        .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;}
 
         .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
@@ -98,7 +100,6 @@
             background: #000; z-index: 4000; overflow: hidden; 
         }
 
-        /* O Canvas que processa as barras verdes brilhantes a 60fps */
         #wrapped-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001;
         }
@@ -109,7 +110,6 @@
             z-index: 4005; text-align: center; pointer-events: none;
         }
         
-        /* Efeito de Neon Glow no Texto (Estilo CapCut) */
         .transition-title { 
             font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
             text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
@@ -137,10 +137,8 @@
         .story-fill { height: 100%; background: #fff; width: 0%; }
         .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* ROLETA (SLOT MACHINE) OTIMIZADA PARA HARDWARE */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        /* Uso de will-change para evitar travamentos durante o giro */
         .slot-machine { 
             display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; 
             will-change: transform; 
@@ -169,13 +167,11 @@
         .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
-        /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -218,12 +214,12 @@
                     <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
                 </div>
                 <div class="counter-grid">
-                    <div class="counter-item"><span id="y">0</span><span class="time-uni">Anos</span></div>
-                    <div class="counter-item"><span id="m">0</span><span class="time-uni">Meses</span></div>
-                    <div class="counter-item"><span id="d">0</span><span class="time-uni">Dias</span></div>
-                    <div class="counter-item"><span id="h">0</span><span class="time-uni">Hrs</span></div>
-                    <div class="counter-item"><span id="min">0</span><span class="time-uni">Min</span></div>
-                    <div class="counter-item"><span id="sec">0</span><span class="time-uni">Seg</span></div>
+                    <div class="counter-item"><span id="y" class="time-val">0</span><span class="time-uni">Anos</span></div>
+                    <div class="counter-item"><span id="m" class="time-val">0</span><span class="time-uni">Meses</span></div>
+                    <div class="counter-item"><span id="d" class="time-val">0</span><span class="time-uni">Dias</span></div>
+                    <div class="counter-item"><span id="h" class="time-val">0</span><span class="time-uni">Hrs</span></div>
+                    <div class="counter-item"><span id="min" class="time-val">0</span><span class="time-uni">Min</span></div>
+                    <div class="counter-item"><span id="sec" class="time-val">0</span><span class="time-uni">Seg</span></div>
                 </div>
             </div>
 
@@ -273,7 +269,7 @@
     <div id="transition-screen">
         <canvas id="wrapped-canvas"></canvas>
         <div class="transition-text-layer">
-            <h1 class="transition-title">Edu e Ana</h1>
+            <h1 class="transition-title">Lucas e Mariana</h1>
             <p class="transition-sub">Os momentos que marcaram essa relação</p>
         </div>
     </div>
@@ -327,7 +323,6 @@ Te amo para sempre! ❤️
         const barra = document.getElementById('progress');
         const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
 
-        // INÍCIO
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
@@ -342,7 +337,6 @@ Te amo para sempre! ❤️
             setTimeout(iniciarSensorDeRolagem, 500); 
         }
 
-        // MÚSICA
         function controlarMusica() {
             if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); } 
             else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
@@ -352,10 +346,8 @@ Te amo para sempre! ❤️
             if (som.duration) { barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; }
         };
 
-        // CARTA
         function verCarta(s) { document.getElementById('letter-modal').style.display = s ? 'block' : 'none'; }
 
-        // CRONÔMETRO DE ANOS, MESES E DIAS
         function cronometro() {
             const agora = new Date();
             let anos = agora.getFullYear() - dataInicio.getFullYear();
@@ -371,13 +363,11 @@ Te amo para sempre! ❤️
             document.getElementById('sec').innerText = agora.getSeconds();
         }
 
-        // CÁLCULO DAS HORAS TOTAIS
         function calcularHorasTotais() {
             const diffMs = new Date() - dataInicio;
             return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
         }
 
-        // SENSOR DE ROLAGEM
         function iniciarSensorDeRolagem() {
             const areaGatilho = document.getElementById('scroll-trigger-area');
             const observer = new IntersectionObserver((entradas) => {
@@ -389,9 +379,7 @@ Te amo para sempre! ❤️
             observer.observe(areaGatilho);
         }
 
-        // =========================================
-        // MOTOR GRÁFICO DO CANVAS (EQUALIZER CAPCUT)
-        // =========================================
+        // CANVAS EQUALIZER
         const canvas = document.getElementById('wrapped-canvas');
         const ctx = canvas.getContext('2d');
         let canvasAnimationId;
@@ -407,30 +395,24 @@ Te amo para sempre! ❤️
             const barWidth = window.innerWidth > 600 ? 30 : 15;
             const gap = 5;
             const numBarsPerSide = 8;
-            
-            // Fatores de altura para formar o Diamante (U invertido)
             const heights = [0.2, 0.4, 0.6, 0.8, 1.0, 0.8, 0.6, 0.4];
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const time = Date.now() * 0.005; // Velocidade da pulsação
+                const time = Date.now() * 0.005;
 
                 ctx.shadowBlur = 25;
                 ctx.shadowColor = '#1ed760';
                 ctx.fillStyle = '#1ed760';
 
                 for (let i = 0; i < numBarsPerSide; i++) {
-                    // Calcula a pulsação fluida baseada na posição e no tempo (seno)
                     const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
                     const barHeight = (canvas.height * heights[i]) * pulse;
-                    
                     const y = (canvas.height - barHeight) / 2;
                     
-                    // Lado Esquerdo
                     const xLeft = i * (barWidth + gap);
                     ctx.fillRect(xLeft, y, barWidth, barHeight);
 
-                    // Lado Direito
                     const xRight = canvas.width - ((i + 1) * (barWidth + gap));
                     ctx.fillRect(xRight, y, barWidth, barHeight);
                 }
@@ -440,9 +422,7 @@ Te amo para sempre! ❤️
             draw();
         }
 
-        // =========================================
-        // GERENCIADOR DE STORIES
-        // =========================================
+        // STORIES
         const storiesData = [
             { type: 'hours' }, 
             { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
@@ -459,13 +439,11 @@ Te amo para sempre! ❤️
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             
-            // Exibe e inicia o Canvas Equalizer
             document.getElementById('transition-screen').style.display = 'block';
             iniciarAnimacaoCanvas();
             
-            // Dura 4 segundos e corta para os Stories
             setTimeout(() => {
-                cancelAnimationFrame(canvasAnimationId); // Para o canvas para economizar bateria
+                cancelAnimationFrame(canvasAnimationId); 
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 4000);
@@ -509,7 +487,6 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                // Animação acelerada por hardware (translate3d)
                 slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
