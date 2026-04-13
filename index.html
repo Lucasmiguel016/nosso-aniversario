@@ -92,18 +92,23 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
         /* =========================================
-           4. TELA DE TRANSIÇÃO (SEU CÓDIGO INTACTO)
+           4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER)
            ========================================= */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
-        #wrapped-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001; }
+
+        #wrapped-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001;
+        }
+
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 4005; text-align: center; pointer-events: none;
         }
+        
         .transition-title { 
             font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
             text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
@@ -114,15 +119,18 @@
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
             animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
         }
+
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes fadeInSub { to { opacity: 1; } }
 
         /* =========================================
-           5. TELA DE STORIES
+           5. TELA DE STORIES & ROLETA 3D FLUIDA
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
+        
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
+        
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
@@ -130,74 +138,54 @@
 
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
         
-        /* NOVO CANVAS DE CELEBRAÇÃO (Poeira Mágica) */
+        /* CANVAS DE CELEBRAÇÃO (CONFETES) */
         #celebration-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
         }
-        @keyframes fadeInConfetti { to { opacity: 1; } }
+        @keyframes fadeInConfetti { to { opacity: 0.8; } }
 
-        /* =========================================
-           O QUE VOCÊ PEDIU: ROLETA PARA CIMA E MAIS BLOCOS
-           ========================================= */
+        /* ROLETA AJUSTADA: 5 BLOCOS */
         .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; 
-            height: 300vh; /* Altura total de 20 blocos de 15vh */
-            position: absolute; top: 0; left: 0;
-            transform: translateY(100vh); /* Começa PRETO, lá embaixo, fora da tela */
+            display: flex; flex-direction: column; width: 100%; height: 250vh; position: absolute; top: -150vh; 
             will-change: transform; z-index: 5010;
         }
         
         .slot-row {
-            height: 15vh; /* Altura achatada para caber mais blocos na tela */
-            display: flex; justify-content: center; align-items: center;
-            font-size: 12vh; /* Número prensado e gigante */
-            font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
         
-        /* Cores das barras com efeito 3D */
+        /* CORES E SOMBRAS EXATAS DO PRINT */
         .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
         .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
         .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
         .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
         
-        /* Animação PARA CIMA! Começa em 100vh e vai pra -200vh (deslizando 300vh de distância) */
-        @keyframes slideSlotsUp { 
-            0% { transform: translate3d(0, 100vh, 0); } 
-            100% { transform: translate3d(0, -200vh, 0); } 
-        }
+        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 150vh, 0); } }
 
-        /* =========================================
-           O QUE VOCÊ PEDIU: EFEITOS AMARELOS (ZIGZAG)
-           ========================================= */
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: #000; /* Fundo preto sólido final */
-            opacity: 0; z-index: 5015; pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
+            opacity: 0; z-index: 10; pointer-events: none;
         }
-
-        /* Zigzag Amarelo do Topo */
-        .reveal-yellow-top { position: absolute; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
-        .reveal-yellow-top .y-fill { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 12vh; width: 100%; }
-        .reveal-yellow-top .y-saw-down { width: 100%; height: 35px; background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
-
-        /* Zigzag Amarelo da Base */
-        .reveal-yellow-bottom { position: absolute; bottom: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
-        .reveal-yellow-bottom .y-saw-up { width: 100%; height: 35px; background: linear-gradient(45deg, #ffb300 50%, transparent 50%), linear-gradient(-45deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
-        .reveal-yellow-bottom .y-fill { background: linear-gradient(to top, #ffe600, #ffb300); height: 12vh; width: 100%; }
-
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 5020;}
-        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; z-index: 5020;}
+        /* NOVA ESCADA AMARELA (CORRIGIDA) */
+        .reveal-yellow-top { position: absolute; top: 0; left: 0; width: 100%; height: 12vh; display: flex; align-items: flex-start; z-index: 5016; }
+        .reveal-yellow-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 12vh; display: flex; align-items: flex-end; z-index: 5016; }
+        
+        .y-stair { flex: 1; width: 100%; background: linear-gradient(to bottom, #ffe600, #ffb300); }
+        .reveal-yellow-bottom .y-stair { background: linear-gradient(to top, #ffe600, #ffb300); }
 
-        /* FOTOS DOS STORIES */
+        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 5020; }
+        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; z-index: 5020; }
+
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
-        /* MODAL CARTA */
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
@@ -312,44 +300,44 @@
                 <div class="slot-row r-pink hours-val"></div>
                 <div class="slot-row r-blue hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
-                
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
             </div>
-
+            
             <div id="final-hours-reveal" class="final-hours-reveal">
-                
                 <div class="reveal-yellow-top">
-                    <div class="y-fill"></div>
-                    <div class="y-saw-down"></div>
+                    <div class="y-stair" style="height: 100%"></div>
+                    <div class="y-stair" style="height: 91%"></div>
+                    <div class="y-stair" style="height: 83%"></div>
+                    <div class="y-stair" style="height: 75%"></div>
+                    <div class="y-stair" style="height: 66%"></div>
+                    <div class="y-stair" style="height: 58%"></div>
+                    <div class="y-stair" style="height: 50%"></div>
+                    <div class="y-stair" style="height: 41%"></div>
+                    <div class="y-stair" style="height: 33%"></div>
+                    <div class="y-stair" style="height: 25%"></div>
+                    <div class="y-stair" style="height: 16%"></div>
+                    <div class="y-stair" style="height: 8%"></div>
                 </div>
 
                 <canvas id="celebration-canvas"></canvas>
 
-                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index:5020;">Horas juntos</p>
+                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020;">Horas juntos</p>
                 <h1 id="final-hours-text" class="final-hours-text">0</h1>
                 <p class="final-subtitle">14% dos casais no mundo ✨</p>
 
                 <div class="reveal-yellow-bottom">
-                    <div class="y-saw-up"></div>
-                    <div class="y-fill"></div>
+                    <div class="y-stair" style="height: 100%"></div>
+                    <div class="y-stair" style="height: 91%"></div>
+                    <div class="y-stair" style="height: 83%"></div>
+                    <div class="y-stair" style="height: 75%"></div>
+                    <div class="y-stair" style="height: 66%"></div>
+                    <div class="y-stair" style="height: 58%"></div>
+                    <div class="y-stair" style="height: 50%"></div>
+                    <div class="y-stair" style="height: 41%"></div>
+                    <div class="y-stair" style="height: 33%"></div>
+                    <div class="y-stair" style="height: 25%"></div>
+                    <div class="y-stair" style="height: 16%"></div>
+                    <div class="y-stair" style="height: 8%"></div>
                 </div>
-
             </div>
         </div>
 
@@ -437,7 +425,7 @@ Te amo para sempre! ❤️
             observer.observe(areaGatilho);
         }
 
-        // CANVAS EQUALIZER (TRANSIÇÃO ORIGINAL)
+        // CANVAS EQUALIZER
         const canvas = document.getElementById('wrapped-canvas');
         const ctx = canvas.getContext('2d');
         let canvasAnimationId;
@@ -480,13 +468,11 @@ Te amo para sempre! ❤️
             draw();
         }
 
-        // =========================================
-        // MOTOR DA POEIRA MÁGICA
-        // =========================================
+        // MOTOR DE CONFETES E CELEBRAÇÃO
         const celCanvas = document.getElementById('celebration-canvas');
         const celCtx = celCanvas.getContext('2d');
         let particles = [];
-        const dustColors = ['#ffeb3b', '#fff59d', '#ffffff', '#fbc02d'];
+        const confettiColors = ['#1ed760', '#ffd700', '#ffffff', '#ff3399'];
 
         function resizeCelebrationCanvas() {
             if(!celCanvas) return;
@@ -495,35 +481,31 @@ Te amo para sempre! ❤️
         }
         window.addEventListener('resize', resizeCelebrationCanvas);
 
-        class DustParticle {
+        class Confetti {
             constructor() {
                 this.x = Math.random() * celCanvas.width;
-                this.y = Math.random() * celCanvas.height; 
-                this.size = Math.random() * 4 + 2; 
-                this.color = dustColors[Math.floor(Math.random() * dustColors.length)];
-                this.speedY = Math.random() * 2 - 1; // Flutua suavemente
-                this.speedX = Math.random() * 1 - 0.5; 
+                this.y = Math.random() * -100; 
+                this.size = Math.random() * 6 + 4;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.speedY = Math.random() * 4 + 2; 
+                this.speedX = Math.random() * 2 - 1; 
                 this.spin = Math.random() * 360;
-                this.spinSpeed = Math.random() * 2 - 1;
-                this.opacity = Math.random() * 0.6 + 0.2;
+                this.spinSpeed = Math.random() * 10 - 5;
             }
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX;
                 this.spin += this.spinSpeed;
-                if (this.y > celCanvas.height + 10) this.y = -10;
-                if (this.y < -10) this.y = celCanvas.height + 10;
-                if (this.x > celCanvas.width + 10) this.x = -10;
-                if (this.x < -10) this.x = celCanvas.width + 10;
+                if (this.y > celCanvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * celCanvas.width;
+                }
             }
             draw() {
                 celCtx.save();
-                celCtx.globalAlpha = this.opacity;
                 celCtx.translate(this.x, this.y);
                 celCtx.rotate(this.spin * Math.PI / 180);
                 celCtx.fillStyle = this.color;
-                celCtx.shadowBlur = 8;
-                celCtx.shadowColor = this.color;
                 celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
                 celCtx.restore();
             }
@@ -532,18 +514,19 @@ Te amo para sempre! ❤️
         function iniciarCelebracao() {
             particles = [];
             resizeCelebrationCanvas();
-            for (let i = 0; i < 60; i++) { particles.push(new DustParticle()); }
+            celCanvas.style.animation = 'fadeInConfetti 1s forwards';
+            for (let i = 0; i < 80; i++) { particles.push(new Confetti()); }
 
-            function animarParticulas() {
+            function animarConfetes() {
                 if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
                 celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
                 for (let i = 0; i < particles.length; i++) {
                     particles[i].update();
                     particles[i].draw();
                 }
-                requestAnimationFrame(animarParticulas);
+                requestAnimationFrame(animarConfetes);
             }
-            animarParticulas();
+            animarConfetes();
         }
 
         // STORIES
@@ -589,6 +572,7 @@ Te amo para sempre! ❤️
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
+            celCanvas.style.opacity = '0'; 
             
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
@@ -611,17 +595,14 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                
-                // MÁGICA AQUI: A animação "slideSlotsUp" chama as colunas de baixo para cima!
-                slotMachine.style.animation = 'slideSlotsUp 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
+                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.5s'; 
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
 
-                // Dispara o pó mágico após a tela preta aparecer
-                setTimeout(iniciarCelebracao, 2500);
+                setTimeout(iniciarCelebracao, 2000);
 
             } else {
                 containerHoras.style.display = 'none';
