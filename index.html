@@ -2,482 +2,720 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify – Nosso Momento</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lucas & Mariana ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg-upper: #8b0000; 
-            --spotify-bg-lower: #000000; 
-            --spotify-green: #1ed760; 
-            --spotify-black: #121212;
-            --text-main: #ffffff;
-            --text-sub: #b3b3b3;
-            --counter-box-bg: rgba(255, 255, 255, 0.1);
+            --green: #1ed760;
+            --red: #8b0000;
+            --black: #000;
+            --dark: #121212;
+            --sub: #b3b3b3;
+            --white: #fff;
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
 
         body, html {
             margin: 0; padding: 0;
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to bottom, var(--spotify-bg-upper) 0%, var(--spotify-bg-lower) 60%, var(--spotify-bg-lower) 100%);
+            background: linear-gradient(160deg, #8b0000 0%, #1a0000 50%, #000 100%);
             background-attachment: fixed;
-            color: var(--text-main);
+            color: var(--white);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
         }
 
-        /* 1. TELA DE INTRODUÇÃO */
+        /* ── INTRO ── */
         #intro-screen {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
+            height: 100dvh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: #000; padding: 30px; text-align: center;
+            position: fixed; width: 100%; top: 0; z-index: 100;
         }
-        .intro-title { font-size: clamp(1.8rem, 8vw, 2.5rem); font-weight: 800; color: #fff; margin-bottom: 15px; line-height: 1.2; max-width: 90%; letter-spacing: -1px; }
-        .intro-subtitle { font-size: 1rem; font-weight: 400; color: #b3b3b3; margin-bottom: 40px; max-width: 80%; line-height: 1.4; }
-        .highlight-green { color: var(--spotify-green); }
-        .btn-start { 
-            background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
-            border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3); transition: transform 0.2s;
+        .intro-logo {
+            font-size: 3rem; margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
         }
-        .btn-start:active { transform: scale(0.95); }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+        .intro-title { font-size: clamp(1.8rem, 8vw, 2.6rem); font-weight: 900; color: #fff; margin-bottom: 12px; line-height: 1.15; letter-spacing: -1.5px; }
+        .intro-subtitle { font-size: 1rem; color: var(--sub); margin-bottom: 50px; max-width: 280px; line-height: 1.5; }
+        .hl { color: var(--green); }
+        .btn-start {
+            background: var(--green); color: #000; padding: 17px 45px;
+            border-radius: 50px; font-weight: 900; text-transform: uppercase;
+            border: none; cursor: pointer; font-size: 0.85rem; letter-spacing: 1.5px;
+            box-shadow: 0 0 40px rgba(30,215,96,0.4);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-start:active { transform: scale(0.95); box-shadow: 0 0 20px rgba(30,215,96,0.2); }
 
-        /* 2. TELA DO PLAYER PRINCIPAL */
-        #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* ── PLAYER ── */
+        #player-screen { display: none; padding: 20px 20px 0; animation: fadeUp 0.7s ease; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .top-phrase { font-size: 0.9rem; font-weight: 700; text-align: center; padding: 20px 0 10px; opacity: 0.85; }
+        .main-card { width: 100%; max-width: 390px; margin: 0 auto; }
+        .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 16px; object-fit: cover; box-shadow: 0 20px 60px rgba(0,0,0,0.7); display: block; }
+        .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+        .song-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 4px; }
+        .song-artist { color: var(--sub); margin: 0; font-size: 0.9rem; }
+        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.15); border-radius: 4px; margin: 22px 0 8px; cursor: pointer; }
+        #progress { width: 0%; height: 100%; background: var(--white); border-radius: 4px; transition: width 0.5s linear; }
+        .time-row { display: flex; justify-content: space-between; color: var(--sub); font-size: 0.7rem; font-weight: 700; margin-bottom: 10px; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 30px; }
+        .ctrl-icon { font-size: 1.4rem; color: var(--sub); cursor: pointer; transition: color 0.2s; }
+        .ctrl-icon:hover { color: var(--white); }
+        .play-btn { font-size: 3.5rem; cursor: pointer; transition: transform 0.15s; }
+        .play-btn:active { transform: scale(0.92); }
 
-        .top-phrase { font-size: 0.95rem; margin: 20px auto; font-weight: 700; text-align: center; width: 100%; max-width: 380px; display: block; }
-        .main-card { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
-        .cover-art { width: 100%; aspect-ratio: 1/1; border-radius: 12px; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        .song-info { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; text-align: left; }
-        .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); border-radius: 5px; margin: 25px 0 10px; }
-        #progress { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
-        .controls { display: flex; justify-content: space-between; align-items: center; margin: 25px 0; font-size: 1.8rem; }
-        .play-btn { font-size: 4rem; cursor: pointer; }
-
-        .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
-        .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
-        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .section-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--sub); text-transform: uppercase; margin-bottom: 16px; }
         
-        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
-        .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 20px 5px; text-align: center; }
-        .time-val { font-size: 1.8rem; font-weight: 800; display: block; margin-bottom: 5px; }
-        .time-uni { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;}
+        .about-section { margin-top: 20px; position: relative; }
+        .couple-img { width: 100%; height: 300px; object-fit: cover; object-position: center 25%; border-radius: 16px; display: block; }
+        .about-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 40px 20px 20px; border-radius: 0 0 16px 16px; }
+        .about-name { font-size: 1.6rem; font-weight: 900; margin: 0 0 4px; }
+        .about-since { font-size: 0.85rem; color: var(--sub); margin: 0; }
 
-        .top-moments { text-align: left; margin-top: 40px; padding: 0 10px; }
-        .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
-        .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
+        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .counter-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 8px; text-align: center; backdrop-filter: blur(10px); }
+        .time-val { font-size: 1.9rem; font-weight: 900; display: block; margin-bottom: 4px; }
+        .time-uni { font-size: 0.65rem; color: var(--sub); text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; }
 
-        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
-        .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
-        .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+        .top-moments { margin: 30px 0; }
+        .moment-item { display: flex; align-items: center; margin-bottom: 14px; background: rgba(255,255,255,0.05); padding: 14px 16px; border-radius: 12px; border-left: 3px solid transparent; transition: border-color 0.2s; }
+        .moment-item:hover { border-left-color: var(--green); }
+        .moment-number { font-size: 1.3rem; font-weight: 900; color: var(--green); margin-right: 16px; min-width: 22px; }
+        .moment-text { font-size: 0.95rem; font-weight: 700; }
 
-        .achievements-section { background: transparent; padding: 0 10px; text-align: left; }
-        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
-        .achievement-item { background: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
-        .key-item { border-color: #1ed760; color: #1ed760; }
-        .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
+        .message-card { background: linear-gradient(135deg, #c2185b, #e91e63, #ad1457); border-radius: 24px; padding: 28px 24px; margin: 30px 0; box-shadow: 0 15px 40px rgba(233,30,99,0.35); }
+        .message-card-tag { font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; opacity: 0.8; text-transform: uppercase; margin-bottom: 12px; display: block; }
+        .message-card-text { font-size: 1.35rem; font-weight: 800; line-height: 1.3; margin-bottom: 24px; letter-spacing: -0.5px; }
+        .btn-show-message { background: #fff; color: #000; border: none; padding: 13px 28px; border-radius: 30px; font-weight: 900; cursor: pointer; font-size: 0.85rem; letter-spacing: 0.5px; transition: transform 0.15s; }
+        .btn-show-message:active { transform: scale(0.95); }
 
-        /* 3. GATILHO DE ROLAGEM */
-        #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
-        .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
-        .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .achievements-section { margin: 30px 0 0; }
+        .achievements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .achievement-item { background: #1e1e1e; border-radius: 14px; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; font-size: 1.3rem; border: 2px solid; }
+        .achievement-item .ach-label { font-size: 0.5rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+        .key-item { border-color: var(--green); color: var(--green); background: rgba(30,215,96,0.08); }
+        .locked { border-color: #333; color: #444; opacity: 0.4; border-style: dashed; }
 
-        /* 4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER) */
-        #transition-screen { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-            background: #000; z-index: 4000; overflow: hidden; 
+        /* ── SCROLL TRIGGER ── */
+        #scroll-trigger-area { margin-top: 60px; padding-bottom: 100px; text-align: center; }
+        .scroll-hint { color: var(--sub); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; animation: bounce 2s infinite; margin-bottom: 18px; }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-8px)} 60%{transform:translateY(-4px)} }
+        .scroll-arrow { font-size: 1.8rem; color: rgba(255,255,255,0.2); animation: bounce 2s infinite 0.3s; }
+
+        /* ── TRANSITION ── */
+        #transition-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
+            background: #000; z-index: 4000; overflow: hidden;
         }
-        #wrapped-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001; }
+        #wrapped-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
         .transition-text-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 4005; text-align: center; pointer-events: none;
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 4005; text-align: center;
+            pointer-events: none; padding: 20px;
         }
-        .transition-title { 
-            font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
-            text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
-            animation: popIn 0.5s ease-out forwards;
-        }
-        .transition-sub { 
-            font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 280px; line-height: 1.4; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
-        }
-        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeInSub { to { opacity: 1; } }
+        .transition-year { font-size: 7rem; font-weight: 900; color: var(--green); letter-spacing: -5px; line-height: 1; opacity: 0; animation: popIn 0.6s ease-out 0.5s forwards; }
+        .transition-title { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -1px; opacity: 0; animation: slideUp 0.6s ease-out 1s forwards; }
+        .transition-sub { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 260px; margin-top: 10px; opacity: 0; animation: slideUp 0.6s ease-out 1.4s forwards; }
+        @keyframes popIn { from{transform:scale(0.3) rotate(-10deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+        @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
 
-        /* =========================================
-           5. STORIES & ROLETA OTIMIZADA
-           ========================================= */
-        #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; overflow: hidden;}
-        
-        /* Áreas de Toque */
-        .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
-        .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
-        
-        /* Barras de Progresso */
-        .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
-        .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
-        .story-fill { height: 100%; background: #fff; width: 0%; }
-        .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        /* ── STORIES ── */
+        #stories-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
+            background: #000; z-index: 5000; overflow: hidden;
+        }
 
-        /* ROLETA: Ajuste de velocidade e suavidade */
-        #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
-        #celebration-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; }
-        
-        .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; 
-            position: absolute; top: 0; left: 0;
-            transform: translateY(100vh); 
+        /* Progress bars */
+        .story-progress-container { position: absolute; top: 12px; left: 10px; right: 10px; display: flex; gap: 4px; z-index: 5030; }
+        .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.25); border-radius: 3px; overflow: hidden; }
+        .story-fill { height: 100%; background: #fff; width: 0%; transition: none; }
+        .story-close { position: absolute; top: 30px; right: 16px; color: #fff; font-size: 1.4rem; z-index: 5030; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); border-radius: 50%; }
+
+        /* Stories viewport - the 3D stack */
+        #stories-viewport {
+            position: absolute; inset: 0; perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        /* Each story slide */
+        .story-slide {
+            position: absolute; inset: 0;
+            border-radius: 0;
+            overflow: hidden;
+            transform-origin: left center;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, border-radius 0.4s ease;
+            will-change: transform;
+            user-select: none;
+        }
+
+        /* Story states */
+        .story-slide.active  { transform: translateX(0) scale(1); opacity: 1; z-index: 10; border-radius: 0; }
+        .story-slide.next    { transform: translateX(92%) scale(0.9); opacity: 0.6; z-index: 9; border-radius: 18px; pointer-events: none; }
+        .story-slide.prev    { transform: translateX(-100%) scale(1); opacity: 0; z-index: 8; pointer-events: none; }
+        .story-slide.hidden  { transform: translateX(100%) scale(0.9); opacity: 0; z-index: 7; pointer-events: none; }
+
+        /* Dragging state */
+        .story-slide.dragging { transition: none !important; }
+
+        /* Click zones */
+        .story-left-zone  { position: absolute; top: 0; left: 0; width: 30%; height: 100%; z-index: 5020; cursor: pointer; }
+        .story-right-zone { position: absolute; top: 0; right: 0; width: 70%; height: 100%; z-index: 5020; cursor: pointer; }
+
+        /* ─ Hours Story ─ */
+        .story-hours-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(160deg, #0d0d0d 0%, #1a0033 100%);
+        }
+
+        /* SLOT MACHINE — suave e cinematográfico */
+        .slot-machine {
+            position: absolute; top: 0; left: 0; width: 100%;
+            transform: translateY(100%);
             will-change: transform; z-index: 5010;
         }
         .slot-row {
-            height: 11.11vh; display: flex; justify-content: center; align-items: center;
-            font-size: 9vh; font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
+            height: 11.11vh;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 8.5vh; font-weight: 900; letter-spacing: -4px;
+            flex-shrink: 0; line-height: 1; font-family: 'Montserrat', sans-serif;
         }
-        .r-orange { background: #f39c12; color: #1a1a1a; text-shadow: -2px 3px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 2px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -2px 3px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #cddc39; text-shadow: -1px 2px 0 #1a237e; }
-        
-        /* ANIMAÇÃO DA ROLETA: Mais lenta (4s) e curva super suave */
-        @keyframes slideSlots { 
-            0% { transform: translate3d(0, 100vh, 0); } 
-            100% { transform: translate3d(0, -200vh, 0); } 
+        .r-orange { background: #e67e22; color: #1a1a1a; }
+        .r-green  { background: #1ed760; color: #1a1a1a; }
+        .r-pink   { background: #e91e63; color: #fff; }
+        .r-blue   { background: #3f51b5; color: #dce775; }
+
+        /* ✨ SUAVE: 7s com easing muito gradual — começa rápido, para devagar */
+        @keyframes slideSlots {
+            0%   { transform: translateY(100%); }
+            100% { transform: translateY(-200%); }
         }
 
         .final-hours-reveal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; inset: 0;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
-            opacity: 0; z-index: 5015; pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95) 40%, #000 100%);
+            opacity: 0; z-index: 5015; pointer-events: none; text-align: center;
+        }
+        @keyframes fadeInReveal { to { opacity: 1; } }
+
+        .final-label { font-size: 0.85rem; font-weight: 800; color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+        .final-hours-num { font-size: clamp(4rem, 20vw, 6rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -4px; }
+        .final-hours-unit { font-size: 1rem; font-weight: 800; color: var(--green); margin-top: 12px; letter-spacing: 1px; text-transform: uppercase; }
+        .final-badge { margin-top: 20px; background: rgba(30,215,96,0.15); border: 1px solid rgba(30,215,96,0.4); border-radius: 30px; padding: 8px 20px; font-size: 0.8rem; font-weight: 700; color: var(--green); }
+
+        /* ─ Confetti ─ */
+        #celebration-canvas {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            z-index: 5016; pointer-events: none; opacity: 0;
         }
 
-        /* EFEITO PEEK (SLIDER) NOS STORIES */
-        #story-photo-container { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; 
+        /* ─ Photo Stories ─ */
+        .story-photo-bg { position: absolute; inset: 0; }
+        .story-photo-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .story-photo-bg::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%, transparent 50%, rgba(0,0,0,0.85) 100%);
         }
-        .story-track {
-            display: flex; width: 500%; height: 100%; /* 5 slides */
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        .story-photo-content {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 50px 28px 60px; z-index: 5010; pointer-events: none;
         }
-        .slide {
-            width: 100vw; height: 100%; position: relative; flex-shrink: 0;
+        .story-date-badge {
+            display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+            padding: 5px 14px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 12px;
         }
-        .story-img-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
-        .story-content { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; padding: 40px; text-align: center; box-sizing: border-box;
-        }
-        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
+        .story-photo-text { font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 900; color: #fff; line-height: 1.15; letter-spacing: -1px; text-shadow: 0 4px 20px rgba(0,0,0,0.6); margin: 0 0 8px; }
+        .story-photo-sub { font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 600; margin: 0; }
 
-        #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
-        .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
+        /* ─ Special card stories (no photo) ─ */
+        .story-card {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 40px 32px; text-align: center;
+        }
+        .story-card-emoji { font-size: 5rem; margin-bottom: 24px; animation: floatEmoji 3s ease-in-out infinite; }
+        @keyframes floatEmoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        .story-card-title { font-size: clamp(2rem, 8vw, 3rem); font-weight: 900; line-height: 1.1; letter-spacing: -2px; margin: 0 0 16px; }
+        .story-card-body { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.6; max-width: 280px; font-weight: 500; }
+
+        /* ─ Letter modal ─ */
+        #letter-modal { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 6000; padding: 50px 28px 40px; overflow-y: auto; }
+        .close-btn { color: var(--green); font-weight: 800; cursor: pointer; margin-bottom: 28px; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
+        .letter-title { font-family: 'DM Serif Display', serif; font-size: 2.5rem; line-height: 1.1; margin-bottom: 24px; }
+        .letter-body { font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,0.85); }
     </style>
 </head>
 <body>
 
-    <audio id="musicaReal" src="track1.mp3" preload="auto"></audio>
+<audio id="musicaReal" src="track1.mp3" preload="auto"></audio>
 
-    <div id="intro-screen">
-        <h1 class="intro-title">Lucas separou um <span class="highlight-green">presente</span> especial!</h1>
-        <p class="intro-subtitle">Um momento único feito com muito carinho.</p>
-        <button class="btn-start" onclick="iniciarTudo()">Ver Presente</button>
-    </div>
+<!-- ── INTRO ── -->
+<div id="intro-screen">
+    <div class="intro-logo">🎵</div>
+    <h1 class="intro-title">Lucas guardou um<br><span class="hl">presente especial</span><br>pra você!</h1>
+    <p class="intro-subtitle">Uma retrospectiva do nosso primeiro ano juntos.</p>
+    <button class="btn-start" onclick="iniciarTudo()">Abrir Presente ❤️</button>
+</div>
 
-    <div id="player-screen">
+<!-- ── PLAYER ── -->
+<div id="player-screen">
+    <div class="main-card">
         <p class="top-phrase">Eu te amo mais que tudo! ❤️</p>
-        <div class="main-card">
-            <img src="imagens/imagens/capa.JPEG" class="cover-art">
-            <div class="song-info">
-                <div>
-                    <h2 style="margin:0; font-size: 1.5rem; font-weight: 800;">Best Part (feat. H.E.R.)</h2>
-                    <p style="color: var(--text-sub); margin:5px 0;">Daniel Caesar, H.E.R.</p>
-                </div>
-                <i class="fa-solid fa-circle-check" style="color: var(--spotify-green); font-size: 1.6rem;"></i>
+        <img src="imagens/imagens/capa.JPEG" class="cover-art" alt="capa">
+        <div class="song-info">
+            <div>
+                <p class="song-title">Best Part (feat. H.E.R.)</p>
+                <p class="song-artist">Daniel Caesar, H.E.R.</p>
             </div>
-            <div class="progress-bar"><div id="progress"></div></div>
-            <div class="controls">
-                <i class="fa-solid fa-shuffle" style="color: var(--text-sub)"></i>
-                <i class="fa-solid fa-backward-step"></i>
-                <i id="playBtn" class="fa-solid fa-circle-play play-btn" onclick="controlarMusica()"></i>
-                <i class="fa-solid fa-forward-step"></i>
-                <i class="fa-solid fa-repeat" style="color: var(--text-sub)"></i>
-            </div>
+            <i class="fa-solid fa-circle-check" style="color: var(--green); font-size: 1.6rem;"></i>
+        </div>
+        <div class="progress-bar"><div id="progress"></div></div>
+        <div class="time-row"><span id="cur-time">0:00</span><span id="tot-time">0:00</span></div>
+        <div class="controls">
+            <i class="fa-solid fa-shuffle ctrl-icon"></i>
+            <i class="fa-solid fa-backward-step ctrl-icon" style="font-size:1.8rem; color:#fff;"></i>
+            <i id="playBtn" class="fa-solid fa-circle-play play-btn" onclick="controlarMusica()"></i>
+            <i class="fa-solid fa-forward-step ctrl-icon" style="font-size:1.8rem; color:#fff;"></i>
+            <i class="fa-solid fa-repeat ctrl-icon"></i>
+        </div>
 
-            <div class="about-section">
-                <span class="sobre-title">Sobre o casal</span>
-                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img">
-                <div style="padding: 0 20px;">
-                    <h2 style="margin:0; font-weight: 800;">Lucas e Mariana</h2>
-                    <p style="color: var(--text-sub); font-size: 0.9rem; margin: 5px 0;">Juntos desde 2025</p>
-                </div>
-                <div class="counter-grid">
-                    <div class="counter-item"><span id="y" class="time-val">0</span><span class="time-uni">Anos</span></div>
-                    <div class="counter-item"><span id="m" class="time-val">0</span><span class="time-uni">Meses</span></div>
-                    <div class="counter-item"><span id="d" class="time-val">0</span><span class="time-uni">Dias</span></div>
-                    <div class="counter-item"><span id="h" class="time-val">0</span><span class="time-uni">Hrs</span></div>
-                    <div class="counter-item"><span id="min" class="time-val">0</span><span class="time-uni">Min</span></div>
-                    <div class="counter-item"><span id="sec" class="time-val">0</span><span class="time-uni">Seg</span></div>
+        <!-- Sobre -->
+        <div class="about-section">
+            <div style="position:relative;">
+                <img src="imagens/imagens/casal_perfil.JPEG" class="couple-img" alt="casal" style="width:100%;height:300px;object-fit:cover;border-radius:16px;display:block;">
+                <div class="about-overlay">
+                    <p class="section-label">Sobre o casal</p>
+                    <h2 class="about-name">Lucas & Mariana</h2>
+                    <p class="about-since">Juntos desde Abril de 2025</p>
                 </div>
             </div>
-            <div id="scroll-trigger-area">
-                <p class="scroll-hint">Continue descendo</p>
-                <svg class="neon-wave" viewBox="0 0 200 60" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#ff3399"/><stop offset="40%" stop-color="#ff0040"/><stop offset="100%" stop-color="#cc0000"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M 10 20 L 80 20 C 110 20, 130 50, 150 50 C 170 50, 185 30, 185 30 L 185 38 C 185 38, 170 60, 140 60 C 110 60, 90 30, 80 30 L 10 30 Z" fill="url(#neonGradient)" rx="5"/>
-                </svg>
+            <div class="counter-grid">
+                <div class="counter-item"><span id="y" class="time-val">0</span><span class="time-uni">Anos</span></div>
+                <div class="counter-item"><span id="m" class="time-val">0</span><span class="time-uni">Meses</span></div>
+                <div class="counter-item"><span id="d" class="time-val">0</span><span class="time-uni">Dias</span></div>
+                <div class="counter-item"><span id="h" class="time-val">0</span><span class="time-uni">Horas</span></div>
+                <div class="counter-item"><span id="min" class="time-val">0</span><span class="time-uni">Min</span></div>
+                <div class="counter-item"><span id="sec" class="time-val">0</span><span class="time-uni">Seg</span></div>
             </div>
         </div>
-    </div>
 
-    <div id="transition-screen">
-        <canvas id="wrapped-canvas"></canvas>
-        <div class="transition-text-layer">
-            <h1 class="transition-title">Lucas e Mariana</h1>
-            <p class="transition-sub">Os momentos que marcaram essa relação</p>
+        <!-- Top momentos -->
+        <div class="top-moments">
+            <p class="section-label">Nossos momentos mais ouvidos</p>
+            <div class="moment-item"><span class="moment-number">1</span><span class="moment-text">Eu te amo ❤️</span></div>
+            <div class="moment-item"><span class="moment-number">2</span><span class="moment-text">Quer ir no shopping?</span></div>
+            <div class="moment-item"><span class="moment-number">3</span><span class="moment-text">Vamos comer poke?</span></div>
+            <div class="moment-item"><span class="moment-number">4</span><span class="moment-text">Você tá tentando me derrubar?</span></div>
+        </div>
+
+        <!-- Mensagem -->
+        <div class="message-card">
+            <span class="message-card-tag">Mensagem especial</span>
+            <p class="message-card-text">Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨</p>
+            <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
+        </div>
+
+        <!-- Conquistas -->
+        <div class="achievements-section">
+            <div class="achievements-header">
+                <span class="section-label" style="margin:0;">Conquistas do casal</span>
+                <span style="color:var(--sub);font-size:0.8rem;font-weight:800;">1 / 4</span>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-item key-item"><i class="fa-solid fa-key"></i><span class="ach-label">Juntos</span></div>
+                <div class="achievement-item locked"><i class="fa-solid fa-ring"></i><span class="ach-label" style="color:#444">Noivado</span></div>
+                <div class="achievement-item locked"><i class="fa-solid fa-plane"></i><span class="ach-label" style="color:#444">Viagem</span></div>
+                <div class="achievement-item locked"><i class="fa-solid fa-house-chimney-heart"></i><span class="ach-label" style="color:#444">Juntos</span></div>
+            </div>
+        </div>
+
+        <!-- Scroll trigger -->
+        <div id="scroll-trigger-area" style="margin-top:70px;padding-bottom:100px;text-align:center;">
+            <p class="scroll-hint">Continue descendo</p>
+            <div class="scroll-arrow">↓</div>
         </div>
     </div>
+</div>
 
-    <div id="stories-screen">
-        <div class="story-progress-container" id="story-bars"></div>
-        <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
+<!-- ── TRANSITION ── -->
+<div id="transition-screen">
+    <canvas id="wrapped-canvas"></canvas>
+    <div class="transition-text-layer">
+        <div class="transition-year">2025</div>
+        <div class="transition-title">Lucas & Mariana</div>
+        <div class="transition-sub">Os momentos que marcaram esse ano</div>
+    </div>
+</div>
 
-        <div id="story-hours-container">
+<!-- ── STORIES ── -->
+<div id="stories-screen">
+    <div class="story-progress-container" id="story-bars"></div>
+    <div class="story-close" onclick="fecharStories()"><i class="fa-solid fa-xmark"></i></div>
+    <div id="stories-viewport"></div>
+    <div class="story-left-zone"  onclick="prevStory()"></div>
+    <div class="story-right-zone" onclick="nextStory()"></div>
+</div>
+
+<!-- ── LETTER ── -->
+<div id="letter-modal">
+    <div class="close-btn" onclick="verCarta(false)"><i class="fa-solid fa-arrow-left"></i> Voltar</div>
+    <h1 class="letter-title">Minha Mensagem pra Você</h1>
+    <div class="letter-body">
+        <p>Mari,</p>
+        <p>Esse ano foi o mais especial da minha vida. Cada momento do nosso primeiro ano juntos vai ficar gravado no meu coração para sempre.</p>
+        <p>Você me faz rir quando eu menos espero, me abraça quando eu mais preciso, e transforma qualquer lugar no melhor lugar do mundo só com a sua presença.</p>
+        <p>Obrigado por escolher ficar do meu lado todos os dias. Te amo com tudo que eu sou.</p>
+        <p>— Lucas ❤️</p>
+    </div>
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────
+const dataInicio = new Date(2025, 3, 17, 0, 0, 0); // 17 Abril 2025
+
+const storiesData = [
+    { type: 'hours' },
+    { type: 'card', bg: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)', emoji: '✈️', title: 'Um ano inteiro juntos!', body: 'Cada dia foi uma nova aventura ao seu lado.' },
+    { type: 'photo', img: 'imagens/imagens/capa.JPEG', badge: 'Abril 2025', text: 'Tudo começou aqui', sub: 'O dia que mudou tudo' },
+    { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', badge: 'Shows', text: 'Shows! 🎉', sub: 'Cada momento, uma memória' },
+    { type: 'photo', img: 'imagens/imagens/capa.JPEG', badge: 'Favorite', text: 'Vamos comer poke?', sub: 'Uma tradição nossa 🍣' },
+    { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', badge: 'Momento', text: 'Você tá tentando me derrubar? 😂', sub: 'Impossível parar de rir' },
+    { type: 'card', bg: 'linear-gradient(135deg, #8b0000, #c62828, #1a0000)', emoji: '❤️', title: 'Te amo mais a cada dia', body: 'Mal posso esperar por tudo que ainda vem por aí.' },
+];
+
+// ─── AUDIO ────────────────────────────────────────────
+const som = document.getElementById('musicaReal');
+const btnIcon = document.getElementById('playBtn');
+const barraProgress = document.getElementById('progress');
+
+function fmt(s) { const m=Math.floor(s/60); return m+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60); }
+som.ontimeupdate = () => {
+    if (som.duration) {
+        barraProgress.style.width = ((som.currentTime/som.duration)*100)+'%';
+        document.getElementById('cur-time').textContent = fmt(som.currentTime);
+    }
+};
+som.onloadedmetadata = () => { document.getElementById('tot-time').textContent = fmt(som.duration); };
+
+function controlarMusica() {
+    if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play','fa-circle-pause'); }
+    else { som.pause(); btnIcon.classList.replace('fa-circle-pause','fa-circle-play'); }
+}
+
+// ─── RELÓGIO ──────────────────────────────────────────
+function cronometro() {
+    const agora = new Date();
+    let a = agora.getFullYear() - dataInicio.getFullYear();
+    let me = agora.getMonth() - dataInicio.getMonth();
+    let di = agora.getDate() - dataInicio.getDate();
+    if (di < 0) { me--; di += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate(); }
+    if (me < 0) { a--; me += 12; }
+    document.getElementById('y').textContent = a;
+    document.getElementById('m').textContent = me;
+    document.getElementById('d').textContent = di;
+    document.getElementById('h').textContent = agora.getHours();
+    document.getElementById('min').textContent = agora.getMinutes();
+    document.getElementById('sec').textContent = agora.getSeconds();
+}
+function calcularHorasTotais() {
+    return Math.max(0, Math.floor((new Date() - dataInicio) / 3600000));
+}
+
+// ─── INÍCIO ───────────────────────────────────────────
+function iniciarTudo() {
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('player-screen').style.display = 'block';
+    window.scrollTo(0,0);
+    som.play().then(()=>btnIcon.classList.replace('fa-circle-play','fa-circle-pause')).catch(()=>{});
+    cronometro();
+    setInterval(cronometro, 1000);
+    setTimeout(iniciarSensorDeRolagem, 600);
+}
+
+function verCarta(s) { document.getElementById('letter-modal').style.display = s ? 'block' : 'none'; }
+
+// ─── SENSOR DE ROLAGEM ────────────────────────────────
+function iniciarSensorDeRolagem() {
+    const area = document.getElementById('scroll-trigger-area');
+    const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { iniciarRetrospectiva(); obs.disconnect(); }
+    }, { threshold: 0.5 });
+    obs.observe(area);
+}
+
+// ─── CANVAS EQUALIZER ────────────────────────────────
+const canvas = document.getElementById('wrapped-canvas');
+const ctx    = canvas.getContext('2d');
+let canvasId;
+
+function iniciarAnimacaoCanvas() {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const bW = window.innerWidth > 600 ? 28 : 14, gap = 6, n = 9;
+    const hs = [0.15,0.35,0.55,0.75,1.0,0.75,0.55,0.35,0.15];
+    function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const t = Date.now()*0.004;
+        ctx.shadowBlur = 30; ctx.shadowColor = '#1ed760'; ctx.fillStyle = '#1ed760';
+        for (let i=0;i<n;i++) {
+            const p = Math.sin(t+i*0.6)*0.25+0.75;
+            const bH = canvas.height*hs[i]*p;
+            const y = (canvas.height-bH)/2;
+            const xL = i*(bW+gap);
+            ctx.fillRect(xL,y,bW,bH);
+            ctx.fillRect(canvas.width-(i+1)*(bW+gap),y,bW,bH);
+        }
+        canvasId = requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// ─── RETROSPECTIVA ───────────────────────────────────
+function iniciarRetrospectiva() {
+    som.pause(); btnIcon.classList.replace('fa-circle-pause','fa-circle-play');
+    document.getElementById('transition-screen').style.display = 'block';
+    iniciarAnimacaoCanvas();
+    setTimeout(() => {
+        cancelAnimationFrame(canvasId);
+        document.getElementById('transition-screen').style.display = 'none';
+        abrirStories();
+    }, 4200);
+}
+
+// ─── CONFETES ────────────────────────────────────────
+const celCanvas = document.getElementById('celebration-canvas');
+let celCtx, particles = [];
+const confColors = ['#1ed760','#ffd700','#ffffff','#ff3399','#00cfff'];
+
+class Conf {
+    constructor() { this.reset(true); }
+    reset(init) {
+        this.x = Math.random() * (celCanvas?.width||400);
+        this.y = init ? Math.random() * (celCanvas?.height||800) : -20;
+        this.s = Math.random()*7+4;
+        this.c = confColors[Math.floor(Math.random()*confColors.length)];
+        this.vy = Math.random()*2.5+1.5;
+        this.vx = Math.random()*1.5-0.75;
+        this.spin = Math.random()*360;
+        this.spinS = Math.random()*8-4;
+        this.wave = Math.random()*Math.PI*2;
+    }
+    update() {
+        this.y += this.vy; this.x += this.vx+Math.sin(this.wave)*0.5;
+        this.spin += this.spinS; this.wave += 0.05;
+        if (this.y > (celCanvas?.height||800)+20) this.reset(false);
+    }
+    draw(c) {
+        c.save(); c.translate(this.x,this.y); c.rotate(this.spin*Math.PI/180);
+        c.fillStyle = this.c; c.globalAlpha = 0.9;
+        c.fillRect(-this.s/2,-this.s/2,this.s,this.s);
+        c.restore();
+    }
+}
+
+function iniciarCelebracao() {
+    if (!celCanvas) return;
+    celCanvas.width = window.innerWidth; celCanvas.height = window.innerHeight;
+    celCtx = celCanvas.getContext('2d');
+    celCanvas.style.opacity = '0';
+    celCanvas.style.transition = 'opacity 1s';
+    setTimeout(() => { celCanvas.style.opacity = '1'; }, 50);
+    particles = Array.from({length: 100}, () => new Conf());
+    function loop() {
+        const story = storiesData[currentStory];
+        if (!story || story.type !== 'hours') return;
+        celCtx.clearRect(0,0,celCanvas.width,celCanvas.height);
+        particles.forEach(p => { p.update(); p.draw(celCtx); });
+        requestAnimationFrame(loop);
+    }
+    loop();
+}
+
+// ─── STORIES ENGINE ──────────────────────────────────
+let currentStory = 0;
+let storyInterval = null;
+let storyProgress = 0;
+const STORY_DURATION_MS = 6000; // 6s por story
+
+// Cria o canvas de celebração dentro do slot machine story
+function criarHoursSlide() {
+    const div = document.createElement('div');
+    div.className = 'story-slide';
+    div.dataset.index = '0';
+    div.innerHTML = `
+        <div class="story-hours-bg"></div>
+        <div class="slot-machine" id="slot-machine">
+            ${Array.from({length:27},(_,i)=>{
+                const classes=['r-orange','r-green','r-pink','r-blue'];
+                return `<div class="slot-row ${classes[i%4]} hours-val"></div>`;
+            }).join('')}
+        </div>
+        <div class="final-hours-reveal" id="final-hours-reveal">
             <canvas id="celebration-canvas"></canvas>
-            <div id="slot-machine" class="slot-machine">
-                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
-            </div>
-            <div id="final-hours-reveal" class="final-hours-reveal">
-                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020; position: relative;">Horas juntos</p>
-                <h1 id="final-hours-text" class="final-hours-text" style="z-index: 5020; position: relative;">0</h1>
-                <p class="final-subtitle" style="z-index: 5020; position: relative;">14% dos casais no mundo ✨</p>
-            </div>
+            <p class="final-label" style="position:relative;z-index:5020;">Horas juntos</p>
+            <div class="final-hours-num" id="final-hours-text" style="position:relative;z-index:5020;">0</div>
+            <p class="final-hours-unit" style="position:relative;z-index:5020;">horas de amor</p>
+            <div class="final-badge" style="position:relative;z-index:5020;">Top 14% dos casais no mundo ✨</div>
+        </div>`;
+    return div;
+}
+
+function criarPhotoSlide(story, index) {
+    const div = document.createElement('div');
+    div.className = 'story-slide';
+    div.dataset.index = index;
+    div.innerHTML = `
+        <div class="story-photo-bg">
+            <img src="${story.img}" alt="">
         </div>
+        <div class="story-photo-content">
+            <span class="story-date-badge">${story.badge || ''}</span>
+            <h2 class="story-photo-text">${story.text}</h2>
+            <p class="story-photo-sub">${story.sub || ''}</p>
+        </div>`;
+    return div;
+}
 
-        <div id="story-photo-container">
-            <div class="story-track" id="story-track">
-                </div>
-        </div>
+function criarCardSlide(story, index) {
+    const div = document.createElement('div');
+    div.className = 'story-slide';
+    div.dataset.index = index;
+    div.style.background = story.bg;
+    div.innerHTML = `
+        <div class="story-card">
+            <div class="story-card-emoji">${story.emoji}</div>
+            <h2 class="story-card-title">${story.title}</h2>
+            <p class="story-card-body">${story.body}</p>
+        </div>`;
+    return div;
+}
 
-        <div class="story-left-click" onclick="prevStory()"></div>
-        <div class="story-right-click" onclick="nextStory()"></div>
-    </div>
+function abrirStories() {
+    const screen = document.getElementById('stories-screen');
+    const viewport = document.getElementById('stories-viewport');
+    const barsContainer = document.getElementById('story-bars');
+    screen.style.display = 'block';
 
-    <script>
-        const som = document.getElementById('musicaReal');
-        const btnIcon = document.getElementById('playBtn');
-        const barra = document.getElementById('progress');
-        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
+    // Cria barras
+    barsContainer.innerHTML = storiesData.map((_,i) =>
+        `<div class="story-bar"><div class="story-fill" id="fill-${i}"></div></div>`
+    ).join('');
 
-        function iniciarTudo() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('player-screen').style.display = 'block';
-            window.scrollTo(0, 0);
-            som.play().then(() => { btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); });
-            cronometro();
-            setInterval(cronometro, 1000);
-            setTimeout(iniciarSensorDeRolagem, 500); 
+    // Cria slides
+    viewport.innerHTML = '';
+    storiesData.forEach((story, i) => {
+        let slide;
+        if (story.type === 'hours')       slide = criarHoursSlide();
+        else if (story.type === 'photo')  slide = criarPhotoSlide(story, i);
+        else                              slide = criarCardSlide(story, i);
+        viewport.appendChild(slide);
+    });
+
+    currentStory = 0;
+    aplicarEstados();
+    renderStory();
+}
+
+function aplicarEstados() {
+    const slides = document.querySelectorAll('.story-slide');
+    slides.forEach((s, i) => {
+        s.className = 'story-slide';
+        if (i === currentStory)       s.classList.add('active');
+        else if (i === currentStory+1) s.classList.add('next');
+        else if (i < currentStory)    s.classList.add('prev');
+        else                          s.classList.add('hidden');
+    });
+}
+
+function renderStory() {
+    clearInterval(storyInterval);
+    storyProgress = 0;
+    aplicarEstados();
+
+    // Barras de progresso
+    for (let i = 0; i < storiesData.length; i++) {
+        const fill = document.getElementById(`fill-${i}`);
+        if (fill) fill.style.width = i < currentStory ? '100%' : '0%';
+    }
+
+    const story = storiesData[currentStory];
+
+    // Animações do story de horas
+    if (story.type === 'hours') {
+        const totalHoras = calcularHorasTotais().toLocaleString('pt-BR');
+        document.querySelectorAll('.hours-val').forEach(el => el.textContent = totalHoras);
+        const el = document.getElementById('final-hours-text');
+        if (el) el.textContent = totalHoras;
+
+        const slot = document.getElementById('slot-machine');
+        if (slot) {
+            slot.style.animation = 'none';
+            slot.offsetHeight;
+            // ✨ SUAVE: 7s com easing gradual — começa rápido, para bem devagar
+            slot.style.animation = 'slideSlots 7s cubic-bezier(0.02, 0.92, 0.1, 1) forwards';
         }
-
-        function controlarMusica() {
-            if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); } 
-            else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
+        const reveal = document.getElementById('final-hours-reveal');
+        if (reveal) {
+            reveal.style.animation = 'none'; reveal.style.opacity = '0';
+            reveal.offsetHeight;
+            reveal.style.animation = 'fadeInReveal 1.2s forwards 6s';
         }
+        setTimeout(iniciarCelebracao, 6500);
+    }
 
-        som.ontimeupdate = () => { if (som.duration) barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; };
+    // Progresso
+    const fill = document.getElementById(`fill-${currentStory}`);
+    const tick = STORY_DURATION_MS / 100;
+    storyInterval = setInterval(() => {
+        storyProgress += 1;
+        if (fill) fill.style.width = storyProgress + '%';
+        if (storyProgress >= 100) nextStory();
+    }, tick);
+}
 
-        function cronometro() {
-            const agora = new Date();
-            let anos = agora.getFullYear() - dataInicio.getFullYear();
-            let meses = agora.getMonth() - dataInicio.getMonth();
-            let dias = agora.getDate() - dataInicio.getDate();
-            if (dias < 0) { meses--; let ant = new Date(agora.getFullYear(), agora.getMonth(), 0); dias += ant.getDate(); }
-            if (meses < 0) { anos--; meses += 12; }
-            document.getElementById('y').innerText = anos;
-            document.getElementById('m').innerText = meses;
-            document.getElementById('d').innerText = dias;
-            document.getElementById('h').innerText = agora.getHours();
-            document.getElementById('min').innerText = agora.getMinutes();
-            document.getElementById('sec').innerText = agora.getSeconds();
-        }
+function nextStory() {
+    if (currentStory < storiesData.length-1) { currentStory++; renderStory(); }
+    else { fecharStories(); }
+}
 
-        function calcularHorasTotais() {
-            return Math.floor((new Date() - dataInicio) / (1000 * 60 * 60));
-        }
+function prevStory() {
+    if (currentStory > 0) { currentStory--; renderStory(); }
+    else {
+        storyProgress = 0;
+        const fill = document.getElementById(`fill-0`);
+        if (fill) fill.style.width = '0%';
+    }
+}
 
-        function iniciarSensorDeRolagem() {
-            const areaGatilho = document.getElementById('scroll-trigger-area');
-            const observer = new IntersectionObserver((entradas) => {
-                if (entradas[0].isIntersecting) { iniciarRetrospectiva(); observer.unobserve(areaGatilho); }
-            }, { threshold: 0.6 });
-            observer.observe(areaGatilho);
-        }
+function fecharStories() {
+    clearInterval(storyInterval);
+    particles = [];
+    document.getElementById('stories-screen').style.display = 'none';
+}
 
-        // CANVAS EQUALIZER
-        const canvas = document.getElementById('wrapped-canvas');
-        const ctx = canvas.getContext('2d');
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-
-        function iniciarAnimacaoCanvas() {
-            resizeCanvas();
-            const numBarsPerSide = 8;
-            const heights = [0.2, 0.4, 0.6, 0.8, 1.0, 0.8, 0.6, 0.4];
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const time = Date.now() * 0.005;
-                ctx.shadowBlur = 25; ctx.shadowColor = '#1ed760'; ctx.fillStyle = '#1ed760';
-                for (let i = 0; i < numBarsPerSide; i++) {
-                    const barHeight = (canvas.height * heights[i]) * (Math.sin(time + i * 0.5) * 0.2 + 0.8);
-                    const y = (canvas.height - barHeight) / 2;
-                    ctx.fillRect(i * 20, y, 15, barHeight);
-                    ctx.fillRect(canvas.width - (i * 20) - 15, y, 15, barHeight);
-                }
-                canvasAnimationId = requestAnimationFrame(draw);
-            }
-            draw();
-        }
-
-        // CONFETES
-        const celCanvas = document.getElementById('celebration-canvas');
-        const celCtx = celCanvas.getContext('2d');
-        let particles = [];
-        class Confetti {
-            constructor() {
-                this.x = Math.random() * window.innerWidth;
-                this.y = Math.random() * -100;
-                this.size = Math.random() * 6 + 4;
-                this.color = ['#1ed760', '#ffd700', '#ffffff', '#ff3399'][Math.floor(Math.random() * 4)];
-                this.speedY = Math.random() * 3 + 2;
-                this.speedX = Math.random() * 2 - 1;
-                this.spin = Math.random() * 360;
-            }
-            update() { this.y += this.speedY; this.x += this.speedX; this.spin += 2; if (this.y > window.innerHeight) this.y = -20; }
-            draw() {
-                celCtx.save(); celCtx.translate(this.x, this.y); celCtx.rotate(this.spin * Math.PI / 180);
-                celCtx.fillStyle = this.color; celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size); celCtx.restore();
-            }
-        }
-        function iniciarCelebracao() {
-            celCanvas.width = window.innerWidth; celCanvas.height = window.innerHeight;
-            particles = Array.from({length: 80}, () => new Confetti());
-            function animar() {
-                if (storiesData[currentStory].type !== 'hours') return;
-                celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
-                particles.forEach(p => { p.update(); p.draw(); });
-                requestAnimationFrame(animar);
-            }
-            celCanvas.style.opacity = '1'; animar();
-        }
-
-        // STORIES SYSTEM COM SLIDER
-        const storiesData = [
-            { type: 'hours' }, 
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Nossos primeiros momentos...' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Cada dia ao seu lado é um presente.' },
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Obrigado por ser minha parceira.' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Te amo para sempre! ❤️' }
-        ];
-        
-        let currentStory = 0;
-        let storyInterval;
-        let storyProgress = 0;
-
-        function iniciarRetrospectiva() {
-            som.pause();
-            document.getElementById('transition-screen').style.display = 'block';
-            iniciarAnimacaoCanvas();
-            
-            // Prepara o trilho de fotos
-            const track = document.getElementById('story-track');
-            track.innerHTML = storiesData.map(s => s.type === 'photo' ? `
-                <div class="slide">
-                    <img src="${s.img}" class="story-img-bg">
-                    <div class="story-content"><h2 class="story-text">${s.text}</h2></div>
-                </div>` : '<div class="slide"></div>').join('');
-
-            setTimeout(() => {
-                document.getElementById('transition-screen').style.display = 'none';
-                abrirStories();
-            }, 4000);
-        }
-
-        function abrirStories() {
-            document.getElementById('stories-screen').style.display = 'block';
-            const barsContainer = document.getElementById('story-bars');
-            barsContainer.innerHTML = storiesData.map((_, i) => `<div class="story-bar"><div class="story-fill" id="fill-${i}"></div></div>`).join('');
-            renderStory();
-        }
-
-        function renderStory() {
-            clearInterval(storyInterval);
-            storyProgress = 0;
-            
-            storiesData.forEach((_, i) => {
-                document.getElementById(`fill-${i}`).style.width = i < currentStory ? '100%' : '0%';
-            });
-            
-            const story = storiesData[currentStory];
-            const track = document.getElementById('story-track');
-            const hoursCont = document.getElementById('story-hours-container');
-            const photoCont = document.getElementById('story-photo-container');
-
-            if (story.type === 'hours') {
-                photoCont.style.display = 'none'; hoursCont.style.display = 'block';
-                let total = calcularHorasTotais().toLocaleString('pt-BR');
-                document.querySelectorAll('.hours-val').forEach(el => el.innerText = total);
-                document.getElementById('final-hours-text').innerText = total;
-
-                const slot = document.getElementById('slot-machine');
-                slot.style.animation = 'none'; slot.offsetHeight;
-                // Animação SUAVE e LENTA (3.5 segundos)
-                slot.style.animation = 'slideSlots 3.5s cubic-bezier(0.15, 0.85, 0.3, 1) forwards';
-
-                const reveal = document.getElementById('final-hours-reveal');
-                reveal.style.animation = 'none'; reveal.offsetHeight;
-                reveal.style.animation = 'fadeInReveal 1s forwards 3s'; 
-                setTimeout(iniciarCelebracao, 3000);
-            } else {
-                hoursCont.style.display = 'none'; photoCont.style.display = 'block';
-                // Move o trilho para a posição da foto atual
-                track.style.transform = `translateX(-${currentStory * 100}vw)`;
-            }
-            
-            const currentFill = document.getElementById(`fill-${currentStory}`);
-            storyInterval = setInterval(() => {
-                storyProgress += 1;
-                currentFill.style.width = storyProgress + '%';
-                if(storyProgress >= 100) nextStory();
-            }, 50); // Stories de 5 segundos
-        }
-
-        function nextStory() {
-            if(currentStory < storiesData.length - 1) { currentStory++; renderStory(); } 
-            else { fecharStories(); }
-        }
-
-        function prevStory() {
-            if(currentStory > 0) { currentStory--; renderStory(); }
-        }
-
-        function fecharStories() {
-            clearInterval(storyInterval);
-            document.getElementById('stories-screen').style.display = 'none';
-        }
-    </script>
+// ─── TOUCH / SWIPE ───────────────────────────────────
+let touchStartX = 0, touchStartY = 0;
+const storiesScreen = document.getElementById('stories-screen');
+storiesScreen.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+storiesScreen.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+    if (dy > 60) return; // scroll vertical
+    if (dx < -40) nextStory();
+    else if (dx > 40) prevStory();
+}, { passive: true });
+</script>
 </body>
 </html>
