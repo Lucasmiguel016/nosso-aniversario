@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --spotify-bg-upper: #8b0000; 
-            --spotify-bg-lower: #000000; 
-            --spotify-green: #1ed760; 
+            --spotify-bg-upper: #8b0000;
+            --spotify-bg-lower: #000000;
+            --spotify-green: #1ed760;
             --spotify-black: #121212;
             --text-main: #ffffff;
             --text-sub: #b3b3b3;
@@ -37,8 +37,8 @@
         .intro-title { font-size: clamp(1.8rem, 8vw, 2.5rem); font-weight: 800; color: #fff; margin-bottom: 15px; line-height: 1.2; max-width: 90%; letter-spacing: -1px; }
         .intro-subtitle { font-size: 1rem; font-weight: 400; color: #b3b3b3; margin-bottom: 40px; max-width: 80%; line-height: 1.4; }
         .highlight-green { color: var(--spotify-green); }
-        .btn-start { 
-            background-color: var(--spotify-green); color: #000; padding: 16px 40px; 
+        .btn-start {
+            background-color: var(--spotify-green); color: #000; padding: 16px 40px;
             border-radius: 35px; font-weight: 800; text-transform: uppercase; border: none; cursor: pointer; font-size: 0.9rem;
             box-shadow: 0 4px 15px rgba(30, 215, 96, 0.3); transition: transform 0.2s;
         }
@@ -94,9 +94,9 @@
         /* =========================================
            4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER)
            ========================================= */
-        #transition-screen { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-            background: #000; z-index: 4000; overflow: hidden; 
+        #transition-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; z-index: 4000; overflow: hidden;
         }
 
         #wrapped-canvas {
@@ -109,13 +109,13 @@
             z-index: 4005; text-align: center; pointer-events: none;
         }
         
-        .transition-title { 
-            font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
+        .transition-title {
+            font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px;
             text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
             animation: popIn 0.5s ease-out forwards;
         }
-        .transition-sub { 
-            font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 280px; line-height: 1.4; 
+        .transition-sub {
+            font-size: 1.2rem; font-weight: 700; color: #fff; max-width: 280px; line-height: 1.4;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
             animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
         }
@@ -140,22 +140,22 @@
         
         /* CANVAS DE CELEBRAÇÃO (CONFETES) */
         #celebration-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0;
         }
         @keyframes fadeInConfetti { to { opacity: 0.8; } }
 
         /* ROLETA: Ajustada para visual mais "distante" e denso (9 blocos na tela) */
-        .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; 
+        .slot-machine {
+            display: flex; flex-direction: column; width: 100%;
             position: absolute; top: 0; left: 0;
-            transform: translateY(100vh);
+            transform: translateY(100vh); /* Começa preta, sobe depois */
             will-change: transform; z-index: 5010;
         }
         
         .slot-row {
-            height: 11.11vh;
+            height: 11.11vh; /* Altura que garante exatamente 9 blocos na tela (100/9) */
             display: flex; justify-content: center; align-items: center;
-            font-size: 9vh;
+            font-size: 9vh; /* Fonte proporcional à altura achatada */
             font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
         }
         
@@ -164,9 +164,10 @@
         .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f; }
         .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e; }
         
-        @keyframes slideSlots { 
-            0% { transform: translate3d(0, 100vh, 0); } 
-            100% { transform: translate3d(0, -200vh, 0); } 
+        /* Animação que sobe 200vh. Começa em 100vh e para em -100vh. */
+        @keyframes slideSlots {
+            0% { transform: translate3d(0, 100vh, 0); }
+            100% { transform: translate3d(0, -200vh, 0); }
         }
 
         .final-hours-reveal {
@@ -187,56 +188,6 @@
 
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
-
-        /* =========================================
-           ✨ ADIÇÃO: EFEITO PEEK DOS STORIES
-           ========================================= */
-        #stories-viewport {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        .story-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            transform-origin: left center;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        opacity   0.4s ease,
-                        border-radius 0.4s ease;
-            will-change: transform;
-        }
-
-        /* Story atual: ocupa 100% da tela, sem borda */
-        .story-slide.active {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-            z-index: 10;
-            border-radius: 0;
-        }
-
-        /* Próximo story: aparece 8% na borda direita, menor e mais escuro */
-        .story-slide.next {
-            transform: translateX(92%) scale(0.9);
-            opacity: 0.6;
-            z-index: 9;
-            border-radius: 18px;
-            pointer-events: none;
-        }
-
-        /* Story anterior: sai pela esquerda, invisível */
-        .story-slide.prev {
-            transform: translateX(-100%) scale(1);
-            opacity: 0;
-            z-index: 8;
-            pointer-events: none;
-        }
-
-        /* Stories ainda não exibidos: aguardam à direita, invisíveis */
-        .story-slide.hidden {
-            transform: translateX(100%) scale(0.9);
-            opacity: 0;
-            z-index: 7;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -341,11 +292,7 @@
         <div class="story-progress-container" id="story-bars"></div>
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
-        <!-- ✨ ADIÇÃO: viewport que contém os slides com efeito peek -->
-        <div id="stories-viewport"></div>
-
-        <!-- Mantidos no DOM para referência, mas o conteúdo é movido para os slides via JS -->
-        <div id="story-hours-container" style="display:none;">
+        <div id="story-hours-container">
             <div id="slot-machine" class="slot-machine">
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
@@ -375,6 +322,7 @@
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
             </div>
+            
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <canvas id="celebration-canvas"></canvas>
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020; position: relative;">Horas juntos</p>
@@ -383,8 +331,9 @@
             </div>
         </div>
 
-        <div id="story-photo-container" style="display:none;">
+        <div id="story-photo-container">
             <img id="story-img" class="story-img-bg" src="">
+            <video id="story-video" class="story-img-bg" style="display:none;" muted playsinline></video>
             <div class="story-content">
                 <h2 id="story-text" class="story-text"></h2>
             </div>
@@ -398,7 +347,7 @@
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
         const barra = document.getElementById('progress');
-        const dataInicio = new Date(2025, 3, 17, 0, 0, 0); 
+        const dataInicio = new Date(2025, 3, 17, 0, 0, 0);
 
         function iniciarTudo() {
             document.getElementById('intro-screen').style.display = 'none';
@@ -409,11 +358,11 @@
             }).catch(e => console.log("Aguardando play..."));
             cronometro();
             setInterval(cronometro, 1000);
-            setTimeout(iniciarSensorDeRolagem, 500); 
+            setTimeout(iniciarSensorDeRolagem, 500);
         }
 
         function controlarMusica() {
-            if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); } 
+            if (som.paused) { som.play(); btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); }
             else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
         }
 
@@ -479,7 +428,7 @@
                 ctx.shadowColor = '#1ed760';
                 ctx.fillStyle = '#1ed760';
                 for (let i = 0; i < numBarsPerSide; i++) {
-                    const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
+                    const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8;
                     const barHeight = (canvas.height * heights[i]) * pulse;
                     const y = (canvas.height - barHeight) / 2;
                     const xLeft = i * (barWidth + gap);
@@ -492,7 +441,7 @@
             draw();
         }
 
-        // MOTOR DE CONFETES E CELEBRAÇÃO (sem alteração)
+        // MOTOR DE CONFETES E CELEBRAÇÃO
         const celCanvas = document.getElementById('celebration-canvas');
         const celCtx = celCanvas.getContext('2d');
         let particles = [];
@@ -508,11 +457,11 @@
         class Confetti {
             constructor() {
                 this.x = Math.random() * celCanvas.width;
-                this.y = Math.random() * -100; 
+                this.y = Math.random() * -100;
                 this.size = Math.random() * 6 + 4;
                 this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                this.speedY = Math.random() * 4 + 2; 
-                this.speedX = Math.random() * 2 - 1; 
+                this.speedY = Math.random() * 4 + 2;
+                this.speedX = Math.random() * 2 - 1;
                 this.spin = Math.random() * 360;
                 this.spinSpeed = Math.random() * 10 - 5;
             }
@@ -548,11 +497,21 @@
 
         // STORIES
         const storiesData = [
-            { type: 'hours' }, 
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Quer ir no shopping?' },
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Vamos comer poke?' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Você tá tentando me derrubar?' }
+            { type: 'hours' },
+            { type: 'photo', img: 'imagens/imagens/foto1.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto2.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto3.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto4.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto5.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto6.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto7.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto8.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto9.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto10.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto11.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto12.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto13.JPEG', text: '' },
+            { type: 'video', src: 'imagens/imagens/video14.mp4' }
         ];
         
         let currentStory = 0;
@@ -565,114 +524,74 @@
             document.getElementById('transition-screen').style.display = 'block';
             iniciarAnimacaoCanvas();
             setTimeout(() => {
-                cancelAnimationFrame(canvasAnimationId); 
+                cancelAnimationFrame(canvasAnimationId);
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 4000);
         }
 
-        // ✨ ADIÇÃO: distribui as classes active / next / prev / hidden nos slides
-        function aplicarEstados() {
-            const slides = document.querySelectorAll('#stories-viewport .story-slide');
-            slides.forEach((slide, i) => {
-                slide.className = 'story-slide'; // limpa estado anterior
-                if      (i === currentStory)     slide.classList.add('active');
-                else if (i === currentStory + 1) slide.classList.add('next');
-                else if (i < currentStory)       slide.classList.add('prev');
-                else                             slide.classList.add('hidden');
-            });
-        }
-
-        // ✨ MODIFICADO: cria um slide no viewport para cada story
         function abrirStories() {
             document.getElementById('stories-screen').style.display = 'block';
-
-            // Barras de progresso (igual ao original)
             const barsContainer = document.getElementById('story-bars');
             barsContainer.innerHTML = '';
             storiesData.forEach((_, index) => {
                 barsContainer.innerHTML += `<div class="story-bar"><div class="story-fill" id="fill-${index}"></div></div>`;
             });
-
-            // Cria os slides dentro do viewport
-            const viewport = document.getElementById('stories-viewport');
-            viewport.innerHTML = '';
-            storiesData.forEach((story, i) => {
-                const slide = document.createElement('div');
-                slide.className = 'story-slide';
-
-                if (story.type === 'hours') {
-                    // Move o conteúdo do container de horas para dentro do slide
-                    const horasClone = document.getElementById('story-hours-container').cloneNode(true);
-                    horasClone.id = 'story-hours-container-slide';
-                    horasClone.style.display = 'block';
-                    horasClone.style.position = 'absolute';
-                    horasClone.style.top = '0';
-                    horasClone.style.left = '0';
-                    horasClone.style.width = '100%';
-                    horasClone.style.height = '100%';
-                    slide.appendChild(horasClone);
-                } else {
-                    // Slide de foto (igual ao original)
-                    slide.innerHTML = `
-                        <img class="story-img-bg" src="${story.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;filter:brightness(0.4);">
-                        <div class="story-content" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center;z-index:5010;">
-                            <h2 class="story-text">${story.text}</h2>
-                        </div>`;
-                }
-
-                viewport.appendChild(slide);
-            });
-
             currentStory = 0;
-            aplicarEstados();
             renderStory();
         }
 
-        // ✨ MODIFICADO: aplica estados visuais + mantém toda lógica original intacta
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
-            celCanvas.style.opacity = '0'; 
+            celCanvas.style.opacity = '0';
+            const imgEl = document.getElementById('story-img');
+            const videoEl = document.getElementById('story-video');
+            const textEl = document.getElementById('story-text');
 
-            // Aplica o efeito peek
-            aplicarEstados();
-
-            // Atualiza barras de progresso (igual ao original)
-            for(let i = 0; i < storiesData.length; i++) {
+            for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
-                if (fill) {
-                    if (i < currentStory) fill.style.width = '100%';
-                    else fill.style.width = '0%';
-                }
+                if (i < currentStory) fill.style.width = '100%';
+                else fill.style.width = '0%';
             }
 
             const story = storiesData[currentStory];
+            const containerHoras = document.getElementById('story-hours-container');
+            const containerFotos = document.getElementById('story-photo-container');
 
-            // Lógica da roleta de horas (igual ao original, aponta para o clone dentro do slide)
             if (story.type === 'hours') {
-                const slideAtivo = document.querySelectorAll('#stories-viewport .story-slide')[currentStory];
+                containerFotos.style.display = 'none';
+                containerHoras.style.display = 'block';
                 let totalHoras = calcularHorasTotais().toLocaleString('pt-BR');
-                slideAtivo.querySelectorAll('.hours-val').forEach(el => el.innerText = totalHoras);
-                const horasText = slideAtivo.querySelector('#final-hours-text') || document.getElementById('final-hours-text');
-                if (horasText) horasText.innerText = totalHoras;
-
-                const slotMachine = slideAtivo.querySelector('.slot-machine');
-                if (slotMachine) {
-                    slotMachine.style.animation = 'none';
-                    slotMachine.offsetHeight; 
-                    slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
-                }
-                const finalReveal = slideAtivo.querySelector('.final-hours-reveal');
-                if (finalReveal) {
-                    finalReveal.style.animation = 'none';
-                    finalReveal.offsetHeight;
-                    finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s';
-                }
+                document.querySelectorAll('.hours-val').forEach(el => el.innerText = totalHoras);
+                document.getElementById('final-hours-text').innerText = totalHoras;
+                const slotMachine = document.getElementById('slot-machine');
+                slotMachine.style.animation = 'none';
+                slotMachine.offsetHeight;
+                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
+                const finalReveal = document.getElementById('final-hours-reveal');
+                finalReveal.style.animation = 'none';
+                finalReveal.offsetHeight;
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s';
                 setTimeout(iniciarCelebracao, 2500);
+            } else if (story.type === 'photo') {
+                containerHoras.style.display = 'none';
+                containerFotos.style.display = 'block';
+                imgEl.style.display = 'block';
+                videoEl.style.display = 'none';
+                videoEl.pause();
+                imgEl.src = story.img;
+                textEl.innerHTML = story.text || "";
+            } else if (story.type === 'video') {
+                containerHoras.style.display = 'none';
+                containerFotos.style.display = 'block';
+                imgEl.style.display = 'none';
+                videoEl.style.display = 'block';
+                videoEl.src = story.src;
+                videoEl.play();
+                textEl.innerHTML = "";
             }
 
-            // Timer da barra de progresso (igual ao original)
             const currentFill = document.getElementById(`fill-${currentStory}`);
             storyInterval = setInterval(() => {
                 storyProgress += 2;
@@ -681,37 +600,23 @@
             }, 100);
         }
 
-        // ✨ MODIFICADO: chama aplicarEstados() antes de renderizar
         function nextStory() {
-            if(currentStory < storiesData.length - 1) { currentStory++; renderStory(); } 
+            if(currentStory < storiesData.length - 1) { currentStory++; renderStory(); }
             else { fecharStories(); }
         }
 
         function prevStory() {
-            if(currentStory > 0) { currentStory--; renderStory(); } 
+            if(currentStory > 0) { currentStory--; renderStory(); }
             else { storyProgress = 0; document.getElementById(`fill-${currentStory}`).style.width = '0%'; }
         }
 
         function fecharStories() {
             clearInterval(storyInterval);
-            particles = []; 
+            particles = [];
+            const videoEl = document.getElementById('story-video');
+            videoEl.pause();
             document.getElementById('stories-screen').style.display = 'none';
         }
-
-        // ✨ ADIÇÃO: suporte a swipe por toque (não existia no original)
-        let touchStartX = 0, touchStartY = 0;
-        const storiesScreen = document.getElementById('stories-screen');
-        storiesScreen.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-        storiesScreen.addEventListener('touchend', e => {
-            const dx = e.changedTouches[0].clientX - touchStartX;
-            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-            if (dy > 60) return; // ignora scroll vertical
-            if (dx < -40) nextStory();       // swipe ← = próximo
-            else if (dx > 40) prevStory();   // swipe → = anterior
-        }, { passive: true });
     </script>
 </body>
 </html>
