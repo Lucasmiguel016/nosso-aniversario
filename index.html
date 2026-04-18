@@ -27,9 +27,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* =========================================
-           1. TELA DE INTRODUÇÃO
-           ========================================= */
+        /* 1. TELA DE INTRODUÇÃO */
         #intro-screen {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #000; padding: 20px; text-align: center; position: fixed; width: 100%; top: 0; z-index: 100;
@@ -44,9 +42,7 @@
         }
         .btn-start:active { transform: scale(0.95); }
 
-        /* =========================================
-           2. TELA DO PLAYER PRINCIPAL
-           ========================================= */
+        /* 2. TELA DO PLAYER PRINCIPAL */
         #player-screen { display: none; padding: 20px; animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -83,32 +79,23 @@
         .key-item { border-color: #1ed760; color: #1ed760; }
         .ring-item, .plane-item, .wedding-item { border-color: #555; color: #555; opacity: 0.3; border-style: dashed; }
 
-        /* =========================================
-           3. GATILHO DE ROLAGEM
-           ========================================= */
+        /* 3. GATILHO DE ROLAGEM */
         #scroll-trigger-area { margin-top: 60px; padding-bottom: 80px; text-align: center; opacity: 0.8; }
         .scroll-hint { color: var(--text-sub); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-weight: 700; animation: bounce 2s infinite; }
         .neon-wave { width: 100%; max-width: 300px; filter: drop-shadow(0 0 12px rgba(255, 0, 85, 0.7)); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
 
-        /* =========================================
-           4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER)
-           ========================================= */
+        /* 4. TELA DE TRANSIÇÃO (CANVAS EQUALIZER) */
         #transition-screen { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: #000; z-index: 4000; overflow: hidden; 
         }
-
-        #wrapped-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001;
-        }
-
+        #wrapped-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4001; }
         .transition-text-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 4005; text-align: center; pointer-events: none;
         }
-        
         .transition-title { 
             font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 10px; letter-spacing: -2px; 
             text-shadow: 0 0 10px #1ed760, 0 0 20px #1ed760, 0 0 40px #1ed760, 0 0 80px #1ed760;
@@ -119,52 +106,44 @@
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
             animation: fadeInSub 1s ease-out forwards 0.5s; opacity: 0;
         }
-
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes fadeInSub { to { opacity: 1; } }
 
         /* =========================================
-           5. TELA DE STORIES & ROLETA OTIMIZADA
+           5. STORIES & ROLETA OTIMIZADA
            ========================================= */
-        #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
+        #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; overflow: hidden;}
         
+        /* Áreas de Toque */
         .story-left-click { position: absolute; top: 0; left: 0; width: 35%; height: 100%; z-index: 5020; cursor: pointer; }
         .story-right-click { position: absolute; top: 0; right: 0; width: 65%; height: 100%; z-index: 5020; cursor: pointer; }
         
+        /* Barras de Progresso */
         .story-progress-container { position: absolute; top: 15px; left: 10px; right: 10px; display: flex; gap: 5px; z-index: 5030; }
         .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
         .story-fill { height: 100%; background: #fff; width: 0%; }
         .story-close { position: absolute; top: 35px; right: 20px; color: #fff; font-size: 1.5rem; z-index: 5030; cursor: pointer; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
+        /* ROLETA: Ajuste de velocidade e suavidade */
         #story-hours-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; overflow: hidden; background: #000; }
+        #celebration-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; }
         
-        /* CANVAS DE CELEBRAÇÃO (CONFETES) */
-        #celebration-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5005; pointer-events: none; opacity: 0; 
-        }
-        @keyframes fadeInConfetti { to { opacity: 0.8; } }
-
-        /* ROLETA: Ajustada para visual mais "distante" e denso (9 blocos na tela) */
         .slot-machine { 
             display: flex; flex-direction: column; width: 100%; 
             position: absolute; top: 0; left: 0;
-            transform: translateY(100vh); /* Começa preta, sobe depois */
+            transform: translateY(100vh); 
             will-change: transform; z-index: 5010;
         }
-        
         .slot-row {
-            height: 11.11vh; /* Altura que garante exatamente 9 blocos na tela (100/9) */
-            display: flex; justify-content: center; align-items: center;
-            font-size: 9vh; /* Fonte proporcional à altura achatada */
-            font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
+            height: 11.11vh; display: flex; justify-content: center; align-items: center;
+            font-size: 9vh; font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
         }
+        .r-orange { background: #f39c12; color: #1a1a1a; text-shadow: -2px 3px 0 #935116; }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 2px 0 #186a3b; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -2px 3px 0 #512e5f; }
+        .r-blue   { background: #3f51b5; color: #cddc39; text-shadow: -1px 2px 0 #1a237e; }
         
-        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e; }
-        
-        /* Animação que sobe 200vh. Começa em 100vh e para em -100vh. */
+        /* ANIMAÇÃO DA ROLETA: Mais lenta (4s) e curva super suave */
         @keyframes slideSlots { 
             0% { transform: translate3d(0, 100vh, 0); } 
             100% { transform: translate3d(0, -200vh, 0); } 
@@ -176,14 +155,25 @@
             background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
             opacity: 0; z-index: 5015; pointer-events: none;
         }
-        @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
-
-        #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
-        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
-        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
+        /* EFEITO PEEK (SLIDER) NOS STORIES */
+        #story-photo-container { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: none; 
+        }
+        .story-track {
+            display: flex; width: 500%; height: 100%; /* 5 slides */
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .slide {
+            width: 100vw; height: 100%; position: relative; flex-shrink: 0;
+        }
+        .story-img-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+        .story-content { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; padding: 40px; text-align: center; box-sizing: border-box;
+        }
         .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
 
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
@@ -236,42 +226,12 @@
                     <div class="counter-item"><span id="sec" class="time-val">0</span><span class="time-uni">Seg</span></div>
                 </div>
             </div>
-
-            <div class="top-moments">
-                <h3 style="margin-bottom: 20px; font-weight: 800;">Nossos momentos mais ouvidos:</h3>
-                <div class="moment-item"><span class="moment-number">1</span><span>Eu te amo</span></div>
-                <div class="moment-item"><span class="moment-number">2</span><span>Quer ir no shopping ?</span></div>
-                <div class="moment-item"><span class="moment-number">3</span><span>Vamos comer poke ?</span></div>
-                <div class="moment-item"><span class="moment-number">4</span><span>Você tá tentando me derrubar ?</span></div>
-            </div>
-
-            <div class="message-card">
-                <span class="message-card-title">Mensagem especial</span>
-                <p class="message-card-text">Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨.</p>
-                <button class="btn-show-message" onclick="verCarta(true)">Mostrar Mensagem</button>
-            </div>
-
-            <div class="achievements-section">
-                <div style="display: flex; justify-content: space-between; color: var(--text-sub); font-size: 0.8rem; font-weight: 800;">
-                    <span>CONQUISTAS DO CASAL</span>
-                    <span>1/4</span>
-                </div>
-                <div class="achievements-grid">
-                    <div class="achievement-item key-item"><i class="fa-solid fa-key"></i></div>
-                    <div class="achievement-item ring-item locked"><i class="fa-solid fa-ring"></i></div>
-                    <div class="achievement-item plane-item locked"><i class="fa-solid fa-plane"></i></div>
-                    <div class="achievement-item wedding-item locked"><i class="fa-solid fa-house-chimney-heart"></i></div>
-                </div>
-            </div>
-
             <div id="scroll-trigger-area">
                 <p class="scroll-hint">Continue descendo</p>
                 <svg class="neon-wave" viewBox="0 0 200 60" preserveAspectRatio="none">
                     <defs>
                         <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#ff3399"/>
-                            <stop offset="40%" stop-color="#ff0040"/>
-                            <stop offset="100%" stop-color="#cc0000"/>
+                            <stop offset="0%" stop-color="#ff3399"/><stop offset="40%" stop-color="#ff0040"/><stop offset="100%" stop-color="#cc0000"/>
                         </linearGradient>
                     </defs>
                     <path d="M 10 20 L 80 20 C 110 20, 130 50, 150 50 C 170 50, 185 30, 185 30 L 185 38 C 185 38, 170 60, 140 60 C 110 60, 90 30, 80 30 L 10 30 Z" fill="url(#neonGradient)" rx="5"/>
@@ -293,38 +253,15 @@
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
         <div id="story-hours-container">
+            <canvas id="celebration-canvas"></canvas>
             <div id="slot-machine" class="slot-machine">
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-orange hours-val"></div><div class="slot-row r-green hours-val"></div><div class="slot-row r-pink hours-val"></div><div class="slot-row r-blue hours-val"></div><div class="slot-row r-orange hours-val"></div>
             </div>
-            
             <div id="final-hours-reveal" class="final-hours-reveal">
-                <canvas id="celebration-canvas"></canvas>
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020; position: relative;">Horas juntos</p>
                 <h1 id="final-hours-text" class="final-hours-text" style="z-index: 5020; position: relative;">0</h1>
                 <p class="final-subtitle" style="z-index: 5020; position: relative;">14% dos casais no mundo ✨</p>
@@ -332,10 +269,8 @@
         </div>
 
         <div id="story-photo-container">
-            <img id="story-img" class="story-img-bg" src="">
-            <div class="story-content">
-                <h2 id="story-text" class="story-text"></h2>
-            </div>
+            <div class="story-track" id="story-track">
+                </div>
         </div>
 
         <div class="story-left-click" onclick="prevStory()"></div>
@@ -352,9 +287,7 @@
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
-            som.play().then(() => {
-                btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
-            }).catch(e => console.log("Aguardando play..."));
+            som.play().then(() => { btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause'); });
             cronometro();
             setInterval(cronometro, 1000);
             setTimeout(iniciarSensorDeRolagem, 500); 
@@ -365,11 +298,7 @@
             else { som.pause(); btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play'); }
         }
 
-        som.ontimeupdate = () => {
-            if (som.duration) { barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; }
-        };
-
-        function verCarta(s) { document.getElementById('letter-modal').style.display = s ? 'block' : 'none'; }
+        som.ontimeupdate = () => { if (som.duration) barra.style.width = ((som.currentTime / som.duration) * 100) + "%"; };
 
         function cronometro() {
             const agora = new Date();
@@ -387,17 +316,13 @@
         }
 
         function calcularHorasTotais() {
-            const diffMs = new Date() - dataInicio;
-            return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
+            return Math.floor((new Date() - dataInicio) / (1000 * 60 * 60));
         }
 
         function iniciarSensorDeRolagem() {
             const areaGatilho = document.getElementById('scroll-trigger-area');
             const observer = new IntersectionObserver((entradas) => {
-                if (entradas[0].isIntersecting) {
-                    iniciarRetrospectiva();
-                    observer.unobserve(areaGatilho);
-                }
+                if (entradas[0].isIntersecting) { iniciarRetrospectiva(); observer.unobserve(areaGatilho); }
             }, { threshold: 0.6 });
             observer.observe(areaGatilho);
         }
@@ -405,102 +330,67 @@
         // CANVAS EQUALIZER
         const canvas = document.getElementById('wrapped-canvas');
         const ctx = canvas.getContext('2d');
-        let canvasAnimationId;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas);
 
         function iniciarAnimacaoCanvas() {
             resizeCanvas();
-            const barWidth = window.innerWidth > 600 ? 30 : 15;
-            const gap = 5;
             const numBarsPerSide = 8;
             const heights = [0.2, 0.4, 0.6, 0.8, 1.0, 0.8, 0.6, 0.4];
-
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const time = Date.now() * 0.005;
-                ctx.shadowBlur = 25;
-                ctx.shadowColor = '#1ed760';
-                ctx.fillStyle = '#1ed760';
+                ctx.shadowBlur = 25; ctx.shadowColor = '#1ed760'; ctx.fillStyle = '#1ed760';
                 for (let i = 0; i < numBarsPerSide; i++) {
-                    const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
-                    const barHeight = (canvas.height * heights[i]) * pulse;
+                    const barHeight = (canvas.height * heights[i]) * (Math.sin(time + i * 0.5) * 0.2 + 0.8);
                     const y = (canvas.height - barHeight) / 2;
-                    const xLeft = i * (barWidth + gap);
-                    ctx.fillRect(xLeft, y, barWidth, barHeight);
-                    const xRight = canvas.width - ((i + 1) * (barWidth + gap));
-                    ctx.fillRect(xRight, y, barWidth, barHeight);
+                    ctx.fillRect(i * 20, y, 15, barHeight);
+                    ctx.fillRect(canvas.width - (i * 20) - 15, y, 15, barHeight);
                 }
                 canvasAnimationId = requestAnimationFrame(draw);
             }
             draw();
         }
 
-        // MOTOR DE CONFETES E CELEBRAÇÃO
+        // CONFETES
         const celCanvas = document.getElementById('celebration-canvas');
         const celCtx = celCanvas.getContext('2d');
         let particles = [];
-        const confettiColors = ['#1ed760', '#ffd700', '#ffffff', '#ff3399'];
-
-        function resizeCelebrationCanvas() {
-            if(!celCanvas) return;
-            celCanvas.width = window.innerWidth;
-            celCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCelebrationCanvas);
-
         class Confetti {
             constructor() {
-                this.x = Math.random() * celCanvas.width;
-                this.y = Math.random() * -100; 
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * -100;
                 this.size = Math.random() * 6 + 4;
-                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                this.speedY = Math.random() * 4 + 2; 
-                this.speedX = Math.random() * 2 - 1; 
+                this.color = ['#1ed760', '#ffd700', '#ffffff', '#ff3399'][Math.floor(Math.random() * 4)];
+                this.speedY = Math.random() * 3 + 2;
+                this.speedX = Math.random() * 2 - 1;
                 this.spin = Math.random() * 360;
-                this.spinSpeed = Math.random() * 10 - 5;
             }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                this.spin += this.spinSpeed;
-                if (this.y > celCanvas.height) { this.y = -20; this.x = Math.random() * celCanvas.width; }
-            }
+            update() { this.y += this.speedY; this.x += this.speedX; this.spin += 2; if (this.y > window.innerHeight) this.y = -20; }
             draw() {
-                celCtx.save();
-                celCtx.translate(this.x, this.y);
-                celCtx.rotate(this.spin * Math.PI / 180);
-                celCtx.fillStyle = this.color;
-                celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-                celCtx.restore();
+                celCtx.save(); celCtx.translate(this.x, this.y); celCtx.rotate(this.spin * Math.PI / 180);
+                celCtx.fillStyle = this.color; celCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size); celCtx.restore();
             }
         }
-
         function iniciarCelebracao() {
-            particles = [];
-            resizeCelebrationCanvas();
-            celCanvas.style.animation = 'fadeInConfetti 1s forwards';
-            for (let i = 0; i < 80; i++) { particles.push(new Confetti()); }
-            function animarConfetes() {
-                if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
+            celCanvas.width = window.innerWidth; celCanvas.height = window.innerHeight;
+            particles = Array.from({length: 80}, () => new Confetti());
+            function animar() {
+                if (storiesData[currentStory].type !== 'hours') return;
                 celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
-                for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
-                requestAnimationFrame(animarConfetes);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animar);
             }
-            animarConfetes();
+            celCanvas.style.opacity = '1'; animar();
         }
 
-        // STORIES
+        // STORIES SYSTEM COM SLIDER
         const storiesData = [
             { type: 'hours' }, 
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Eu te amo' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Quer ir no shopping?' },
-            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Vamos comer poke?' },
-            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Você tá tentando me derrubar?' }
+            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Nossos primeiros momentos...' },
+            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Cada dia ao seu lado é um presente.' },
+            { type: 'photo', img: 'imagens/imagens/capa.JPEG', text: 'Obrigado por ser minha parceira.' },
+            { type: 'photo', img: 'imagens/imagens/casal_perfil.JPEG', text: 'Te amo para sempre! ❤️' }
         ];
         
         let currentStory = 0;
@@ -509,11 +399,18 @@
 
         function iniciarRetrospectiva() {
             som.pause();
-            btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
             document.getElementById('transition-screen').style.display = 'block';
             iniciarAnimacaoCanvas();
+            
+            // Prepara o trilho de fotos
+            const track = document.getElementById('story-track');
+            track.innerHTML = storiesData.map(s => s.type === 'photo' ? `
+                <div class="slide">
+                    <img src="${s.img}" class="story-img-bg">
+                    <div class="story-content"><h2 class="story-text">${s.text}</h2></div>
+                </div>` : '<div class="slide"></div>').join('');
+
             setTimeout(() => {
-                cancelAnimationFrame(canvasAnimationId); 
                 document.getElementById('transition-screen').style.display = 'none';
                 abrirStories();
             }, 4000);
@@ -522,53 +419,50 @@
         function abrirStories() {
             document.getElementById('stories-screen').style.display = 'block';
             const barsContainer = document.getElementById('story-bars');
-            barsContainer.innerHTML = '';
-            storiesData.forEach((_, index) => {
-                barsContainer.innerHTML += `<div class="story-bar"><div class="story-fill" id="fill-${index}"></div></div>`;
-            });
-            currentStory = 0;
+            barsContainer.innerHTML = storiesData.map((_, i) => `<div class="story-bar"><div class="story-fill" id="fill-${i}"></div></div>`).join('');
             renderStory();
         }
 
         function renderStory() {
             clearInterval(storyInterval);
             storyProgress = 0;
-            celCanvas.style.opacity = '0'; 
-            for(let i=0; i<storiesData.length; i++) {
-                const fill = document.getElementById(`fill-${i}`);
-                if (i < currentStory) fill.style.width = '100%';
-                else fill.style.width = '0%'; 
-            }
+            
+            storiesData.forEach((_, i) => {
+                document.getElementById(`fill-${i}`).style.width = i < currentStory ? '100%' : '0%';
+            });
+            
             const story = storiesData[currentStory];
-            const containerHoras = document.getElementById('story-hours-container');
-            const containerFotos = document.getElementById('story-photo-container');
+            const track = document.getElementById('story-track');
+            const hoursCont = document.getElementById('story-hours-container');
+            const photoCont = document.getElementById('story-photo-container');
+
             if (story.type === 'hours') {
-                containerFotos.style.display = 'none';
-                containerHoras.style.display = 'block';
-                let totalHoras = calcularHorasTotais().toLocaleString('pt-BR');
-                document.querySelectorAll('.hours-val').forEach(el => el.innerText = totalHoras);
-                document.getElementById('final-hours-text').innerText = totalHoras;
-                const slotMachine = document.getElementById('slot-machine');
-                slotMachine.style.animation = 'none';
-                slotMachine.offsetHeight; 
-                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
-                const finalReveal = document.getElementById('final-hours-reveal');
-                finalReveal.style.animation = 'none';
-                finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
-                setTimeout(iniciarCelebracao, 2500);
+                photoCont.style.display = 'none'; hoursCont.style.display = 'block';
+                let total = calcularHorasTotais().toLocaleString('pt-BR');
+                document.querySelectorAll('.hours-val').forEach(el => el.innerText = total);
+                document.getElementById('final-hours-text').innerText = total;
+
+                const slot = document.getElementById('slot-machine');
+                slot.style.animation = 'none'; slot.offsetHeight;
+                // Animação SUAVE e LENTA (3.5 segundos)
+                slot.style.animation = 'slideSlots 3.5s cubic-bezier(0.15, 0.85, 0.3, 1) forwards';
+
+                const reveal = document.getElementById('final-hours-reveal');
+                reveal.style.animation = 'none'; reveal.offsetHeight;
+                reveal.style.animation = 'fadeInReveal 1s forwards 3s'; 
+                setTimeout(iniciarCelebracao, 3000);
             } else {
-                containerHoras.style.display = 'none';
-                containerFotos.style.display = 'block';
-                document.getElementById('story-img').src = story.img;
-                document.getElementById('story-text').innerHTML = story.text;
+                hoursCont.style.display = 'none'; photoCont.style.display = 'block';
+                // Move o trilho para a posição da foto atual
+                track.style.transform = `translateX(-${currentStory * 100}vw)`;
             }
+            
             const currentFill = document.getElementById(`fill-${currentStory}`);
             storyInterval = setInterval(() => {
-                storyProgress += 2;
+                storyProgress += 1;
                 currentFill.style.width = storyProgress + '%';
-                if(storyProgress >= 100) { nextStory(); }
-            }, 100);
+                if(storyProgress >= 100) nextStory();
+            }, 50); // Stories de 5 segundos
         }
 
         function nextStory() {
@@ -577,13 +471,11 @@
         }
 
         function prevStory() {
-            if(currentStory > 0) { currentStory--; renderStory(); } 
-            else { storyProgress = 0; document.getElementById(`fill-${currentStory}`).style.width = '0%'; }
+            if(currentStory > 0) { currentStory--; renderStory(); }
         }
 
         function fecharStories() {
             clearInterval(storyInterval);
-            particles = []; 
             document.getElementById('stories-screen').style.display = 'none';
         }
     </script>
