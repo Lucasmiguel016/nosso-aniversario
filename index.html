@@ -124,7 +124,7 @@
         @keyframes fadeInSub { to { opacity: 1; } }
 
         /* =========================================
-           5. TELA DE STORIES & ROLETA OTIMIZADA
+           5. TELA DE STORIES & ROLETA OTIMIZADA (ATUALIZADO PARA CARD)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
@@ -181,10 +181,40 @@
         .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
-        .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
-        .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
-        .story-text { font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9); line-height: 1.2; letter-spacing: -1px; }
+        /* Novo container de foto com layout flexível para card */
+        #story-photo-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            background: #000; padding: 20px; box-sizing: border-box; z-index: 5005;
+        }
+
+        /* Novo card de imagem centralizado */
+        .story-img-card {
+            width: 85%; max-width: 400px; aspect-ratio: 9/16;
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative;
+        }
+        
+        .story-img-bg {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: none; /* Stories claros: filtro de brilho removido */
+        }
+
+        /* Container de conteúdo acima do card */
+        .story-content {
+            text-align: center; margin-bottom: 20px; z-index: 5010;
+            pointer-events: none; width: 100%; max-width: 400px;
+            padding: 0 20px; box-sizing: border-box;
+        }
+        .story-text {
+            font-size: 1.2rem; font-weight: 700; color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7); line-height: 1.2;
+            letter-spacing: -0.5px; margin: 0 0 5px 0;
+        }
+        .story-subtext {
+            font-size: 0.9rem; font-weight: 500; color: rgba(255,255,255,0.8);
+            margin: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+        }
 
         #letter-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--spotify-black); z-index: 6000; padding: 45px 25px; box-sizing: border-box; overflow-y: auto; text-align: left; }
         .close-btn { color: var(--spotify-green); font-weight: 800; cursor: pointer; margin-bottom: 20px; display: block; }
@@ -332,10 +362,10 @@
         </div>
 
         <div id="story-photo-container">
-            <img id="story-img" class="story-img-bg" src="">
-            <video id="story-video" class="story-img-bg" style="display:none;" muted playsinline></video>
-            <div class="story-content">
-                <h2 id="story-text" class="story-text"></h2>
+            <div class="story-content"></div>
+            <div class="story-img-card">
+                <img id="story-img" class="story-img-bg" src="">
+                <video id="story-video" class="story-img-bg" style="display:none;" muted playsinline></video>
             </div>
         </div>
 
@@ -495,22 +525,23 @@
             animarConfetes();
         }
 
-        /// STORIES ORGANIZADOS: HORAS -> FOTOS 1 A 13 -> VÍDEO FINAL
+        // STORIES ORGANIZADOS EM CARD (ATUALIZADO)
+        // Você pode editar o 'text' (título) e 'subtext' (texto entre parênteses) de cada foto.
         const storiesData = [
             { type: 'hours' },
-            { type: 'photo', img: 'imagens/imagens/foto1.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto2.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto3.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto4.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto5.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto6.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto7.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto8.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto9.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto10.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto11.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto12.JPEG', text: '' },
-            { type: 'photo', img: 'imagens/imagens/foto13.JPEG', text: '' },
+            { type: 'photo', img: 'imagens/imagens/foto1.JPEG', text: 'O começo de tudo ❤️', subtext: '(Parece que foi ontem)' },
+            { type: 'photo', img: 'imagens/imagens/foto2.JPEG', text: 'Nosso primeiro encontro', subtext: '(Poke e muita conversa 🍣)' },
+            { type: 'photo', img: 'imagens/imagens/foto3.JPEG', text: 'Eu te amo!', subtext: '(Mais que tudo ❤️)' },
+            { type: 'photo', img: 'imagens/imagens/foto4.JPEG', text: 'Quer ir no shopping?', subtext: '(Eu sei que você adora 🛍️)' },
+            { type: 'photo', img: 'imagens/imagens/foto5.JPEG', text: 'Melhor companhia', subtext: '(Sempre 🎵)' },
+            { type: 'photo', img: 'imagens/imagens/foto6.JPEG', text: 'Você tá tentando me derrubar?', subtext: '(Ainda lembro disso 😂)' },
+            { type: 'photo', img: 'imagens/imagens/foto7.JPEG', text: 'Nossa música', subtext: '(Dá o play 🎵)' },
+            { type: 'photo', img: 'imagens/imagens/foto8.JPEG', text: 'Nosso cantinho', subtext: '(🏠❤️)' },
+            { type: 'photo', img: 'imagens/imagens/foto9.JPEG', text: 'Nossos planos', subtext: '(💍✨)' },
+            { type: 'photo', img: 'imagens/imagens/foto10.JPEG', text: 'Um futuro juntos', subtext: '(Sempre ❤️)' },
+            { type: 'photo', img: 'imagens/imagens/foto11.JPEG', text: 'Lucas e Mariana', subtext: '(Casal mais lindo ❤️)' },
+            { type: 'photo', img: 'imagens/imagens/foto12.JPEG', text: 'Para sempre', subtext: '(Até o fim ✨)' },
+            { type: 'photo', img: 'imagens/imagens/foto13.JPEG', text: 'Você é o meu amor', subtext: '(❤️✨)' },
             { type: 'video', src: 'imagens/imagens/video14.mp4' }
         ];
         
@@ -547,7 +578,10 @@
             celCanvas.style.opacity = '0';
             const imgEl = document.getElementById('story-img');
             const videoEl = document.getElementById('story-video');
-            const textEl = document.getElementById('story-text');
+            const textContentEl = document.querySelector('.story-content'); // Container de texto
+
+            // Limpa o conteúdo de texto antigo
+            textContentEl.innerHTML = '';
 
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
@@ -576,20 +610,29 @@
                 setTimeout(iniciarCelebracao, 2500);
             } else if (story.type === 'photo') {
                 containerHoras.style.display = 'none';
-                containerFotos.style.display = 'block';
+                containerFotos.style.display = 'flex'; // Usar flex para centralizar o card
                 imgEl.style.display = 'block';
                 videoEl.style.display = 'none';
                 videoEl.pause();
                 imgEl.src = story.img;
-                textEl.innerHTML = story.text || "";
+
+                // Adiciona o texto acima do card
+                if (story.text) {
+                    textContentEl.innerHTML += `<h2 class="story-text">${story.text}</h2>`;
+                }
+                if (story.subtext) {
+                    textContentEl.innerHTML += `<p class="story-subtext">${story.subtext}</p>`;
+                }
             } else if (story.type === 'video') {
                 containerHoras.style.display = 'none';
-                containerFotos.style.display = 'block';
+                containerFotos.style.display = 'flex'; // Usar flex para centralizar o card
                 imgEl.style.display = 'none';
                 videoEl.style.display = 'block';
                 videoEl.src = story.src;
                 videoEl.play();
-                textEl.innerHTML = "";
+
+                // Para o vídeo, não há texto.
+                textContentEl.innerHTML = '';
             }
 
             const currentFill = document.getElementById(`fill-${currentStory}`);
