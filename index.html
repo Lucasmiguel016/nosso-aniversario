@@ -124,7 +124,7 @@
         @keyframes fadeInSub { to { opacity: 1; } }
 
         /* =========================================
-           5. TELA DE STORIES & ROLETA 3D FLUIDA
+           5. TELA DE STORIES & ROLETA OTIMIZADA
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
@@ -144,29 +144,27 @@
         }
         @keyframes fadeInConfetti { to { opacity: 0.8; } }
 
-        /* =========================================
-           ROLETA CORRIGIDA: Blocos menores (9 na tela) e sobe do preto
-           ========================================= */
+        /* ROLETA: Ajustada para visual mais "distante" e denso (9 blocos na tela) */
         .slot-machine { 
             display: flex; flex-direction: column; width: 100%; 
             position: absolute; top: 0; left: 0;
-            transform: translateY(100vh); /* Começa no preto, abaixo da tela */
+            transform: translateY(100vh); /* Começa preta, sobe depois */
             will-change: transform; z-index: 5010;
         }
         
         .slot-row {
-            height: 11.5vh; /* Achatado: cabem quase 9 blocos na tela ao mesmo tempo */
+            height: 11.11vh; /* Altura que garante exatamente 9 blocos na tela (100/9) */
             display: flex; justify-content: center; align-items: center;
-            font-size: 9vh; /* Fonte menor para caber na altura reduzida */
+            font-size: 9vh; /* Fonte proporcional à altura achatada */
             font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
         }
         
-        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
+        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116; }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f; }
+        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e; }
         
-        /* Animação que puxa do fundo preto (100vh) e desliza para cima */
+        /* Animação que sobe 200vh. Começa em 100vh e para em -100vh. */
         @keyframes slideSlots { 
             0% { transform: translate3d(0, 100vh, 0); } 
             100% { transform: translate3d(0, -200vh, 0); } 
@@ -176,14 +174,13 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
-            opacity: 0; z-index: 10; pointer-events: none;
+            opacity: 0; z-index: 5015; pointer-events: none;
         }
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
         .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
@@ -322,11 +319,12 @@
                 <div class="slot-row r-pink hours-val"></div>
                 <div class="slot-row r-blue hours-val"></div>
                 <div class="slot-row r-orange hours-val"></div>
+                <div class="slot-row r-green hours-val"></div>
+                <div class="slot-row r-pink hours-val"></div>
             </div>
             
             <div id="final-hours-reveal" class="final-hours-reveal">
                 <canvas id="celebration-canvas"></canvas>
-
                 <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020; position: relative;">Horas juntos</p>
                 <h1 id="final-hours-text" class="final-hours-text" style="z-index: 5020; position: relative;">0</h1>
                 <p class="final-subtitle" style="z-index: 5020; position: relative;">14% dos casais no mundo ✨</p>
@@ -344,17 +342,6 @@
         <div class="story-right-click" onclick="nextStory()"></div>
     </div>
 
-    <div id="letter-modal">
-        <span class="close-btn" onclick="verCarta(false)">← Voltar para a música</span>
-        <h1 style="color: var(--spotify-green); font-weight: 800;">Minha Mariana,</h1>
-        <p style="line-height: 1.8; font-size: 1.1rem; color: #eee; white-space: pre-wrap;">
-Há um ano, eu não imaginava que seria tão feliz ao seu lado.
-Você é a "melhor parte" de todos os meus dias.
-
-Te amo para sempre! ❤️
-        </p>
-    </div>
-
     <script>
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
@@ -365,11 +352,9 @@ Te amo para sempre! ❤️
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('player-screen').style.display = 'block';
             window.scrollTo(0, 0);
-            
             som.play().then(() => {
                 btnIcon.classList.replace('fa-circle-play', 'fa-circle-pause');
             }).catch(e => console.log("Aguardando play..."));
-
             cronometro();
             setInterval(cronometro, 1000);
             setTimeout(iniciarSensorDeRolagem, 500); 
@@ -438,23 +423,18 @@ Te amo para sempre! ❤️
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 const time = Date.now() * 0.005;
-
                 ctx.shadowBlur = 25;
                 ctx.shadowColor = '#1ed760';
                 ctx.fillStyle = '#1ed760';
-
                 for (let i = 0; i < numBarsPerSide; i++) {
                     const pulse = Math.sin(time + i * 0.5) * 0.2 + 0.8; 
                     const barHeight = (canvas.height * heights[i]) * pulse;
                     const y = (canvas.height - barHeight) / 2;
-                    
                     const xLeft = i * (barWidth + gap);
                     ctx.fillRect(xLeft, y, barWidth, barHeight);
-
                     const xRight = canvas.width - ((i + 1) * (barWidth + gap));
                     ctx.fillRect(xRight, y, barWidth, barHeight);
                 }
-
                 canvasAnimationId = requestAnimationFrame(draw);
             }
             draw();
@@ -488,10 +468,7 @@ Te amo para sempre! ❤️
                 this.y += this.speedY;
                 this.x += this.speedX;
                 this.spin += this.spinSpeed;
-                if (this.y > celCanvas.height) {
-                    this.y = -20;
-                    this.x = Math.random() * celCanvas.width;
-                }
+                if (this.y > celCanvas.height) { this.y = -20; this.x = Math.random() * celCanvas.width; }
             }
             draw() {
                 celCtx.save();
@@ -508,14 +485,10 @@ Te amo para sempre! ❤️
             resizeCelebrationCanvas();
             celCanvas.style.animation = 'fadeInConfetti 1s forwards';
             for (let i = 0; i < 80; i++) { particles.push(new Confetti()); }
-
             function animarConfetes() {
                 if (document.getElementById('stories-screen').style.display === 'none' || storiesData[currentStory].type !== 'hours') return;
                 celCtx.clearRect(0, 0, celCanvas.width, celCanvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-                }
+                for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
                 requestAnimationFrame(animarConfetes);
             }
             animarConfetes();
@@ -537,10 +510,8 @@ Te amo para sempre! ❤️
         function iniciarRetrospectiva() {
             som.pause();
             btnIcon.classList.replace('fa-circle-pause', 'fa-circle-play');
-            
             document.getElementById('transition-screen').style.display = 'block';
             iniciarAnimacaoCanvas();
-            
             setTimeout(() => {
                 cancelAnimationFrame(canvasAnimationId); 
                 document.getElementById('transition-screen').style.display = 'none';
@@ -550,13 +521,11 @@ Te amo para sempre! ❤️
 
         function abrirStories() {
             document.getElementById('stories-screen').style.display = 'block';
-            
             const barsContainer = document.getElementById('story-bars');
             barsContainer.innerHTML = '';
             storiesData.forEach((_, index) => {
                 barsContainer.innerHTML += `<div class="story-bar"><div class="story-fill" id="fill-${index}"></div></div>`;
             });
-
             currentStory = 0;
             renderStory();
         }
@@ -565,47 +534,35 @@ Te amo para sempre! ❤️
             clearInterval(storyInterval);
             storyProgress = 0;
             celCanvas.style.opacity = '0'; 
-            
             for(let i=0; i<storiesData.length; i++) {
                 const fill = document.getElementById(`fill-${i}`);
                 if (i < currentStory) fill.style.width = '100%';
                 else fill.style.width = '0%'; 
             }
-            
             const story = storiesData[currentStory];
             const containerHoras = document.getElementById('story-hours-container');
             const containerFotos = document.getElementById('story-photo-container');
-
             if (story.type === 'hours') {
                 containerFotos.style.display = 'none';
                 containerHoras.style.display = 'block';
-
                 let totalHoras = calcularHorasTotais().toLocaleString('pt-BR');
                 document.querySelectorAll('.hours-val').forEach(el => el.innerText = totalHoras);
                 document.getElementById('final-hours-text').innerText = totalHoras;
-
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                
-                // Animação ATUALIZADA: Inicia em 100vh (preto embaixo) e sobe rápido
                 slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
-
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.5s'; 
-                
-                // Dispara os confetes com a tela preta de revelação
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
                 setTimeout(iniciarCelebracao, 2500);
-
             } else {
                 containerHoras.style.display = 'none';
                 containerFotos.style.display = 'block';
                 document.getElementById('story-img').src = story.img;
                 document.getElementById('story-text').innerHTML = story.text;
             }
-            
             const currentFill = document.getElementById(`fill-${currentStory}`);
             storyInterval = setInterval(() => {
                 storyProgress += 2;
@@ -615,20 +572,13 @@ Te amo para sempre! ❤️
         }
 
         function nextStory() {
-            if(currentStory < storiesData.length - 1) {
-                currentStory++;
-                renderStory();
-            } else { fecharStories(); }
+            if(currentStory < storiesData.length - 1) { currentStory++; renderStory(); } 
+            else { fecharStories(); }
         }
 
         function prevStory() {
-            if(currentStory > 0) {
-                currentStory--;
-                renderStory();
-            } else {
-                storyProgress = 0; 
-                document.getElementById(`fill-${currentStory}`).style.width = '0%';
-            }
+            if(currentStory > 0) { currentStory--; renderStory(); } 
+            else { storyProgress = 0; document.getElementById(`fill-${currentStory}`).style.width = '0%'; }
         }
 
         function fecharStories() {
