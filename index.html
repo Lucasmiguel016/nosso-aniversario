@@ -61,7 +61,7 @@
 
         .about-section { background: transparent; margin-top: 40px; padding-bottom: 25px; position: relative; text-align: left; }
         .couple-img { width: 100%; height: 320px; object-fit: cover; object-position: center 25%; display: block; margin-bottom: 20px; border-radius: 12px; }
-        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); }
+        .sobre-title { position: absolute; top: 20px; left: 20px; color: #fff; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 10px rgba(0,0,0,0.9); z-index: 5; }
         
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px 20px; }
         .counter-item { background: var(--counter-box-bg); border-radius: 15px; padding: 20px 5px; text-align: center; }
@@ -72,12 +72,13 @@
         .moment-item { display: flex; align-items: center; margin-bottom: 18px; background: rgba(255,255,255,0.06); padding: 12px; border-radius: 10px; }
         .moment-number { font-size: 1.5rem; font-weight: 800; color: var(--spotify-green); margin-right: 15px; min-width: 25px; }
 
-        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        /* CORREÇÃO DO BOTÃO: Adicionado position e z-index para garantir clique */
+        .message-card { background-color: #e91e63; border-radius: 25px; padding: 25px; color: #fff; margin: 35px 0 25px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.2); position: relative; z-index: 10; }
         .message-card-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 15px; }
         .message-card-text { font-size: 1.5rem; line-height: 1.1; margin-bottom: 25px; font-weight: 800; letter-spacing: -0.8px; }
-        .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+        .btn-show-message { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; position: relative; z-index: 11; }
 
-        .achievements-section { background: transparent; padding: 0 10px; text-align: left; }
+        .achievements-section { background: transparent; padding: 0 10px; text-align: left; position: relative; z-index: 5; }
         .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; }
         .achievement-item { background: #282828; border-radius: 12px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; border: 2px solid; }
         .key-item { border-color: #1ed760; color: #1ed760; }
@@ -124,7 +125,7 @@
         @keyframes fadeInSub { to { opacity: 1; } }
 
         /* =========================================
-           5. TELA DE STORIES & ROLETA OTIMIZADA (ATUALIZADO PARA CARD)
+           5. TELA DE STORIES & ROLETA OTIMIZADA (CARD LAYOUT)
            ========================================= */
         #stories-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; z-index: 5000; }
         
@@ -181,14 +182,14 @@
         .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Novo container de foto com layout flexível para card */
+        /* Container de foto com layout flexível para card */
         #story-photo-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: none; flex-direction: column; justify-content: center; align-items: center;
             background: #000; padding: 20px; box-sizing: border-box; z-index: 5005;
         }
 
-        /* Novo card de imagem centralizado */
+        /* Card de imagem centralizado */
         .story-img-card {
             width: 85%; max-width: 400px; aspect-ratio: 9/16;
             border-radius: 12px; overflow: hidden;
@@ -197,7 +198,7 @@
         
         .story-img-bg {
             width: 100%; height: 100%; object-fit: cover;
-            filter: none; /* Stories claros: filtro de brilho removido */
+            filter: none; /* Stories claros */
         }
 
         /* Container de conteúdo acima do card */
@@ -373,6 +374,17 @@
         <div class="story-right-click" onclick="nextStory()"></div>
     </div>
 
+    <div id="letter-modal">
+        <span class="close-btn" onclick="verCarta(false)">[ Fechar ]</span>
+        <div style="color: #fff; line-height: 1.6; font-size: 1rem;">
+            <p>Minha gatinha Mariana,</p>
+            <p>Escrevo essa mensagem para te lembrar o quanto você é especial para mim. Desde que começamos nossa jornada juntos em 2025, cada dia tem sido um presente.</p>
+            <p>Você é o amor da minha vida e a pessoa que me faz querer ser melhor a cada novo dia ❤️✨. Adoro nossos momentos, desde as conversas profundas até as brincadeiras bobas (tipo quando você tenta me derrubar 😂).</p>
+            <p>Estou ansioso por todo o futuro que temos pela frente. Te amo mais que tudo!</p>
+            <p>Com todo amor,<br>Lucas</p>
+        </div>
+    </div>
+
     <script>
         const som = document.getElementById('musicaReal');
         const btnIcon = document.getElementById('playBtn');
@@ -525,8 +537,8 @@
             animarConfetes();
         }
 
-        // STORIES ORGANIZADOS EM CARD (ATUALIZADO)
-        // Você pode editar o 'text' (título) e 'subtext' (texto entre parênteses) de cada foto.
+        // STORIES ORGANIZADOS EM CARD
+        // Mantenha os textos originais, apenas ajustaremos a exibição das fotos no JS.
         const storiesData = [
             { type: 'hours' },
             { type: 'photo', img: 'imagens/imagens/foto1.JPEG', text: 'O começo de tudo ❤️', subtext: '(Parece que foi ontem)' },
@@ -615,6 +627,26 @@
                 videoEl.style.display = 'none';
                 videoEl.pause();
                 imgEl.src = story.img;
+
+                /* --- CORREÇÃO DAS FOTOS CORTADAS --- */
+                // Lista das fotos que devem aparecer por completo (contain)
+                // Usamos o nome do arquivo para identificar
+                const fotosCompletas = [
+                    'imagens/imagens/foto3.JPEG',
+                    'imagens/imagens/foto6.JPEG',
+                    'imagens/imagens/foto9.JPEG',
+                    'imagens/imagens/foto10.JPEG',
+                    'imagens/imagens/foto12.JPEG'
+                ];
+
+                if (fotosCompletas.includes(story.img)) {
+                    // Ajusta para pegar por completo (pode deixar barras pretas dentro do card)
+                    imgEl.style.objectFit = 'contain';
+                } else {
+                    // Mantém o preenchimento padrão (corta se necessário)
+                    imgEl.style.objectFit = 'cover';
+                }
+                /* ----------------------------------- */
 
                 // Adiciona o texto acima do card
                 if (story.text) {
