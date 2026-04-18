@@ -144,59 +144,34 @@
         }
         @keyframes fadeInConfetti { to { opacity: 0.8; } }
 
-        /* =========================================
-           MODIFICAÇÃO EXCLUSIVA AQUI: ROLETA AJUSTADA PARA CIMA E 9 BLOCOS
-           ========================================= */
         .slot-machine { 
-            display: flex; flex-direction: column; width: 100%; 
-            position: absolute; top: 0; left: 0; 
-            transform: translateY(100vh); /* Começa fora da tela (abaixo) garantindo o fundo preto no início */
-            will-change: transform; z-index: 5010;
+            display: flex; flex-direction: column; width: 100%; height: 350vh; position: absolute; top: -250vh; 
+            will-change: transform; 
         }
         
         .slot-row {
-            height: 11.11vh; /* Altura matematicamente perfeita para caber 9 blocos na tela (100/9) */
-            display: flex; justify-content: center; align-items: center;
-            font-size: 10vh; /* Fonte gigante e espremida */
-            font-weight: 900; letter-spacing: -4px; flex-shrink: 0; line-height: 1;
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            font-size: 6.5rem; font-weight: 900; letter-spacing: -4px;
         }
         
-        /* Cores exatas e Sombras do print */
-        .r-orange { background: #f39c12; color: #1a1a1a; text-shadow: -2px 3px 0 #935116, -3px 5px 0 #935116; }
-        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -2px 3px 0 #186a3b, -3px 5px 0 #186a3b; }
-        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -2px 3px 0 #512e5f, -3px 5px 0 #512e5f; }
-        .r-blue   { background: #3f51b5; color: #cddc39; text-shadow: -2px 3px 0 #1a237e, -3px 5px 0 #1a237e; }
-        .r-black  { background: #1a1a1a; color: #f39c12; text-shadow: -2px 3px 0 #935116, -3px 5px 0 #935116; }
+        .r-orange { background: #e67e22; color: #1a1a1a; text-shadow: -1px 1px 0 #935116, -2px 2px 0 #935116, -3px 3px 0 #935116, -4px 4px 0 #935116; }
+        .r-green  { background: #2ecc71; color: #1a1a1a; text-shadow: -1px 1px 0 #186a3b, -2px 2px 0 #186a3b, -3px 3px 0 #186a3b, -4px 4px 0 #186a3b; }
+        .r-pink   { background: #d279d2; color: #1a1a1a; text-shadow: -1px 1px 0 #512e5f, -2px 2px 0 #512e5f, -3px 3px 0 #512e5f, -4px 4px 0 #512e5f; }
+        .r-blue   { background: #3f51b5; color: #dce775; text-shadow: -1px 1px 0 #1a237e, -2px 2px 0 #1a237e, -3px 3px 0 #1a237e, -4px 4px 0 #1a237e; }
         
-        /* Animação sobe 200vh. Como começa em 100vh, percorre 300vh totais rasgando a tela! */
-        @keyframes slideSlotsUp { 
-            0%   { transform: translate3d(0, 100vh, 0); } 
-            100% { transform: translate3d(0, -200vh, 0); } 
-        }
+        @keyframes slideSlots { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 250vh, 0); } }
 
-        /* REVELAÇÃO FINAL COM ZIGUEZAGUE E PRETO TOTAL */
         .final-hours-reveal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: #000; /* Fundo preto sólido final */
-            opacity: 0; z-index: 5015; pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%, #000 100%);
+            opacity: 0; z-index: 10; pointer-events: none;
         }
-
-        /* Ziguezagues Amarelos */
-        .reveal-yellow-top { position: absolute; top: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
-        .reveal-yellow-top .y-fill { background: linear-gradient(to bottom, #ffe600, #ffb300); height: 10vh; width: 100%; }
-        .reveal-yellow-top .y-saw-down { width: 100%; height: 35px; background: linear-gradient(135deg, #ffb300 50%, transparent 50%), linear-gradient(225deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
-
-        .reveal-yellow-bottom { position: absolute; bottom: 0; left: 0; width: 100%; display: flex; flex-direction: column; z-index: 5016; }
-        .reveal-yellow-bottom .y-saw-up { width: 100%; height: 35px; background: linear-gradient(45deg, #ffb300 50%, transparent 50%), linear-gradient(-45deg, #ffb300 50%, transparent 50%); background-size: 40px 100%; }
-        .reveal-yellow-bottom .y-fill { background: linear-gradient(to top, #ffe600, #ffb300); height: 10vh; width: 100%; }
-
         @keyframes fadeInReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 5020; position: relative;}
-        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; z-index: 5020; position: relative;}
+        .final-hours-text { font-size: 5rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .final-subtitle { font-size: 1rem; font-weight: 800; color: var(--spotify-green); margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FOTOS DOS STORIES */
         #story-photo-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; }
         .story-img-bg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; filter: brightness(0.4); }
         .story-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; text-align: center; z-index: 5010; pointer-events: none;}
@@ -309,57 +284,20 @@
         <i class="fa-solid fa-xmark story-close" onclick="fecharStories()"></i>
 
         <div id="story-hours-container">
-            <canvas id="celebration-canvas"></canvas>
-
             <div id="slot-machine" class="slot-machine">
                 <div class="slot-row r-orange hours-val"></div>
                 <div class="slot-row r-green hours-val"></div>
                 <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-black hours-val"></div>
                 <div class="slot-row r-blue hours-val"></div>
-
                 <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-black hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-black hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-black hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
-                <div class="slot-row r-pink hours-val"></div>
-                <div class="slot-row r-black hours-val"></div>
-                <div class="slot-row r-blue hours-val"></div>
-
-                <div class="slot-row r-orange hours-val"></div>
-                <div class="slot-row r-green hours-val"></div>
             </div>
-
+            
             <div id="final-hours-reveal" class="final-hours-reveal">
-                <div class="reveal-yellow-top">
-                    <div class="y-fill"></div>
-                    <div class="y-saw-down"></div>
-                </div>
-
-                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index:5020; position:relative;">Horas juntos</p>
-                <h1 id="final-hours-text" class="final-hours-text">0</h1>
-                <p class="final-subtitle">14% dos casais no mundo ✨</p>
-
-                <div class="reveal-yellow-bottom">
-                    <div class="y-saw-up"></div>
-                    <div class="y-fill"></div>
-                </div>
+                <canvas id="celebration-canvas"></canvas>
+                
+                <p style="font-size:1.2rem; font-weight:700; color:#fff; margin-bottom:10px; z-index: 5020; position: relative;">Horas juntos</p>
+                <h1 id="final-hours-text" class="final-hours-text" style="z-index: 5020; position: relative;">0</h1>
+                <p class="final-subtitle" style="z-index: 5020; position: relative;">14% dos casais no mundo ✨</p>
             </div>
         </div>
 
@@ -617,16 +555,14 @@ Te amo para sempre! ❤️
                 const slotMachine = document.getElementById('slot-machine');
                 slotMachine.style.animation = 'none';
                 slotMachine.offsetHeight; 
-                
-                // Animação ATUALIZADA: Inicia em 100vh (baixo da tela) e sobe rasgando!
-                slotMachine.style.animation = 'slideSlotsUp 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
+                slotMachine.style.animation = 'slideSlots 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards';
 
                 const finalReveal = document.getElementById('final-hours-reveal');
                 finalReveal.style.animation = 'none';
                 finalReveal.offsetHeight;
-                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.5s'; 
-                
-                // Dispara os confetes com a tela preta de revelação
+                finalReveal.style.animation = 'fadeInReveal 1s forwards 2.2s'; 
+
+                // Dispara os confetes e a celebração após a roleta parar
                 setTimeout(iniciarCelebracao, 2500);
 
             } else {
